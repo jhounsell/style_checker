@@ -1,0 +1,22 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-m">There are style problems in your text:</h1>
+
+    <div id="results" class="govuk-body">
+      {{ results | safe }}
+    </div>
+
+    <a href="index.html" class="govuk-button">Check some different text </a>
+  
+  </div>
+ 
+</div>
+
+{% endblock %}

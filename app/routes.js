@@ -1,9 +1,29 @@
-//
-// For guidance on how to create routes see:
-// https://prototype-kit.service.gov.uk/docs/create-routes
-//
+const govukPrototypeKit = require('govuk-prototype-kit');
+const router = govukPrototypeKit.requests.setupRouter();
+const checkTextRules = require('./assets/javascripts/text-checker'); // Adjust the path as needed
 
-const govukPrototypeKit = require('govuk-prototype-kit')
-const router = govukPrototypeKit.requests.setupRouter()
+router.post('/check-text-router', (req, res, next) => {
+  const userText = req.body['user-text'];
+  let results = '';
 
-// Add your routes here
+  // Apply style rules from the external file
+  results = checkTextRules(userText);
+
+  // Redirect based on results
+  if (results) {
+    req.session.data['results'] = results; // Store results in session data
+    return res.redirect('/results');
+  } else {
+    return res.redirect('/no-issues');
+  }
+});
+
+router.get('/results', (req, res) => {
+  res.render('results', { results: req.session.data['results'] });
+});
+
+router.get('/no-issues', (req, res) => {
+  res.render('no-issues');
+});
+
+module.exports = router;
