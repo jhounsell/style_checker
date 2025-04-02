@@ -5,4 +5,9 @@
 
 window.GOVUKPrototypeKit.documentReady(() => {
   // Add JavaScript here
-})
+
+  window.clearText = function() {
+    document.getElementById("user-text").value="";
+  }
+
+});

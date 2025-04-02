@@ -36,7 +36,7 @@ function checkTextRules(userText) {
   sentences.forEach(sentence => {
     if (antisocialRegex.test(sentence)) {
       const highlightedSentence = sentence.replace(antisocialRegex, '<strong>$&</strong>');
-      results += `<p class="govuk-body">'Antisocial' should be spelt without hyphens. Found in: "${highlightedSentence.trim()}"</p>`;
+      results += `<p class="govuk-body">'Antisocial' should be spelt without hyphens.</p> <div class="govuk-inset-text">${highlightedSentence.trim()}</div>`;
     }
   });
 
