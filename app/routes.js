@@ -10,13 +10,19 @@ router.post('/check-text-router', (req, res, next) => {
   results = checkTextRules(userText);
 
   // Redirect based on results
-  if (results) {
-    req.session.data['results'] = results; // Store results in session data
-    return res.redirect('/results');
-  } else {
-    return res.redirect('/no-issues');
+  if (results === 'no-sentences') {
+    return res.redirect ('/no-sentences');
   }
-});
+    else if (results) {
+      req.session.data ['results'] = results;
+      return res.redirect('/results');
+    }
+    
+    else {
+      return res.redirect('/no-issues');
+    }
+
+  })
 
 router.get('/results', (req, res) => {
   res.render('results', { results: req.session.data['results'] });

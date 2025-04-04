@@ -8,6 +8,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
   window.clearText = function() {
     document.getElementById("user-text").value="";
+    document.getElementById("user-text").focus();
   }
 
 });
