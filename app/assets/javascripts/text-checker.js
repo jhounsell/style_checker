@@ -34,6 +34,19 @@ function checkTextRules(userText) {
     { regex: /(?!criminal\sjustice\ssystem)[cC]riminal\s[jJ]ustice\s[sS]ystem/g, message: "Spell criminal justice system in lower case."},
     { regex: /\bcustomer/gi, message: "Avoid calling the people who use our services customers. Use you or be specific when describing them, for example applicant or asylum seeker."},
     { regex: /\bsecondary\scontrol/gi, message: "Use customs rather than secondary control"},
+    { regex: /customs\sofficer/gi, message: "Use Border Force officer rather than customs officer"},
+    { regex: /(?!DBS\sadult\sfirst)DBS\s[aA]dult\s[fF]irst/g, message: "Use lower case for adult first."},
+    { regex: /(?!DBS\sadults\sbarred\slist)DBS\s[aA]dults\s[bB]arred\s[Ll]ist/g, message: "Use lower case for adults barred list."},
+    { regex: /([Dd][Bb][Ss])\s[dD]isclosure(?!\sservice)/g, message: "Use DBS certificate rather than DBS disclosure."},
+    { regex: /([Dd][Bb][Ss])\s[dD]isclosure\s[sS]ervice/g, message: "Use DBS checking service rather than DBS disclosure service."},
+    { regex: /(?!DBS\schildren's\sbarred\sservice)([Dd][Bb][Ss])\s[cC]hildren(‘|'|’)s\s[bB]arred\s[sS]ervice/g, message: "Use lower case for children's barred list."},
+    { regex: /Decision\sMaker/g, message: "Spell decision maker in lower case."},
+    { regex: /[Dd]ecision\s[Mm]aking\s[Uu]nit/g, message: "Spell decision making unit in lower case."},
+    { regex: /digital\sstatus/gi, message: "Avoid using 'digital status' in public-facing services. Instead use 'eVisa' or 'online immigration status'."},
+    { regex: /(?!Disclosure\sand\sBarring\sService)[dD]isclosure\sand\s[bB]arring\s[sS]ervice/g, message: "Capitalise Disclosure and Barring Service thusly."},
+    { regex: /(?!electronic\stravel\sauthorisation)[eE]lectronic\s[tT]ravel\s[aA]uthorisation/g, message: "Use lower case initial letters on electronic travel authorisation. You can use the acronym ETA after the first mention."},
+    { regex: /enhanced\sdisclosure/gi, message: "Use 'enhanced DBS check' rather than 'enhanced disclosure'."},
+    { regex: /(?!EU\sSettlement\sScheme)EU\s[Ss]ettlement\s[Ss]cheme/g, message: "Capitalise EU Settlement Scheme thusly. You can use the initials EUSS after the first full mention.."}  
   ];
 
   // Split the text into sentences
