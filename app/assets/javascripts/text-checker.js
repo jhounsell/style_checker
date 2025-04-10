@@ -25,7 +25,7 @@ function checkTextRules(userText) {
     { regex: /(click|tap)/gi, message: "Use select rather than click or tap because not everyone uses a mouse."},
     { regex: /(Common\sTravel\sarea|Common\stravel\sArea|common\sTravel\sArea|common\stravel\sArea|Common\stravel\sarea|common\stravel\sarea|common\sTravel\sArea|common\sTravel\sarea)/g, message: "Capitalise the initials of Common Travel Area."},
     { regex: /validat(e(s|d)?|ing|ion)/g, message: "Consider using confirm or prove instead of validate if you are asking users to provide additional evidence."},
-    { regex: /\b(?!(Confirmation of Acceptance for Studies)\b)[cC]onfirmation\s[oO]f\s[aA]cceptance\s[fF]or\s[sS]tudies)/g, message: "Spell the initials of Confirmation of Acceptance for Studies in upper case."},
+    { regex: /\b(?!(Confirmation of Acceptance for Studies)\b)[cC]onfirmation\s[oO]f\s[aA]cceptance\s[fF]or\s[sS]tudies/g, message: "Spell the initials of Confirmation of Acceptance for Studies in upper case."},
     { regex: /\bconsignee/gi, message: "Prefer recipient. If you need to use consignee, use it with recipient. For example, recipient (consignee)."},
     { regex: /\bconsignor/gi, message: "Prefer sender. If you need to use consignor, use it with sender. For example, sender (consignor)."},
     { regex: /\bright\b/gi, message: "Use correct rather than right."},
