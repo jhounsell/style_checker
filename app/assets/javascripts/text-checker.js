@@ -85,7 +85,7 @@ function checkTextRules(userText) {
     { regex: /(?!UK\sVisa\sand\sCitizenship\sApplication\sServices)[uU]\.?[kK]\.?\s[vV]isa\s(&|and)\s[cC]itizenship\s[aA]pplication\s[sS]ervices/g, message: "Spell 'UK Visa and Citizenship Services' thusly, without a & and with first-letter capitals."},
     { regex: /(?!UK\sVisas\sand\sImmigration)[uU]\.?[kK]\.?\s[vV]isas\s(&|and)\s[iI]mmigration/g, message: "Spell 'UK Visas and Immigration' thusly, without a & and with first-letter capitals."},
     { regex: /(?!unique\sapplication\snumber)[uU]nique\s[aA]pplication\s[nN]umber/g, message: "Spell 'unique application number' thusly, with lower case first letters."},
-    { regex: /(be(ing)?|is|are|were|was|am|makes?|made|making)\s.*user-centred.*/gi, message: "Hyphenate when using as an adjective, as in 'user-centred design'. Do not hyphenate when using as a noun, as in 'teams need to be user centred'."},
+    { regex: /(be(ing)?|is|are|were|was|am|makes?|made|making)\s.*user-centred.*/gi, message: "Hyphenate user-centred when using as an adjective, as in 'user-centred design'. Do not hyphenate when using as a noun, as in 'teams need to be user centred'."},
   ];
 
   // Split the text into sentences
