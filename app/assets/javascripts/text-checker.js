@@ -66,7 +66,7 @@ function checkTextRules(userText) {
     { regex: /(?!Life\sin\sthe\sUK\sTest)[lL]ife\s[iI]n\s[tT]he\s([uU]\.?[kK]\.?|[uU]nited\s[kK]ingdom)\s[tT]est/g, message: "Life in the UK Test should be spelled thusly, with capitals on the L and T."},  
     { regex: /\blog(\s||\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)in\b|\blogin\b/gi, message: "Use 'sign in' rather than 'log in'."},  
     { regex: /\bsign\sinto\b/gi, message: "Use 'sign in to' rather than 'sign into'."},  
-    { regex: /\bmigrants?\b/gi, message: "Avoid using 'migrants'. Try to be specific, such as 'applicant', 'claimant', 'employee' or 'worker'. If you cannot be specific, use 'people'."},  
+    { regex: /(?!Migrant\sHelp)\b[mM]igrants?\b/gi, message: "Avoid using 'migrants'. Try to be specific, such as 'applicant', 'claimant', 'employee' or 'worker'. If you cannot be specific, use 'people'."},  
     { regex: /\bnotif(ying|ication|ie(d|s))/gi, message: "Avoid using 'notification' or 'notify'. Try to be specific about contact, such as, 'we will send you an email' or 'how do you want to be contacted?'."},  
     { regex: /(?<!GOV\.UK\s)\bnotify/gi, message: "Avoid using 'notification' or 'notify'. Try to be specific about contact, such as, 'we will send you an email' or 'how do you want to be contacted?'."},  
     { regex: /(online|digital)\s(?<!immigration\s)status/gi, message: "Avoid using 'online status' or 'digital status' when referring to someone's immigration status. Use 'online immigration status' instead."},  
@@ -86,6 +86,11 @@ function checkTextRules(userText) {
     { regex: /(?!UK\sVisas\sand\sImmigration)[uU]\.?[kK]\.?\s[vV]isas\s(&|and)\s[iI]mmigration/g, message: "Spell 'UK Visas and Immigration' thusly, without a & and with first-letter capitals."},
     { regex: /(?!unique\sapplication\snumber)[uU]nique\s[aA]pplication\s[nN]umber/g, message: "Spell 'unique application number' thusly, with lower case first letters."},
     { regex: /(be(ing)?|is|are|were|was|am|makes?|made|making)\s.*user-centred.*/gi, message: "Hyphenate user-centred when using as an adjective, as in 'user-centred design'. Do not hyphenate when using as a noun, as in 'teams need to be user centred'."},
+    { regex: /(global\stalent|high\spotential|graduate|family|Ukraine|mobility|visitor|business|british\snational(\(*overseas\)*)*|(skilled|temporary|secondment)\sworker|right\sof\sabode|tier\s[1-5]|transit|marriage|student|study|scheme|representative|scale-up|founder|spouse|partner|ancestry|reunion|refugee|asylum|dependant).*\sroutes?.*/gi, message: "Use 'visa' rather than terms like 'route'. For example, use 'graduate visa' rather than 'graduate route'."},
+    { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters."},
+    { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead."},
+    { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word."},
+    { regex: /business\s(day|week)/gi, message: "Spell 'watchlist' in lower case and as one word."},
   ];
 
   // Split the text into sentences

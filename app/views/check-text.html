@@ -1,0 +1,39 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+
+    <form action="/check-text-router" method="post" novalidate>
+
+      <fieldset class="govuk-fieldset" role="group" aria-describedby="question-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            Enter the text you want to check
+          </h1>
+        </legend>
+        <div id="question-hint" class="govuk-hint">
+          Copy and paste the text directly from your designs
+        </div>
+        <textarea class="govuk-textarea" id="user-text" name="user-text" rows="20">{{data['user-text']}}</textarea>
+        <button class="govuk-button" type="submit" onclick="checkText()">Check text</button>
+      </fieldset>
+
+
+  </form>
+
+  <button onclick="clearText()" class="govuk-button govuk-button--warning" data-module="govuk-button">
+    Delete text
+  </button>
+  
+
+  <div id="results" class="govuk-body"></div>
+
+ 
+</div>
+
+{% endblock %}
