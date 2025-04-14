@@ -33,6 +33,7 @@ function checkTextRules(userText) {
     { regex: /\bcustomer/gi, message: "Avoid calling the people who use our services customers. Use you or be specific when describing them, for example applicant or asylum seeker.", title: "Customers"},
     { regex: /\bsecondary\scontrol/gi, message: "Use customs rather than secondary control", title:"Secondary control"},
     { regex: /customs\sofficer/gi, message: "Use Border Force officer rather than customs officer", title:"Customs officer"},
+    { regex: /\bdependant\s(.*\s)?(up)?on/gi, message: "Use dependant as a noun and dependent as an adjective. For example 'The dependant is dependent on support'.", title:"Dependant/dependent"}, // Won't catch relative pronoun sentences, e.g. "Upon her I am dependant" - although this is not plain English!
     { regex: /(?!DBS\sadult\sfirst)DBS\s[aA]dult\s[fF]irst/g, message: "Use lower case for adult first.", title: "DBS adult first"},
     { regex: /(?!DBS\sadults\sbarred\slist)DBS\s[aA]dults\s[bB]arred\s[Ll]ist/g, message: "Use lower case for adults barred list.", title: "DBS adults barred list"},
     { regex: /([Dd][Bb][Ss])\s[dD]isclosure(?!\sservice)/g, message: "Use DBS certificate rather than DBS disclosure.", title: "DBS disclosure"},
@@ -42,6 +43,10 @@ function checkTextRules(userText) {
     { regex: /[Dd]ecision\s[Mm]aking\s[Uu]nit/g, message: "Spell decision making unit in lower case.", title: "Decision making unit"},
     { regex: /digital\sstatus/gi, message: "Avoid using 'digital status' in public-facing services. Instead use 'eVisa' or 'online immigration status'.", title: "Digital status"},
     { regex: /(?!Disclosure\sand\sBarring\sService)[dD]isclosure\sand\s[bB]arring\s[sS]ervice/g, message: "Capitalise Disclosure and Barring Service thusly.", title: "Disclosure and Barring Service"},
+    { regex: /\b(e[-]?gates|e[-]?Gates|E[-]?gates|E[-]?Gates?)\b(?!\s*\([^)]*\))/, message: "Explain what eGates means the first time you use it. For example 'You can use an eGate (electronic passport gate)'.", title: "Exlaining eGates on first use"},
+    { regex: /(?<!\()\b(e[-]?visa|e[-]?Visa|E[-]?visa|E[-]?Visa?)\b(?!\s*\([^)]*\))/, message: "Explain what eVisa means the first time you use it. For example 'prove your online immigration status (eVisa)'.", title: "Exlaining eVisa on first use"},
+    { regex: /(?!eGates)\b[eE][\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]?[gG]ates?\b/g, message: "Spell 'eGates' with a lower case 'e', and without any spaces or hyphens.", title: "eGates"},
+    { regex: /(?!eGates)\b[eE][\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]?[gG]visa\b/g, message: "Spell 'eVisa' with a lower case 'e', and without any spaces or hyphens.", title: "eVisa"},
     { regex: /(?!electronic\stravel\sauthorisation)[eE]lectronic\s[tT]ravel\s[aA]uthorisation/g, message: "Use lower case initial letters on electronic travel authorisation. You can use the acronym ETA after the first mention.", title: "electronic travel authorisation"},
     { regex: /enhanced\sdisclosure/gi, message: "Use 'enhanced DBS check' rather than 'enhanced disclosure'.", title: "enhanced disclosure"},
     { regex: /(?!EU\sSettlement\sScheme)EU\s[Ss]ettlement\s[Ss]cheme/g, message: "Capitalise EU Settlement Scheme thusly. You can use the initials EUSS after the first full mention.", title: "EU Settlement Scheme"},  
@@ -132,19 +137,19 @@ function checkTextRules(userText) {
 
 
 // Term consistency check
-  const term1 = /asylum claimant/gi;
-  const term2 = /asylum applicant/gi;
-  const hasTerm1 = term1.test(concatenatedText);
-  const hasTerm2 = term2.test(concatenatedText);
+  const term1 = /asylum claimant/gi;
+  const term2 = /asylum applicant/gi;
+  const hasTerm1 = term1.test(concatenatedText);
+  const hasTerm2 = term2.test(concatenatedText);
 
-  if (hasTerm1 && hasTerm2) {
-    const highlightedText = concatenatedText
-      .replace(term1, '<strong>$&</strong>')
-      .replace(term2, '<strong>$&</strong>');
-    results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
-  }
+  if (hasTerm1 && hasTerm2) {
+    const highlightedText = concatenatedText
+      .replace(term1, '<strong>$&</strong>')
+      .replace(term2, '<strong>$&</strong>');
+     results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
+   }
 
-  return results;
+  return results;
 }
 
 module.exports = checkTextRules;
