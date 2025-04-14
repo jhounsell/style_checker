@@ -95,7 +95,8 @@ function checkTextRules(userText) {
     { regex: /(?!UK\sVisa\sand\sCitizenship\sApplication\sServices)[uU]\.?[kK]\.?\s[vV]isa\s(&|and)\s[cC]itizenship\s[aA]pplication\s[sS]ervices/g, message: "Spell 'UK Visa and Citizenship Services' thusly, without a & and with first-letter capitals.", title: "UK Visa and Citizenship Services"},
     { regex: /(?!UK\sVisas\sand\sImmigration)[uU]\.?[kK]\.?\s[vV]isas\s(&|and)\s[iI]mmigration/g, message: "Spell 'UK Visas and Immigration' thusly, without a & and with first-letter capitals.", title: "UK Visas and Immigration"},
     { regex: /(?!unique\sapplication\snumber)[uU]nique\s[aA]pplication\s[nN]umber/g, message: "Spell 'unique application number' thusly, with lower case first letters.", title: "Unique application number"},
-    { regex: /(be(ing)?|is|are|were|was|am|makes?|made|making)\s.*user-centred.*/gi, message: "Hyphenate user-centred when using as an adjective, as in 'user-centred design'. Do not hyphenate when using as a noun, as in 'teams need to be user centred'.", title: "User-centred"},
+    { regex: /(be(ing)?|is|are|were|was|am|makes?|made|making)\s.*user-centred.*/gi, message: "Do not hyphenate user centred when using as a noun, as in 'teams need to be user centred'.", title: "User centred"},
+    { regex: /\buser\scentred\s\w*/gi, message: "Hyphenate user-centred when using as an adjective, as in 'user-centred design'.", title: "User-centred"},
     { regex: /(global\stalent|high\spotential|graduate|family|Ukraine|mobility|visitor|business|british\snational(\(*overseas\)*)*|(skilled|temporary|secondment)\sworker|right\sof\sabode|tier\s[1-5]|transit|marriage|student|study|scheme|representative|scale-up|founder|spouse|partner|ancestry|reunion|refugee|asylum|dependant).*\sroutes?.*/gi, message: "Use 'visa' rather than terms like 'route'. For example, use 'graduate visa' rather than 'graduate route'.", title: "visa"},
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
@@ -128,7 +129,7 @@ function checkTextRules(userText) {
   // Format results
   matchesBypattern.forEach(({ pattern, matches }) => {
     if (matches.length > 0) {
-      results += `<h2 class"=govuk-heading-s">${pattern.title}</h2>`;
+      results += `<h2 class="govuk-heading-s">${pattern.title}</h2>`;
       results += `<p class="govuk-body">${pattern.message}</p>`;
       results += `<p class="govuk-body">Matches found: ${matches.length}</p>`;
       matches.forEach (match => {
@@ -140,8 +141,8 @@ function checkTextRules(userText) {
 
 
 // Term consistency check
-  const term1 = /asylum claimant/gi;
-  const term2 = /asylum applicant/gi;
+  const term1 = /asylum\sclaimant/gi;
+  const term2 = /asylum\sapplicant/gi;
   const hasTerm1 = term1.test(concatenatedText);
   const hasTerm2 = term2.test(concatenatedText);
 
@@ -149,6 +150,7 @@ function checkTextRules(userText) {
     const highlightedText = concatenatedText
       .replace(term1, '<strong>$&</strong>')
       .replace(term2, '<strong>$&</strong>');
+     results += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
      results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
    }
 

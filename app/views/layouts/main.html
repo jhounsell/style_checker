@@ -3,7 +3,8 @@ For guidance on how to use layouts see:
 https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 #}
 
-{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% extends "home-office-kit-layout.html" %}
+{% set bodyClasses = 'hods-page' %}
 
 {% block scripts %}
   {{ super() }}
