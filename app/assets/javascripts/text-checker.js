@@ -3,6 +3,7 @@ function checkTextRules(userText) {
 
   //Regex rule set
   const regexPatterns = [
+    //HODS Style Rules
     { regex: /anti[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]social/gi, message: "Antisocial should be spelt without hyphens.", title: "Antisocial"},
     { regex: /alter(s|ing|ed|ation)?\b|modif(y(ing)?|ie(s|d)|ication)|switch(es|ed|ing)?/gi, message: "Use change instead of alter, modify or switch.", title: "Alter, switch, modify"},
     { regex: /(register(ing|s|ed)?|(set(s|ting)?\s*up)|(establish(es|ed|ing)?))\s+an\s+account/gi, message: "Use create instead of register or set up when you want people to create an account.", title: "Register/set up" },
@@ -102,6 +103,13 @@ function checkTextRules(userText) {
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
+  //GOV.UK Style Rules
+    { regex: /REGEXRULEGOESHERE/g, message:"", title: "" },
+    { regex: /\ba\*./g, message:"When referring to educational grades, spell the letter in uppercase.", title: "A* (case)" },
+    { regex: /\ba\s\*/gi, message:"Spell A* without a space", title: "A* (spacing)" },
+    { regex: /(?<!(follow.*|like|upon|bec\wm.+|dr\ww.*))\sa[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?stars?\b(?!(.+ed|\son\sthe|\soverhead|\sabove|sky))/gi, message:"When referring to educational grades, use the character '*' and do not use 'star'.", title: "A* (typography)" },
+    { regex: /\b(an\s)?a level(s)?\b(?=\s+(in\b|subject(s)?\b|exam(s)?\b|coursework\b|grades?\b|results?\b|revision\b|choices?\b|studies\b|topics?\b|qualifications?\b))/g, message:"Spell A levels with an uppercase 'a'.", title: "A level (case)" },
+    { regex: /(?<!A\slevel)(a[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel|A[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel)/g, message:"Spell A levels with a space between the words and a lowercase 'l'.", title: "A level (spacing)" },
   ];
 
   // Split the text into sentences
@@ -126,6 +134,52 @@ function checkTextRules(userText) {
     });
     return { pattern, matches };
   });
+
+
+
+  // === ACRONYM EXPLANATION CHECK ===
+
+  const explainedAcronyms = new Set();
+  
+  // match patterns like "WHO (World Health Organization)" or "(World Health Organization) WHO"
+  const explanationPatterns = [
+    /\b([A-Z]{2,})\s*\([^)]+\)/g, // ACRONYM (Explanation)
+   /\([^)]+\)\s*([A-Z]{2,})\b/g  // (Explanation) ACRONYM
+    ];
+  explanationPatterns.forEach(pattern => {
+    let match;
+    while ((match = pattern.exec(concatenatedText)) !== null) {
+      explainedAcronyms.add(match[1]);
+    }
+  });
+
+  
+  //track first occurrences
+const acronymPattern = /\b[A-Z]{2,}\b/g;
+const seenAcronyms = new Set();
+const unexplained = [];
+
+let match;
+while ((match = acronymPattern.exec(concatenatedText)) !==null) {
+  const acronym = match[0];
+  if (!seenAcronyms.has(acronym)) {
+    seenAcronyms.add(acronym);
+    if (!explainedAcronyms.has(acronym)) {
+      unexplained.push(acronym);
+    }
+  }
+}
+
+
+    if (unexplained.length > 0 ) {
+      results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
+      results += `<p class="govuk-body">The following acronyms appear in the text without an explanation on first use:</p>`;
+      results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
+        unexplained.forEach(acronym => {
+          results += `<div class="govuk-inset-text">${acronym}</div>`;
+        });
+        results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+    }
 
   // Format results
   matchesBypattern.forEach(({ pattern, matches }) => {
