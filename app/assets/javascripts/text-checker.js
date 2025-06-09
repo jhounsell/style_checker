@@ -110,6 +110,82 @@ function checkTextRules(userText) {
     { regex: /(?<!(follow.*|like|upon|bec\wm.+|dr\ww.*))\sa[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?stars?\b(?!(.+ed|\son\sthe|\soverhead|\sabove|sky))/gi, message:"When referring to educational grades, use the character '*' and do not use 'star'.", title: "A* (typography)" },
     { regex: /\b(an\s)?a level(s)?\b(?=\s+(in\b|subject(s)?\b|exam(s)?\b|coursework\b|grades?\b|results?\b|revision\b|choices?\b|studies\b|topics?\b|qualifications?\b))/g, message:"Spell A levels with an uppercase 'a'.", title: "A level (case)" },
     { regex: /(?<!A\slevel)(a[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel|A[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel)/g, message:"Spell A levels with a space between the words and a lowercase 'l'.", title: "A level (spacing)" },
+    { regex: /(?![Tt]he\sacademies\sprogramme)[tT]he\s[aA]cademies\s[pP]rogramme/g, message:"Spell 'the academies programme' in lower case.", title: "The academies programme" },
+    { regex: /(?!academy\sconverters)[aA]cademy\s[Cc]onverters/g, message:"Spell 'academy converters' in lower case.", title: "Academy converters" },
+    { regex: /(?<!(\b[A-Z][a-z]+\b\s|\.\s))Act\b(?!(\s\d+|\s.+[A-Z]))/g, message:"Spell act lower case unless using the full title of the act.", title: "Act" },
+    { regex: /(?!Adoption\sRegister)[aA]doption\s[rR]egister/g, message:"Spell 'Adoption Register' in upper case.", title: "Adoption Register" },
+    { regex: /(under|over)[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]\d\d?s/gi, message:"Avoid using 'the over 50s' or 'under-18s'. Make it clear who's included.", title: "Age (descriptors)" },
+    { regex: /\d\d?[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]year[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]old/gi, message:"Do not use hyphens in ages unless to avoid confusion. Make it clear who's included.", title: "Age (compound adjective)" },
+    { regex: /(aged\s\d+[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]\d+(\syears)?|\d+[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]\d+\syears)/gi, message:"Do not use hyphens in age ranges.", title: "Age (ranges)" },
+    { regex: /white[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]?list/gi, message:"Use 'allow' or 'allow list' instead of 'whitelist'.", title: "Allow list" },
+    { regex: /al[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]qa(?!'|’)[ie]da/gi, message:"Spell the terrorist organisation as 'al-Qa’ida'.", title: "al-Qa’ida" },
+    { regex: /(?!alternative\sprovision)[Aa]lternative\s[Pp]rovision\b/g, message:"Spell 'alternative provision' in lower case.", title: "Alternative provision" },
+    { regex: /(?<![A-Z][a-z]*\s)&(?![A-Z])/g, message:"Only use ampersands (&) in company or departmental names.", title: "Ampersand" },
+  ];
+
+  const ukEnglishregexPatterns = [
+    //A
+    { regex: /accessoriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /Acclimatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /Activiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /adaptor/gi, message: "Use 'adapter' in UK English", title: "US spelling detected", },    
+    { regex: /Advertiz(?!em)/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Aerosoliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\baging\b/gi, message: "Use 'ageing' in UK English", title: "US spelling detected", },    
+    { regex: /Agonis(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\bairplane\b|\bairplanes\b/gi, message: "Use 'aeroplane' in UK English", title: "US spelling detected", },    
+    { regex: /Alchemiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliniz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Allegoriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alphabetiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /aluminum/gi, message: "Use 'aluminium' in UK English", title: "US spelling detected", },    
+    { regex: /amortiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Analogiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /analyz(?!(iz|t|es))/gi, message: "Prefer -lys spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Anatomiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anemi/gi, message: "Use 'anaemia' in UK English", title: "US spelling detected", },    
+    { regex: /anesthe/gi, message: "Use 'anaesthesia/anaesthetic' in UK English", title: "US spelling detected", },    
+    { regex: /anatomiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anesthetiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /angliciz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /animaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anodiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /antagoniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anodiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /antenna/gi, message: "Usually localised to 'aerial' in UK English", title: "US spelling detected", },    
+    { regex: /anthologiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anyplace/gi, message: "Use 'anywhere' in UK English", title: "US spelling detected", },    
+    { regex: /aphoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apologiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apostatiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apostatiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\bappalls?\b/gi, message: "Use 'appal(s)' in UK English", title: "US spelling detected", },    
+    { regex: /appetiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /appriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /arabiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /arboriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /archaiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /archeolog/gi, message: "Use 'archaeology' in UK English", title: "US spelling detected", },    
+    { regex: /\barmor(?!eal)/gi, message: "Use 'armour' in UK English", title: "US spelling detected", },    
+    { regex: /aromatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /artifact/gi, message: "Use 'artefact' in UK English", title: "US spelling detected", },
+    { regex: /arugula/gi, message: "Use 'rocket' for UK English", title: "US spelling detected", },
+    { regex: /asphalt/gi, message: "Use 'tarmac' instead of asphalt in UK English", title: "US spelling detected", },
+    { regex: /atomiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /atticiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /(?<!power\sof\s)attorney/gi, message: "Check the context: 'attorney' can normally be localised in UK English", title: "US spelling detected", },
+    { regex: /authoris/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /automatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /autotomis/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /avianiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bax\b/gi, message: "Use 'axe' for UK English", title: "US spelling detected", },
+    { regex: /axiomatis(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /azotis/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+
+    //B
+
   ];
 
   // Split the text into sentences
@@ -140,12 +216,27 @@ function checkTextRules(userText) {
   // === ACRONYM EXPLANATION CHECK ===
 
   const explainedAcronyms = new Set();
+  const excludedAcronyms = new Set ([
+    'UK',
+    'USA',
+    'DVLA',
+    'EU',
+    'VAT',
+    'MP',
+    'BBC',
+    'VPN',
+    'ID',
+    'URL',
+  ]);
   
-  // match patterns like "WHO (World Health Organization)" or "(World Health Organization) WHO"
+  // match acronym-like patterns
+
   const explanationPatterns = [
-    /\b([A-Z]{2,})\s*\([^)]+\)/g, // ACRONYM (Explanation)
-   /\([^)]+\)\s*([A-Z]{2,})\b/g  // (Explanation) ACRONYM
+      /\b([A-Z]{2,})\s*\([^)]+\)/g, // ACRONYM (Explanation)
+      /\([^)]+\)\s*([A-Z]{2,})\b/g, // (Explanation) ACRONYM
+      /\(([A-Z]{2,})\)/g            // (ACRONYM)
     ];
+    
   explanationPatterns.forEach(pattern => {
     let match;
     while ((match = pattern.exec(concatenatedText)) !== null) {
@@ -164,7 +255,7 @@ while ((match = acronymPattern.exec(concatenatedText)) !==null) {
   const acronym = match[0];
   if (!seenAcronyms.has(acronym)) {
     seenAcronyms.add(acronym);
-    if (!explainedAcronyms.has(acronym)) {
+    if (!explainedAcronyms.has(acronym) && !excludedAcronyms.has(acronym)) {
       unexplained.push(acronym);
     }
   }
@@ -173,11 +264,17 @@ while ((match = acronymPattern.exec(concatenatedText)) !==null) {
 
     if (unexplained.length > 0 ) {
       results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
-      results += `<p class="govuk-body">The following acronyms appear in the text without an explanation on first use:</p>`;
+      results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
       results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
-        unexplained.forEach(acronym => {
-          results += `<div class="govuk-inset-text">${acronym}</div>`;
-        });
+      unexplained.forEach(acronym => {
+        const regex = new RegExp(`\\b${acronym}\\b`);
+        const sentenceWithAcronym = sentences.find(sentence => regex.test(sentence));
+        if (sentenceWithAcronym) {
+          const highlighted = sentenceWithAcronym.replace(regex, '<strong>$&</strong>');
+          results += `<div class="govuk-inset-text">${highlighted.trim() }</div>`;
+        }
+      });
+      
         results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
     }
 
