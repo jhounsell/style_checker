@@ -52,6 +52,7 @@ function checkTextRules(userText) {
     { regex: /(?!electronic\stravel\sauthorisation)[eE]lectronic\s[tT]ravel\s[aA]uthorisation/g, message: "Use lower case initial letters on electronic travel authorisation. You can use the acronym ETA after the first mention.", title: "electronic travel authorisation"},
     { regex: /enhanced\sdisclosure/gi, message: "Use 'enhanced DBS check' rather than 'enhanced disclosure'.", title: "enhanced disclosure"},
     { regex: /(?!EU\sSettlement\sScheme)EU\s[Ss]ettlement\s[Ss]cheme/g, message: "Capitalise EU Settlement Scheme thusly. You can use the initials EUSS after the first full mention.", title: "EU Settlement Scheme"},  
+    { regex: /finger[\s]scans?/gi, message: "Not a synonym for 'fingerprint'. Fingers are 'scanned' and the results are called 'fingerprints'.", title: "Finger scan"},  
     { regex: /(?!General\sRegister\sOffice)[Gg]eneral\s[Rr]egist(er|ry|ration)\s[oO]ffice/g, message: "Capitalise General Register Office thusly. It is 'register' not 'registry'. You can use the initials 'GRO' after the first full mention.", title: "General Register Office"},  
     { regex: /(?!GOV\.UK)[Gg][Oo][Vv]\.[Uu][Kk][^\/]/g, message: "Spell GOV.UK in all upper case.", title: "GOV.UK"},  
     { regex: /[Hh]is\s[mM]ajesty(‘|'|’)s\s[A-Z]/g, message: "Use 'HM' rather than 'His Majesty's' in front of the name of the relevant public body. For example, 'HM Revenue & Customs'.", title: "His Majesty's"},  
