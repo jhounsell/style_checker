@@ -3,6 +3,7 @@ function checkTextRules(userText) {
 
   //Regex rule set
   const regexPatterns = [
+    //HODS Style Rules
     { regex: /anti[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]social/gi, message: "Antisocial should be spelt without hyphens.", title: "Antisocial"},
     { regex: /alter(s|ing|ed|ation)?\b|modif(y(ing)?|ie(s|d)|ication)|switch(es|ed|ing)?/gi, message: "Use change instead of alter, modify or switch.", title: "Alter, switch, modify"},
     { regex: /(register(ing|s|ed)?|(set(s|ting)?\s*up)|(establish(es|ed|ing)?))\s+an\s+account/gi, message: "Use create instead of register or set up when you want people to create an account.", title: "Register/set up" },
@@ -19,7 +20,7 @@ function checkTextRules(userText) {
     { regex: /business\s(days?|weeks?)/gi, message: "Use working day instead of business day. Consider explaining what you mean by a working day.", title: "Business day"},
     { regex: /(case\swork|case[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]work)/gi, message: "Spell casework, caseworker or caseworking without a space or hyphen.", title: "Casework"},
     { regex: /(Certificate\sof\ssponsorship|certificate\sof\sSponsorship|Certificate\sof\sSponsorship)/g, message: "Spell certificate of sponsorship in lower case. You can use the acronym CoS after the first full mention.", title: "Certificate of sponsorship"},
-    { regex: /verif(y(ing)?|ie(s|d)|ication)/gi, message: "Consider using check instead of verify if you are asking users to check the accuracy of something.", title: "Verify"},
+    { regex: /(?<!life\sevents\s)verif(y(ing)?|ie(s|d)|ication)/gi, message: "Consider using check instead of verify if you are asking users to check the accuracy of something.", title: "Verify"},
     { regex: /clandestine/gi, message: "Do not refer to people as a clandestine or clandestine entrant. Try to be specific, like 'a person hidden in a vehicle, ship or plane'.", title: "Clandestine"},
     { regex: /(click|tap)/gi, message: "Use select rather than click or tap because not everyone uses a mouse.", title: "Click"},
     { regex: /(Common\sTravel\sarea|Common\stravel\sArea|common\sTravel\sArea|common\stravel\sArea|Common\stravel\sarea|common\stravel\sarea|common\sTravel\sArea|common\sTravel\sarea)/g, message: "Capitalise the initials of Common Travel Area.", title: "Common Travel Area"},
@@ -27,7 +28,7 @@ function checkTextRules(userText) {
     { regex: /\b(?!(Confirmation of Acceptance for Studies)\b)[cC]onfirmation\s[oO]f\s[aA]cceptance\s[fF]or\s[sS]tudies/g, message: "Spell the initials of Confirmation of Acceptance for Studies in upper case.", title: "Confirmation of Acceptance for Studies"},
     { regex: /\bconsignee/gi, message: "Prefer recipient. If you need to use consignee, use it with recipient. For example, recipient (consignee).", title: "Consignee"},
     { regex: /\bconsignor/gi, message: "Prefer sender. If you need to use consignor, use it with sender. For example, sender (consignor).", title: "Consignor"},
-    { regex: /\bright\b/gi, message: "Use correct rather than right.", title: "Correct"},
+    { regex: /\bright\b(?!\s(not\s)?to)/gi, message: "Use correct rather than right.", title: "Correct"},
     { regex: /\bcorrespondence/gi, message: "Correspondence is not plain English. Try to be specific, like postal address, contact address or email address.", title:"Correspondence"},
     { regex: /counter(\s|\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)?sign(ator(y|ies))?/gi, message: "Countersignatory is not plain English. Instead, try the person who can confirm your identity or you must have your application signed by someone else.", title:"Countersignatory"},
     { regex: /(?!criminal\sjustice\ssystem)[cC]riminal\s[jJ]ustice\s[sS]ystem/g, message: "Spell criminal justice system in lower case.", title:"Criminal justice system"},
@@ -83,7 +84,7 @@ function checkTextRules(userText) {
     { regex: /(?!points[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]based\ssystem)\b[pP]oints(\s|[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D])[Bb]ased\s[Ss]ystem/g, message: "Spell points-based system in lower case and hyphenate.", title: "points-based system"},  
     { regex: /(?!Police\sNational\sComputer)[Pp]olice\s[Nn]ational\s[Cc]omputer/g, message: "Spell the initial letters of Police National Computer in upper case.", title:"Police National Computer"},  
     { regex: /\bpurdah/gi, message: "Use 'pre-election period', rather than 'purdah'.", title:"Purdah"},  
-    { regex: /\b(private|trooper|gunner|signaller|sapper|guardsman|rifleman|kingsman|lance\scorporal|corporal|sergeant|staff\ssergeant|colour\ssergeant|(warrant\sofficer\sclass\s(two|2)|wo2)|sergeant\smajor|(warrant\sofficer\sclass\s(one|1)|wo1)|regimental\ssergeant\smajor|officer\scadet|second\slieutenant|lieutenant|captain|major|lieutenant\scolonel|commanding\sofficer|colonel|brigadier|major\sgeneral|lieutenant\sgeneral|field\smarshal)\s[A-Z]\w*/gi, message: "Capitalise the rank before the name, as in 'Field Marshal Joan Smith'.", title:"Military rank"},  
+    { regex: /\b(trooper|gunner|signaller|sapper|guardsman|rifleman|kingsman|lance\scorporal|corporal|sergeant|staff\ssergeant|colour\ssergeant|(warrant\sofficer\sclass\s(two|2)|wo2)|sergeant\smajor|(warrant\sofficer\sclass\s(one|1)|wo1)|regimental\ssergeant\smajor|officer\scadet|second\slieutenant|lieutenant|captain|major|lieutenant\scolonel|commanding\sofficer|colonel|brigadier|major\sgeneral|lieutenant\sgeneral|field\smarshal)\s[A-Z]\w*/gi, message: "Capitalise the rank before the name, as in 'Field Marshal Joan Smith'.", title:"Military rank"},  
     { regex: /\b(constable|sergeant|inspector|chief\sinspector|superintendent|chief\ssuperintendent|commander|assistant\schief\sconstable|deupty\sassistant\scommissioner|deputy\schief\sconstable|assistant\scommissioner|deputy\scommissioner|commissioner|chief\sconstable)\s[A-Z]\w*/gi, message: "Capitalise the rank before the name, as in 'Detective Inspector Joan Smith'.", title:"Police rank"},  
     { regex: /\brefugees?\b/gi, message: "Make sure you only use refugee to describe an asylum claimant who has been granted refugee status.", title:"Refugee"},  
     { regex: /(?!senior\scivil\sservice)[sS]enior\s[cC]ivil\s[sS]ervice/g, message: "Lower case the initial letters of 'senior civil service'. You can use the acronym SCS after the first full mention.", title: "Senior civil service"},  
@@ -102,6 +103,312 @@ function checkTextRules(userText) {
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
+  
+    //GOV.UK Style Rules
+    { regex: /\ba\*./g, message:"When referring to educational grades, spell the letter in uppercase.", title: "A* (case)" },
+    { regex: /\ba\s\*/gi, message:"Spell A* without a space", title: "A* (spacing)" },
+    { regex: /(?<!(follow.*|like|upon|bec\wm.+|dr\ww.*))\sa[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?stars?\b(?!(.+ed|\son\sthe|\soverhead|\sabove|sky))/gi, message:"When referring to educational grades, use the character '*' and do not use 'star'.", title: "A* (typography)" },
+    { regex: /\b(an\s)?a level(s)?\b(?=\s+(in\b|subject(s)?\b|exam(s)?\b|coursework\b|grades?\b|results?\b|revision\b|choices?\b|studies\b|topics?\b|qualifications?\b))/g, message:"Spell A levels with an uppercase 'a'.", title: "A level (case)" },
+    { regex: /(?<!A\slevel)(a[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel|A[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D](l|L)evel)/g, message:"Spell A levels with a space between the words and a lowercase 'l'.", title: "A level (spacing)" },
+    { regex: /(?![Tt]he\sacademies\sprogramme)[tT]he\s[aA]cademies\s[pP]rogramme/g, message:"Spell 'the academies programme' in lower case.", title: "The academies programme" },
+    { regex: /(?!academy\sconverters)[aA]cademy\s[Cc]onverters/g, message:"Spell 'academy converters' in lower case.", title: "Academy converters" },
+    { regex: /(?<!(\b[A-Z][a-z]+\b\s|\.\s))Act\b(?!(\s\d+|\s.+[A-Z]))/g, message:"Spell act lower case unless using the full title of the act.", title: "Act" },
+    { regex: /(?!Adoption\sRegister)[aA]doption\s[rR]egister/g, message:"Spell 'Adoption Register' in upper case.", title: "Adoption Register" },
+    { regex: /(under|over)[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]\d\d?s/gi, message:"Avoid using 'the over 50s' or 'under-18s'. Make it clear who's included.", title: "Age (descriptors)" },
+    { regex: /\d\d?[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]year[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]old/gi, message:"Do not use hyphens in ages unless to avoid confusion. Make it clear who's included.", title: "Age (compound adjective)" },
+    { regex: /(aged\s\d+[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]\d+(\syears)?|\d+[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]\d+\syears)/gi, message:"Do not use hyphens in age ranges.", title: "Age (ranges)" },
+    { regex: /white[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]?list/gi, message:"Use 'allow' or 'allow list' instead of 'whitelist'.", title: "Allow list" },
+    { regex: /al[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D\s]qa(?!'|’)[ie]da/gi, message:"Spell the terrorist organisation as 'al-Qa’ida'.", title: "al-Qa’ida" },
+    { regex: /(?!alternative\sprovision)[Aa]lternative\s[Pp]rovision\b/g, message:"Spell 'alternative provision' in lower case.", title: "Alternative provision" },
+    { regex: /(?<![A-Z][a-z]*\s)&(?![A-Z])/g, message:"Only use ampersands (&) in company or departmental names.", title: "Ampersand" },
+    { regex: /\bAnimal\s[Hh]ealth\b/g, message:"Spell 'animal health' in lower case.", title: "Animal health" },
+    { regex: /anti[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]social/g, message:"Spell 'antisocial' without a hyphen or space.", title: "Antisocial" },
+    { regex: /(?!applied\sgeneral\squalifications)[aA]pplied\s[gG]eneral\s[qQ]ualifications/g, message:"Spell 'applied general qualifications' in lower case.", title: "Applied general qualifications" },
+    { regex: /(?!apprenticeship\sprogramme)[aA]pprenticeship\s[pP]rogramme/g, message:"Spell 'apprenticeship programme' in lower case.", title: "Apprenticeship programme" },
+    { regex: /A\sroads?/g, message:"Spell 'A-road' with a hyphen.", title: "A-road" },
+    { regex: /(?!armed\sforces)[aA]rmed\s[fF]orces/g, message:"Spell 'armed forces' in lower case.", title: "Armed forces" },
+    { regex: /arms\s[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]?length\sbody/g, message:"Spell 'arm's length body' in lower case, with an apostrophe and without a hyphen.", title: "Armed forces" },
+    { regex: /(?!assembly\sministers)[Aa]ssembly\s[Mm]inister/g, message:"Spell 'assembly ministers' in lower case.", title: "Assembly ministers" },
+    { regex: /(?!Attendance\sAllowance)[Aa]ttendance\s[Aa]llowance/g, message:"Spell 'Attendance Allowance' with uppercase on the first letters.", title: "Attendance Allowance" },
+    { regex: /\bBACS\b/g, message:"Use the acronym 'Bacs' not 'BACS'.", title: "Bacs" },
+    { regex: /(back|front)[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]end\b/gi, message:"Spell 'frontend' or 'backend' without any hyphens or spaces.", title: "Backend/frontend" },
+    { regex: /sort\scode\s?[:\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]{1,2}\d\d[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\d\d[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\d\d\s/gi, message:"Use spaces rather than hyphens in sort codes.", title: "Bank details (sort codes)" },
+    { regex: /account\snumber\s?[:\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]{1,2}((\d{2}\s){3}\d\d|\d{4}\s\d{4}|(\d{3}\s){2}\d\d)/gi, message:"Avoid using spaces or separators in account numbers", title: "Bank details (account numbers)" },
+    { regex: /base[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]line/gi, message:"Spell 'baseline' as one word.", title: "Baseline" },
+    { regex: /(?!Bereavement\sPayment)[Bb]ereavement\s[Pp]ayment/g, message:"Spell 'Bereavement Payment' in uppercase.", title: "Bereavement Payment" },
+    { regex: /(£|\$|₩|лв|₭|ден|₨|₮|€|¥|₹|CHF|Fr|R\$|₽|₿)\d{1,3}(\s?(billions|millions)|([bBmM][nN]?))/g, message:"When talking about money, use the singular form and do not abbreviate the amount. For example, '£12 billion'.", title: "Billions/millions" },
+    { regex: /(?!Blind\sPerson[’‘']s\sAllowance)[bB]lind\s[pP]erson[’‘']s\s[aA]llowance/g, message:"Spell 'Blind Person's Allowance in upper case.", title: "Blind Person's Allowance" },
+    { regex: /black[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]?list/gi, message:"Do not use blacklist. Use 'block list' instead.", title: "Black list" },
+    { regex: /blog[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?post/gi, message:"Spell 'blog post' as 2 words.", title: "Blog post" },
+    { regex: /\w{3,}\(s\)./gi, message:"Do not use brackets to refer to something that could be singular or plural. Always use the plural instead.", title: "Brackets (plural and singular)" },
+    { regex: /(?<!["“][^"\n\r]*?)\[[^\]]+\](?![^"\n\r]*?["”])/gi, message:"Only use square brackets when giving explanations inside quoted text.", title: "Brackets (round)" },
+    { regex: /\bbrexit/gi, message:"Only use 'brexit' to provide historical context. Use specific dates where possible.", title: "Brexit" },
+    { regex: /(?!BTEC\sNational\sDiploma)BTEC\s[nN]ational\s[dD]iploma/g, message:"Spell 'BTEC National Diploma' with upper case acronym and initial letters.", title: "BTEC National Diploma" },
+    { regex: /(?!(business\scontinuinty\smanagement|Business\scontinuity\smanagement))Business\s[cC]ontinuity\s[mM]anagement/g, message:"Spell 'business continuity management' in lower case.", title: "Business continuity management" },
+    { regex: /(?!Business\sIdentifier\sCode)[bB]usiness\s[iI]dentifier\s[cC]ode/g, message:"Spell 'Business Identifier Code (BIC)' in upper case with accompanying acronym.", title: "Business Identifier Code" },
+    { regex: /(?!business\splan)[bB]usiness\s[pP]lan/g, message:"Spell 'business plan' in lower case.", title: "Business plan" },
+    { regex: /(?!business\sstatement)[bB]usiness\s[sS]tatement/g, message:"Spell 'business statement' in lower case.", title: "Business statement" },
+    { regex: /(?!C\sof\sE)[cC]\s[oO]f?\s[eE]\b/g, message:"Use 'C of E' when referring to school names.", title: "C of E" },
+    { regex: /\bCabinet\b/g, message:"Lower case 'cabinet' when referring to the government agency.", title: "Cabinet" },
+    { regex: /(?!Capital\sGains\sTax)[Cc]apital\s[gG]ains\s[tT]ax(es)?/g, message:"Upper case the initial letters on 'Capital Gains Tax'.", title: "Capital Gains Tax" },
+    { regex: /(?!chair\sof\sgovernors)[cC]hair((wo)?man|person)?\s[oO]f\s[gG]overnors/g, message:"Use the official, lower case title: 'chair of governors'.", title: "Chair of governors" },
+    { regex: /(?!chair(person|(wo)?man))(?<!\.\sChair)Chair(((wo)?man)?|person)(?<!\.\sChair(person|(wo)?man)?)/g, message:"Spell 'chair, chairwoman, chairperson and chairman' in lower case. Also, consider using gender-neutral language.", title: "Chairman, chairwoman, chairperson" },
+    { regex: /(?<!(to|I|we|you|they)\s)change\slogs?\b/gi, message:"Spell 'change log' as 2 words.", title: "Change log" },
+    { regex: /Clearing\sHouse\sAutomated\sPayment\sSystem(?=\s\(CHAPS\))/gi, message:"Put the acronym before the full explanation", title: "CHAPS" },
+    { regex: /(?<!(to|we|I|you|they)\s)check[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]box(es)?/gi, message:"Spell 'checkbox' as a singular word", title: "Checkbox" },
+    { regex: /(?!chemical\,?\sbiological\,?\sradiological\,?\sand\snuclear\s(\(CBRN\)\s)?materials?)[cC]hemical\,?\s[bB]iological\,?\s[rR]adiological\,?\s(and\s)?[nN]uclear\s(\(CBRN\)\s)[Mm]aterials?/g, message:"Lower case. Upper case for the acronym.", title: "chemical, biological, radiological and nuclear (CBRN) materials" },
+    { regex: /(?<!chief\sconstable)[cC]hief\s[C]onstable(?!\s[A-Z]+\.?\s?[A-Z]?)/g, message:"Use lower case for 'chief constable' unless using as an official title with a name.", title: "Chief constable" },
+    { regex: /(?!Child\sBenefit)[Cc]hild\s[Bb]enefit/g, message:"Spell 'Child Benefit' with upper case initial letters.", title: "Child Benefit" },
+    { regex: /(?!Child\sTax\sCredit)[Cc]hild\s[tT]ax\s[Cc]redit/g, message:"Spell 'Child Tax Credit' with upper case initial letters.", title: "Child Tax Credit" },
+    { regex: /(?!childcare)[Cc]hild[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]care/g, message:"Spell 'childcare' in lower case and as 1 word.", title: "childcare" },
+    { regex: /(?!Childcare\sGrant)[Cc]hildcare\s[Gg]rant/g, message:"Spell 'Childcare Grant' with upper case initial letters.", title: "Childcare Grant" },
+    { regex: /child[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mind(er|ing)?/g, message:"Spell 'childminder/ing' as 1 word.", title: "Childminder, childminding" },
+    { regex: /(?!Children\sin\sNeed)(?!children\sin\sneed\scensus)[Cc]hildren\s[iI]n\s[nN]eed/g, message:"Upper case for the BBC fundraising event, lower case for children in need census.", title: "Children in Need" },
+    { regex: /(?!Civil\sContingencies\sSecretariat)[Cc]ivil\s[Cc]ontingencies\s[Ss]ecretariat/g, message:"Upper case the initial letters.", title: "Civil Contingencies Secretariat" },
+    { regex: /(?!Civil\sService)[cC]ivil\s[sS]ervice/g, message:"Upper case initial letters.", title: "Civil Service" },
+    { regex: /(?<![.?!]\s)(?!civil\sservants)[cC]ivil\s[sS]ervants?/g, message:"Lower case 'civil servants'.", title: "Civil servants" },
+    { regex: /class[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]work/g, message:"Spell 'classwork' as 1 word.", title: "Classwork" },
+    { regex: /\bCoalition\b/g, message:"Spell 'coalition' in lower case in all instances.", title: "Coalition" },
+    { regex: /\b(?!CO2)[Cc][o0O][2\u2082]\b/g, message:"Use capital letters and a regular 2 on 'CO2'.", title: "CO2" },
+    { regex: /(?!coastguard)[Cc]oast[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]guards?/g, message:"Spell 'coastguard' in lower case as 1 word.", title: "Coastguard" },
+    { regex: /(?!code\sof\spractice)[cC]ode\s[oO]f\s[pP]racti[cs]e/g, message:"Spell 'code of practice' in lower case.", title: "Code of practice" },
+    { regex: /(?!command\spaper)[cC]ommand\s[Pp]apers?/g, message:"Spell 'command paper' in lower case.", title: "Command paper" },
+    { regex: /third[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]party\ssoftware/g, message:"Use 'commercial software' instead of 'third-party software'.", title: "Third-party software" },
+    { regex: /(?!Community\sCare\sGrant)[Cc]ommunity\s[Cc]are\s[Gg]rant/g, message:"Upper case the initial letters.", title: "Community Care Grant" },
+    { regex: /(?!community\sresilience)[Cc]ommunity\s[rR]esilience/g, message:"Spell 'community resilience' in lower case.", title: "Community resilience" },
+    { regex: /(?<![.?!]\s)(?!(community|voluntary|foundation)\sschools)([Cc]ommunity|[vV]oluntary|[fF]oundation)\s[Ss]chools?/g, message:"Spell 'community/voluntary/foundation schools' in lower case.", title: "Community, voluntary and foundation schools" },
+    { regex: /(?<![.?!]\s)(?!competence\sorder)[Cc]ompetence\s[Oo]rder/g, message:"Spell 'competence order' in lower case.", title: "Competence order" },
+    { regex: /(master|slave|child|parent)\scomponent/gi, message:"Use 'primary' and 'secondary' when referring to components (not master/slave or child/parent).", title: "Component that controls other components" },
+    { regex: /(?!conduct\sof\sbusiness\srules)[cC]onduct\s[oO]f\s[bB]usiness\s[rR]ules/g, message:"Spell 'conduct of business rules' in lower case.", title: "Conduct of business rules" },
+    { regex: /(?<!UK)[A-Z]+\s([A-Z]\s?)+[?.!:;-]/g, message:"Do not use BLOCK CAPITALS.", title: "Block capitals" },
+    { regex: /(?<![.?!]\s)(?!consultation\sresponses?)[Cc]onsultation\s[rR]esponses?/g, message:"Spell 'consultation responses' in lower case.", title: "Consultation responses" },
+    { regex: /(?<![.?!]\s)(?!continuous\simprovement)[Cc]ontinuous\s[iI]mprovement/g, message:"Spell 'continuous improvement' in lower case.", title: "Continuous improvement" },
+    { regex: /\bco\s?operat(ion|ive|e(s|d?))/g, message:"Spell 'co-operation' (or its variants) with a hyphen.", title: "Co-operation" },
+    { regex: /(?<![.?!]\s)(?!core\sstandards)[cC]ore\s[sS]tandards/g, message: "Lower case.", title: "core standards" },
+    { regex: /(?<![.?!]\s)(?!credit\sunions)[cC]redit\s[uU]nions/g, message: "Lower case.", title: "credit unions" },
+    { regex: /(?<![.?!]\s)(?!critical\snational)[cC]ritical\s[nN]ational\s[iI]nfrastructure/g, message: "Lower case.", title: "critical national infrastructure" },
+    { regex: /(?<![.?!]\s)(?!critical\sworker)[cC]ritical\s[wW]orker/g, message: "Lower case. Use only in relation to educational provision. Do not use ‘keyworker’.", title: "critical worker" },
+    { regex: /(?<![.?!]\s)(?!crown\sservants)[cC]rown\s[sS]ervants/g, message: "Lower case.", title: "crown servants" },
+    { regex: /(?<![.?!]\s)(?!customs\sduty)[cC]ustoms\s[dD]uty/g, message: "Lower case.", title: "customs duty" },
+    { regex: /(?<![.?!]\s)(?!customs\sunion)[cC]ustoms\s[uU]nion/g, message: "Lower case. Use upper case only when part of a specific title.", title: "customs union" },
+    { regex: /(?<![.?!]\s)(?!cyber\sbullying)[cC]yber\s[bB]ullying/g, message: "Two words. Lower case.", title: "cyber bullying" },
+    { regex: /cyber[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?bully(ing)?/g, message: "Two words. Lower case.", title: "cyber bullying" },
+    { regex: /(?<![.?!]\s)(?!dedicated\sschools)[dD]edicated\s[sS]chools\s[gG]rant/g, message: "Lower case.", title: "dedicated schools grant" },
+    { regex: /(?<![.?!]\s)(?!defence\steam)[dD]efence\s[tT]eam/g, message: "Lower case.", title: "defence team" },
+    { regex: /(?<![.?!]\s)(?!defence)[dD]efence/g, message: "Lower case even when referring to the MOD defence team.", title: "defence" },
+    { regex: /(?<![.?!]\s)(?!devolved\sgovernments)[dD]evolved\s[gG]overnments/g, message: "Lower case.", title: "devolved governments" },
+    { regex: /(?<![.?!]\s)(?!director\sgeneral)[dD]irector\s[gG]eneral/g, message: "Lower case. No hyphen.", title: "director general" },
+    { regex: /(?<![.?!]\s)(?!director)[dD]irector/g, message: "Lower case in text. Use upper case in titles.", title: "director" },
+    { regex: /(?<![.?!]\s)(?!dispensation)[dD]ispensation/g, message: "Lower case.", title: "dispensation" },
+    { regex: /(?<![.?!]\s)(?!early\scareer)[eE]arly\s[cC]areer\s[tT]eacher/g, message: "Lower case.", title: "early career teacher" },
+    { regex: /(?<![.?!]\s)(?!early\syears)[eE]arly\s[yY]ears/g, message: "Lower case.", title: "early years" },
+    { regex: /(?<![.?!\n\r]\s)(?<!^Email)(?!email)[eE][\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]?mail/g, message: "Lower case and spell as 1 word.", title: "email" },
+    { regex: /(?<![.?!]\s)(?!emergency\splan)[eE]mergency\s[pP]lan/g, message: "Lower case.", title: "emergency plan" },
+    { regex: /(?<![.?!]\s)(?!endpoint)[eE]ndpoint/g, message: "Lower case. Not 'end point' in the context of APIs.", title: "endpoint" },
+    { regex: /(?<![.?!]\s)(?!enrolment)[eE]nrolment/g, message: "Lower case.", title: "enrolment" },
+    { regex: /(?<![.?!]\s)(?!enrolling)[eE]nrolling/g, message: "Lower case.", title: "enrolling" },
+    { regex: /(?<![.?!]\s)(?!enrol)[eE]nrol/g, message: "Lower case.", title: "enrol" },
+    { regex: /(?<![.?!]\s)(?!ethnic\sminorities)[eE]thnic\s[mM]inorities/g, message: "Lower case. Refer to groups individually where possible.", title: "ethnic minorities" },
+    { regex: /(?<![.?!]\s)(?!euros,\sthe\seuro)[eE]uros,\sthe\s[eE]uro/g, message: "Lower case, if referring to the currency.", title: "euros, the euro" },
+    { regex: /(?<![.?!]\s)(?!executive\sdirector)[eE]xecutive\s[dD]irector/g, message: "Lower case in running text.", title: "executive director" },
+    { regex: /(?<![.?!]\s)(?!diploma)[dD]iploma/g, message: "Lower case unless part of a qualification title.", title: "diploma" },
+    { regex: /(?<![.?!]\s)(?!Corporation\sTax)[cC]orporation\s[tT]ax/g, message: "Use upper case.", title: "Corporation Tax" },
+    { regex: /(?<![.?!]\s)(?!Corporation\sTax\sfor\sAgents\sonline\sservice)[cC]orporation\s[tT]ax\s[fF]or\s[aA]gents\s[oO]nline\s[sS]ervice/g, message: "Use upper case.", title: "Corporation Tax for Agents online service" },
+    { regex: /(?<![.?!]\s)(?!Corporation\sTax\sOnline)[cC]orporation\s[tT]ax\s[oO]nline/g, message: "Use upper case 'Online' if referring to the actual service, not when describing using the service.", title: "Corporation Tax Online" },
+    { regex: /(?<![.?!]\s)(?!Council\sTax)[cC]ouncil\s[tT]ax/g, message: "Use upper case.", title: "Council Tax" },
+    { regex: /(?<![.?!]\s)(?!County\sCourt)[cC]ounty\s[cC]ourt/g, message: "Upper case as it represents a single court system.", title: "County Court" },
+    { regex: /(?<![.?!]\s)(?!Daycare\sTrust)[dD]aycare\s[tT]rust/g, message: "Two words. Upper case.", title: "Daycare Trust" },
+    { regex: /(?<![.?!]\s)(?!Direct\sDebit)[dD]irect\s[dD]ebit/g, message: "Upper case.", title: "Direct Debit" },
+    { regex: /(?<![.?!]\s)(?!Direct\sDebit\sInstruction)[dD]irect\s[dD]ebit\s[iI]nstruction/g, message: "Upper case.", title: "Direct Debit Instruction" },
+    { regex: /(?<![.?!]\s)(?!Disability\sLiving\sAllowance)[dD]isability\s[lL]iving\s[aA]llowance/g, message: "Upper case.", title: "Disability Living Allowance" },
+    { regex: /(?<![.?!]\s)(?!Discretionary\sHousing\sPayment)[dD]iscretionary\s[hH]ousing\s[pP]ayment/g, message: "Upper case.", title: "Discretionary Housing Payment" },
+    { regex: /(?<![.?!]\s)(?!East\sEnd\s\(London\))[eE]ast\s[eE]nd\s(\(lL]ondon\))?/g, message: "Upper case.", title: "East End (London)" },
+    { regex: /(?<![.?!]\s)(?!Excel\sspreadsheet)[eE]xcel\s[sS]preadsheet/g, message: "Upper case because Excel is a brand name. Lower case spreadsheet.", title: "Excel spreadsheet" },
+    { regex: /(?<![.?!]\s)(?!Extended\sProject\sQualification)[eE]xtended\s[pP]roject\s[qQ]ualification/g, message: "Upper case.", title: "Extended Project Qualification" },
+    { regex: /(?!EBacc)\b[eE][bB][Aa][cC]{2}\b/g, message: "A performance measure linked to GCSEs. Upper case E and B.", title: "EBacc" },
+    { regex: /(?!COTS)\bCots\b/g, message: "Meaning “commercial-off-the-shelf software”. Not “cots” or “Cots”. Explain the acronym at first use.", title: "COTS" },
+    { regex: /(?<![.?!]\s)(?<!([A-Z][a-z]+\s){1,})Councils?\b/g, message: "Use lower case when writing about local councils in general. Use capitals for the official name of a local council. For example ‘Reading Borough Council’, ‘Warwick District Council’ and ‘Swanage Town Council’.", title: "council" },
+    { regex: /(?!COVID-19)([cC][oO][vV][iI][dD][\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]19|coronavirus)/g, message: "Only use COVID-19 for the specific condition.", title: "COVID-19" },
+    { regex: /\bcourse[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]work/gi, message: "One word.", title: "Coursework" },
+    { regex: /\bcross\s?curricular\slearning/gi, message: "Hyphenated", title: "cross-curricular learning" },
+    { regex: /\bcurricula/gi, message: "Use curriculums", title: "curriculums" },
+    { regex: /\bdata\s+(are|have|were|show|indicate|suggest|reveal|demonstrate|highlight|support|reflect|contain|include|comprise|originate|undergo)\b/gi, message: "Treat as a singular noun: The data is stored on a secure server.", title: "data" },
+    { regex: /\bdata[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?centres?\b/gi, message: "2 words. Not 'datacentre'.", title: "data centre" },
+    { regex: /\bdata[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?sets?\b/gi, message: "2 words. Not 'dataset'.", title: "data set" },
+    { regex: /\b(?:\d{1,2}\s)?(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may(?=\s(?:\d{1,2}|\d{4}))|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)(?:\s\d{4})?\b/g, message: "Upper-case the first letter on months.", title: "months (case)" },
+    { regex: /(\d{1,2}\s)?(january|february|march|april|may|june|july|august|september|october|november|december)\s(\d{2,4})?[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\s(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|\d{2,4}\s(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))/gi, message: "Use 'to' in date ranges, not dashes.", title: "months (ranges)" },
+    { regex: /\b(\d{4}|\d{1,2})\s?[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\s?(\d{4}|\d{1,2})\s?(january|february|march|april|may|june|july|august|september|october|november|december|\bjan\b|\bfeb\b|\bmar\b|\bapr\b|\bmay\b|\bjun\b|\bjul\b|\baug\b|\bsep\b|\boct\b|\bnov\b|\bdec\b)?/gi, message: "Use 'to' in date ranges, not dashes.", title: "dates (ranges)" },
+    { regex: /(january|february|march|april|may|june|july|august|september|october|november|december|\bjan\b|\bfeb\b|\bmar\b|\bapr\b|\bmay\b|\bjun\b|\bjul\b|\baug\b|\bsep\b|\boct\b|\bnov\b|\bdec\b)\,\s\d{4}/gi, message: "Do not use a comma between the month and year", title: "months (comma)" },
+
+
+  ];
+
+  const ukEnglishregexPatterns = [
+    //A
+    { regex: /accessoriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /Acclimatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /Activiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /adaptor/gi, message: "Use 'adapter' in UK English", title: "US spelling detected", },    
+    { regex: /Advertiz(?!em)/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Aerosoliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\baging\b/gi, message: "Use 'ageing' in UK English", title: "US spelling detected", },    
+    { regex: /Agonis(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\bairplane\b|\bairplanes\b/gi, message: "Use 'aeroplane' in UK English", title: "US spelling detected", },    
+    { regex: /Alchemiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliniz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Allegoriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alkaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Alphabetiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /aluminum/gi, message: "Use 'aluminium' in UK English", title: "US spelling detected", },    
+    { regex: /amortiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Analogiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /analyz(?!(iz|t|es))/gi, message: "Prefer -lys spellings and use UK English", title: "US spelling detected", },    
+    { regex: /Anatomiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anemi/gi, message: "Use 'anaemia' in UK English", title: "US spelling detected", },    
+    { regex: /anesthe/gi, message: "Use 'anaesthesia/anaesthetic' in UK English", title: "US spelling detected", },    
+    { regex: /anatomiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anesthetiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /angliciz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /animaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anodiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /antagoniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anodiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /antenna/gi, message: "Usually localised to 'aerial' in UK English", title: "US spelling detected", },    
+    { regex: /anthologiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /anyplace/gi, message: "Use 'anywhere' in UK English", title: "US spelling detected", },    
+    { regex: /aphoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apologiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apostatiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /apostatiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /\bappalls?\b/gi, message: "Use 'appal(s)' in UK English", title: "US spelling detected", },    
+    { regex: /appetiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /appriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /arabiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /arboriz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /archaiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },    
+    { regex: /archeolog/gi, message: "Use 'archaeology' in UK English", title: "US spelling detected", },    
+    { regex: /\barmor(?!eal)/gi, message: "Use 'armour' in UK English", title: "US spelling detected", },    
+    { regex: /aromatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /artifact/gi, message: "Use 'artefact' in UK English", title: "US spelling detected", },
+    { regex: /arugula/gi, message: "Use 'rocket' for UK English", title: "US spelling detected", },
+    { regex: /asphalt/gi, message: "Use 'tarmac' instead of asphalt in UK English", title: "US spelling detected", },
+    { regex: /atomiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /atticiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /(?<!power\sof\s)attorney/gi, message: "Check the context: 'attorney' can normally be localised in UK English", title: "US spelling detected", },
+    { regex: /authoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /automatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /autotomis/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /avianiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bax\b/gi, message: "Use 'axe' for UK English", title: "US spelling detected", },
+    { regex: /axiomatiz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /azotiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+
+    //B
+    { regex: /bacteriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bbalk\b|\bbalked\b|\bbalks\b|\bbalking\b/gi, message: "'Balk' becomes 'baulk' in UK English", title: "US spelling detected", },
+    { regex: /banaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bband(-|\s)?aid/gi, message: "Use 'plaster' in UK English", title: "US spelling detected", },
+    { regex: /\bbanisters?/gi, message: "Use 'bannister' in UK English", title: "US spelling detected", },
+    { regex: /baptiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /bastardiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /behavior/gi, message: "Use 'behaviour' in UK English", title: "US spelling detected", },
+    { regex: /behoove/gi, message: "Use 'behove' in UK English", title: "US spelling detected", },
+    { regex: /beltway/gi, message: "'Beltway' > 'ringroad' in UK English", title: "US spelling detected", },
+    { regex: /beveled/gi, message: "Use 'bevelled' in UK English", title: "US spelling detected", },
+    { regex: /bipolariz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /birthdate/gi, message: "Use 'date of birth' in UK English", title: "US spelling detected", },
+    { regex: /\bblond\b/gi, message: "Use 'blonde' in UK English", title: "US spelling detected", },
+    { regex: /botaniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /breathalyz/gi, message: "Use 'breathalyse' in UK English", title: "US spelling detected", },
+    { regex: /bromiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /brutaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /burglariz/gi, message: "Use 'burgle' in UK English", title: "US spelling detected", },
+    { regex: /burned/gi, message: "Prefer 'burnt' in UK English", title: "US spelling detected", },
+
+    //C
+    { regex: /calisthenics/gi, message: "Use 'callisthenics' in UK English", title: "US spelling detected", },
+    { regex: /caloriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /canaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cancelatio/gi, message: "Use 'cancellation' in UK English", title: "US spelling detected", },
+    { regex: /canceled/gi, message: "Use 'cancelled' in UK English", title: "US spelling detected", },
+    { regex: /canceling/gi, message: "Use 'cancelling' in UK English", title: "US spelling detected", },
+    { regex: /candor/gi, message: "Use 'candour' in UK English", title: "US spelling detected", },
+    { regex: /cannibaliz(?!(m|t))/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /canoniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /capitaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /caponiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /capsuliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /carameliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /carboliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /carboniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /carburetor/gi, message: "Use 'carburettor' in UK English", title: "US spelling detected", },
+    { regex: /carburiz/gi, message: "Use 'carburettor' in UK English", title: "US spelling detected", },
+    { regex: /cataboliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /catalyz/gi, message: "Use 'catalyse' in UK English", title: "US spelling detected", },
+    { regex: /categoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /catheteriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /catholiciz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cauteriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bcenter\b|\bcenters\b/gi, message: "Use 'centre' in UK English", title: "US spelling detected", },
+    { regex: /centered/gi, message: "Use 'centred' in UK English", title: "US spelling detected", },
+    { regex: /centering/gi, message: "Use 'centring' in UK English", title: "US spelling detected", },
+    { regex: /centerfol/gi, message: "Use 'centrefold' in UK English", title: "US spelling detected", },
+    { regex: /centerpiec/gi, message: "Use 'centrepiece' in UK English", title: "US spelling detected", },
+    { regex: /centraliz/gi, message: "Use 'centralise' in UK English", title: "US spelling detected", },
+    { regex: /cesarea/gi, message: "Use 'caesarean' in UK English", title: "US spelling detected", },
+    { regex: /channeled/gi, message: "Use 'channelled' in UK English", title: "US spelling detected", },
+    { regex: /channeling/gi, message: "Use 'channelling' in UK English", title: "US spelling detected", },
+    { regex: /channeliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /checkbook/gi, message: "Use 'cheque book' in UK English", title: "US spelling detected", },
+    //Checkboxes regex would normally go here, but omitted due to design system wording
+    { regex: /checkered/gi, message: "Use 'chequered' in UK English", title: "US spelling detected", },
+    { regex: /chili/gi, message: "Use 'chilli' in UK English", title: "US spelling detected", },
+    { regex: /chiseled/gi, message: "Use 'chiselled' in UK English", title: "US spelling detected", },
+    { regex: /chromiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cinematiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /\bcipher/gi, message: "Use 'cypher' in UK English", title: "US spelling detected", },
+    { regex: /circulariz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /civilianiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /civiliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /clamor/gi, message: "Use 'clamour' in UK English", title: "US spelling detected", },
+    { regex: /classiciz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /classiciz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /climatiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /(?<!(come\sout\sof\sthe\s|skeletons?\sin\s\w+\s))closet/gi, message: "Use 'wardrobe' in UK English", title: "US spelling detected", },
+    { regex: /cogniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /colonializ/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /coloniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /color/gi, message: "Use 'colour' in UK English", title: "US spelling detected", },
+    { regex: /coloriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /communaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /communiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /compartmentaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /compriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /computeriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /concertiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /concretiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /conveyoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /conveyoriz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cosmeticiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /councilor/gi, message: "Use councillor in UK English", title: "US spelling detected", },
+    { regex: /counsel(ed|ing|or)/gi, message: "Use 'counselling/counsellor/counselled' in UK English", title: "US spelling detected", },
+    { regex: /coverall/gi, message: "Use 'overall' in UK English", title: "US spelling detected", },
+    { regex: /cozy/gi, message: "Use 'cosy' in UK English", title: "US spelling detected", },
+    { regex: /crenelated/gi, message: "Use 'crenellated' in UK English", title: "US spelling detected", },
+    { regex: /crenelated/gi, message: "Use 'crenellated' in UK English", title: "US spelling detected", },
+    { regex: /creolize/gi, message: "Use 'creolise' in UK English", title: "US spelling detected", },
+    { regex: /\bcribs?\b/gi, message: "Use 'cot' in UK English", title: "US spelling detected", },
+    { regex: /criminaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /criticiz/gi, message: "Use 'cot' in UK English", title: "US spelling detected", },
+    { regex: /cruele(st|r)/gi, message: "Use 'crueller/cruellest' in UK English", title: "US spelling detected", },
+    { regex: /crystaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /customiz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cutiniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+    { regex: /cycliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
+
+    //D
+    { regex: /decimaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
   ];
 
   // Split the text into sentences
@@ -126,6 +433,80 @@ function checkTextRules(userText) {
     });
     return { pattern, matches };
   });
+
+
+
+  // === ACRONYM EXPLANATION CHECK ===
+
+  const explainedAcronyms = new Set();
+  const excludedAcronyms = new Set ([
+    'UK',
+    'USA',
+    'DVLA',
+    'EU',
+    'VAT',
+    'MP',
+    'BBC',
+    'VPN',
+    'ID',
+    'URL',
+    'GOV',
+    'CCTV',
+    'NHS',
+    'IT',
+    'PDF',
+    'DNA',
+    'PO',
+  ]);
+  
+  // match acronym-like patterns
+
+  const explanationPatterns = [
+      /\b([A-Z]{2,})\s*\([^)]+\)/g, // ACRONYM (Explanation)
+      /\([^)]+\)\s*([A-Z]{2,})\b/g, // (Explanation) ACRONYM
+      /\(([A-Z]{2,})\)/g            // (ACRONYM)
+    ];
+    
+  explanationPatterns.forEach(pattern => {
+    let match;
+    while ((match = pattern.exec(concatenatedText)) !== null) {
+      explainedAcronyms.add(match[1]);
+    }
+  });
+
+  
+  //track first occurrences
+const acronymPattern = /\b[A-Z]{2,}\b/g;
+const seenAcronyms = new Set();
+const unexplained = [];
+
+let match;
+while ((match = acronymPattern.exec(concatenatedText)) !==null) {
+  const acronym = match[0];
+  if (!seenAcronyms.has(acronym)) {
+    seenAcronyms.add(acronym);
+    if (!explainedAcronyms.has(acronym) && !excludedAcronyms.has(acronym)) {
+      unexplained.push(acronym);
+    }
+  }
+}
+
+
+    if (unexplained.length > 0 ) {
+      results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
+      results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
+      results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
+      unexplained.forEach(acronym => {
+        const regex = new RegExp(`\\b${acronym}\\b`);
+        const sentenceWithAcronym = sentences.find(sentence => regex.test(sentence));
+        if (sentenceWithAcronym) {
+          const highlighted = sentenceWithAcronym.replace(regex, '<strong>$&</strong>');
+          results += `<div class="govuk-inset-text">${highlighted.trim() }</div>`;
+        }
+      });
+      
+        results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+    }
 
   // Format results
   matchesBypattern.forEach(({ pattern, matches }) => {
