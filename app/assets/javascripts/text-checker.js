@@ -70,7 +70,7 @@ function checkTextRules(userText) {
     { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' instead of 'leave to remain' or 'limited leave to remain'.", title: "Permission to stay"},  
     { regex: /(?!letter\sof\sauthority)[Ll]etter\s[oO]f\s[aA]uthority/g, message: "Spell letter of authority in lower case.", title: "Letter of authority"},  
     { regex: /(?!Life\sin\sthe\sUK\sTest)[lL]ife\s[iI]n\s[tT]he\s([uU]\.?[kK]\.?|[uU]nited\s[kK]ingdom)\s[tT]est/g, message: "Life in the UK Test should be spelled thusly, with capitals on the L and T.", title: "Life in the UK Test"},  
-    { regex: /\blog(\s||\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)in\b|\blogin\b/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
+    { regex: /\blog[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?ins?\b|\blog(g(ing|ed)|s)?\s(\w+\s)?in/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
     { regex: /\bsign\sinto\b/gi, message: "Use 'sign in to' rather than 'sign into'.", title: "Sign into"},  
     { regex: /(?!Migrant\sHelp)\b[mM]igrants?\b/gi, message: "Avoid using 'migrants'. Try to be specific, such as 'applicant', 'claimant', 'employee' or 'worker'. If you cannot be specific, use 'people'.", title: "Migrants"},  
     { regex: /can('|’|‘)t|won('|’|‘)t|don('|’|‘)t|isn('|’|‘)t|aren('|’|‘)t|wasn('|’|‘)t|weren('|’|‘)t|doesn('|’|‘)t|didn('|’|‘)t|hasn('|’|‘)t|haven('|’|‘)t|hadn('|’|‘)t/gi, message: "Avoid all contractions. Research shows that contractions make content difficult to understand for people with limited fluency.", title: "Negative contractions"},  
