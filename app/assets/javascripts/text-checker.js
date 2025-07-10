@@ -322,6 +322,7 @@ function checkTextRules(userText) {
     'PDF',
     'DNA',
     'PO',
+    'OK',
   ]);
   
   // match acronym-like patterns
