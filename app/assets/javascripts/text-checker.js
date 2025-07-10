@@ -196,7 +196,8 @@ function checkTextRules(userText) {
     { regex: /(?<![.?!]\s)(?!dedicated\sschools)[dD]edicated\s[sS]chools\s[gG]rant/g, message: "Lower case.", title: "dedicated schools grant" },
     { regex: /(?<![.?!]\s)(?!defence\steam)[dD]efence\s[tT]eam/g, message: "Lower case.", title: "defence team" },
     { regex: /(?<![.?!]\s)(?!defence)[dD]efence/g, message: "Lower case even when referring to the MOD defence team.", title: "defence" },
-    { regex: /(?<![.?!]\s)(?!devolved\sgovernments)[dD]evolved\s[gG]overnments/g, message: "Lower case.", title: "devolved governments" },
+    { regex: /(?<![.?!]\s)(?!defence)[dD]efence/g, message: "Lower case even when referring to the MOD defence team.", title: "defence" },
+    { regex: /(?<![.?!]\s)[dD]evolved\s[aA]dministrations?/g, message: "Use 'devolved governments' instead.", title: "devolved administrations" },
     { regex: /(?<![.?!]\s)(?!director\sgeneral)[dD]irector\s[gG]eneral/g, message: "Lower case. No hyphen.", title: "director general" },
     { regex: /(?<![.?!]\s)(?!director)[dD]irector/g, message: "Lower case in text. Use upper case in titles.", title: "director" },
     { regex: /(?<![.?!]\s)(?!dispensation)[dD]ispensation/g, message: "Lower case.", title: "dispensation" },
@@ -221,6 +222,7 @@ function checkTextRules(userText) {
     { regex: /(?<![.?!]\s)(?!Direct\sDebit)[dD]irect\s[dD]ebit/g, message: "Upper case.", title: "Direct Debit" },
     { regex: /(?<![.?!]\s)(?!Direct\sDebit\sInstruction)[dD]irect\s[dD]ebit\s[iI]nstruction/g, message: "Upper case.", title: "Direct Debit Instruction" },
     { regex: /(?<![.?!]\s)(?!Disability\sLiving\sAllowance)[dD]isability\s[lL]iving\s[aA]llowance/g, message: "Upper case.", title: "Disability Living Allowance" },
+    { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
     { regex: /(?<![.?!]\s)(?!Discretionary\sHousing\sPayment)[dD]iscretionary\s[hH]ousing\s[pP]ayment/g, message: "Upper case.", title: "Discretionary Housing Payment" },
     { regex: /(?<![.?!]\s)(?!East\sEnd\s\(London\))[eE]ast\s[eE]nd\s(\(lL]ondon\))?/g, message: "Upper case.", title: "East End (London)" },
     { regex: /(?<![.?!]\s)(?!Excel\sspreadsheet)[eE]xcel\s[sS]preadsheet/g, message: "Upper case because Excel is a brand name. Lower case spreadsheet.", title: "Excel spreadsheet" },
@@ -239,6 +241,11 @@ function checkTextRules(userText) {
     { regex: /(\d{1,2}\s)?(january|february|march|april|may|june|july|august|september|october|november|december)\s(\d{2,4})?[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\s(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|\d{2,4}\s(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))/gi, message: "Use 'to' in date ranges, not dashes.", title: "months (ranges)" },
     { regex: /\b(\d{4}|\d{1,2})\s?[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]\s?(\d{4}|\d{1,2})\s?(january|february|march|april|may|june|july|august|september|october|november|december|\bjan\b|\bfeb\b|\bmar\b|\bapr\b|\bmay\b|\bjun\b|\bjul\b|\baug\b|\bsep\b|\boct\b|\bnov\b|\bdec\b)?/gi, message: "Use 'to' in date ranges, not dashes.", title: "dates (ranges)" },
     { regex: /(january|february|march|april|may|june|july|august|september|october|november|december|\bjan\b|\bfeb\b|\bmar\b|\bapr\b|\bmay\b|\bjun\b|\bjul\b|\baug\b|\bsep\b|\boct\b|\bnov\b|\bdec\b)\,\s\d{4}/gi, message: "Do not use a comma between the month and year", title: "months (comma)" },
+    { regex: /\s(eg|e\.g\.?)(\s|,)/gi, message: "Do not use e.g. Use 'for example' or an alternative instead.", title: "eg" },
+    { regex: /\s(etc|e\.t\.c\.)(\s|,)/gi, message: "Do not use e.t.c. Use an alternative instead.", title: "etc" },
+    { regex: /\s(ie|i\.e\.)(\s|,)/gi, message: "Do not use i.e. Use an alternative instead.", title: "ie" },
+    { regex: /\be[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mail/gi, message: "One word.", title: "email" },
+    { regex: /(?=[^@\s]*[A-Z])[\w.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, message: "Write email addresses in lower case.", title: "Email addresses" },
 
 
   ];
