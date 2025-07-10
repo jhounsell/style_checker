@@ -221,7 +221,6 @@ function checkTextRules(userText) {
     { regex: /(?<![.?!]\s)(?!Direct\sDebit)[dD]irect\s[dD]ebit/g, message: "Upper case.", title: "Direct Debit" },
     { regex: /(?<![.?!]\s)(?!Direct\sDebit\sInstruction)[dD]irect\s[dD]ebit\s[iI]nstruction/g, message: "Upper case.", title: "Direct Debit Instruction" },
     { regex: /(?<![.?!]\s)(?!Disability\sLiving\sAllowance)[dD]isability\s[lL]iving\s[aA]llowance/g, message: "Upper case.", title: "Disability Living Allowance" },
-    { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
     { regex: /(?<![.?!]\s)(?!Discretionary\sHousing\sPayment)[dD]iscretionary\s[hH]ousing\s[pP]ayment/g, message: "Upper case.", title: "Discretionary Housing Payment" },
     { regex: /(?<![.?!]\s)(?!East\sEnd\s\(London\))[eE]ast\s[eE]nd\s(\(lL]ondon\))?/g, message: "Upper case.", title: "East End (London)" },
     { regex: /(?<![.?!]\s)(?!Excel\sspreadsheet)[eE]xcel\s[sS]preadsheet/g, message: "Upper case because Excel is a brand name. Lower case spreadsheet.", title: "Excel spreadsheet" },
@@ -245,6 +244,24 @@ function checkTextRules(userText) {
     { regex: /\s(ie|i\.e\.)(\s|,)/gi, message: "Do not use i.e. Use an alternative instead.", title: "ie" },
     { regex: /\be[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mail/gi, message: "One word.", title: "email" },
     { regex: /(?=[^@\s]*[A-Z])[\w.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, message: "Write email addresses in lower case.", title: "Email addresses" },
+
+    //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
+    { regex: /b/gi, message:"", title:"", },
+    { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
+    { regex: /wheelchair[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bound|confined\sto\sa\swheelchair/gi, message:"Use 'wheelchair user' instead.", title:"Writing about disability", },
+    { regex: /(afflicted\sby|suffer(s|ing|ed)?\sfrom)/gi, message:"Use 'has [name of condition or impairment]' instead of 'afflicted by' or similar.", title:"Writing about disability", },
+    { regex: /mentally\s(handicapped|defective|challenged)|retarded|subnormal/gi, message:"Use 'with a learning disability/disabilities' instead.", title:"Writing about disability", },
+    { regex: /cripple/gi, message:"Use 'disabled person' instead.", title:"Writing about disability", },
+    { regex: /spastic/gi, message:"Use 'person with cerebral palsy' instead.", title:"Writing about disability", },
+    { regex: /able[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bodied/gi, message:"Use 'non-disabled' instead.", title:"Writing about disability", },
+    { regex: /insane|mental\spatient|mad/gi, message:"Use 'person with a mental health condition' instead.", title:"Writing about disability", },
+    { regex: /deaf\sand\sdumb|deaf\smute/gi, message:"Use 'deaf, user of British Sign Language (BSL), or person with a hearing impairment' instead.", title:"Writing about disability", },
+    { regex: /the\sblind/gi, message:"Use 'people with visual impairments', 'blind people', or 'blind and partially sighted people' instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sepileptics?/gi, message:"Use 'people with epilepsy'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdiabetics?/gi, message:"Use 'people with diabetes'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdepressives?/gi, message:"Use 'people with depression'instead.", title:"Writing about disability", },
+    { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
+    { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
 
 
   ];
