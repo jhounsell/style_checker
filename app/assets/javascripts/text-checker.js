@@ -196,7 +196,6 @@ function checkTextRules(userText) {
     { regex: /(?<![.?!]\s)(?!dedicated\sschools)[dD]edicated\s[sS]chools\s[gG]rant/g, message: "Lower case.", title: "dedicated schools grant" },
     { regex: /(?<![.?!]\s)(?!defence\steam)[dD]efence\s[tT]eam/g, message: "Lower case.", title: "defence team" },
     { regex: /(?<![.?!]\s)(?!defence)[dD]efence/g, message: "Lower case even when referring to the MOD defence team.", title: "defence" },
-    { regex: /(?<![.?!]\s)(?!defence)[dD]efence/g, message: "Lower case even when referring to the MOD defence team.", title: "defence" },
     { regex: /(?<![.?!]\s)[dD]evolved\s[aA]dministrations?/g, message: "Use 'devolved governments' instead.", title: "devolved administrations" },
     { regex: /(?<![.?!]\s)(?!director\sgeneral)[dD]irector\s[gG]eneral/g, message: "Lower case. No hyphen.", title: "director general" },
     { regex: /(?<![.?!]\s)(?!director)[dD]irector/g, message: "Lower case in text. Use upper case in titles.", title: "director" },
