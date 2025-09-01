@@ -104,6 +104,9 @@ function checkTextRules(userText) {
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
+    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' rather than 'photograph'. For example, 'take a photo of your document' or 'photo ID'", title: "Photo"},
+    { regex: /\bsiblings?(hip|[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]in[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]law)?/gi, message: "Sibling is not plain English and may be hard to translate. Use 'brother or sister' instead.", title: "Sibling"},
+    { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
 
 
   ];
