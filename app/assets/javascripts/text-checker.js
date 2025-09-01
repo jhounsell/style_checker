@@ -244,7 +244,6 @@ function checkTextRules(userText) {
     { regex: /\s(ie|i\.e\.)(\s|,)/gi, message: "Do not use i.e. Use an alternative instead.", title: "ie" },
     { regex: /\be[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mail/gi, message: "One word.", title: "email" },
     { regex: /(?=[^@\s]*[A-Z])[\w.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, message: "Write email addresses in lower case.", title: "Email addresses" },
-
     //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
     { regex: /b/gi, message:"", title:"", },
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
@@ -262,6 +261,7 @@ function checkTextRules(userText) {
     { regex: /(an?|is|are)?\sdepressives?/gi, message:"Use 'people with depression'instead.", title:"Writing about disability", },
     { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
     { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
+    { regex: /\b[eE]\.?g\.?\b|\b[eE]\.?t\.?\.c?\b|\b[Ii]\.?e\.?\b/gi, message: "Use alternatives to latin abbreviations: 'for example', 'like', 'including', 'meaning' or 'that is'.", title: "Eg, etc and ie" },
 
 
   ];
