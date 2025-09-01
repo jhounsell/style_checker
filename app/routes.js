@@ -1,15 +1,13 @@
 const govukPrototypeKit = require('govuk-prototype-kit');
 const router = govukPrototypeKit.requests.setupRouter();
-const checkTextRules = require('./assets/javascripts/text-checker'); // Adjust the path as needed
+const checkTextRules = require('./assets/javascripts/text-checker');
 
 router.post('/check-text-router', (req, res, next) => {
   const userText = req.body['user-text'];
   let results = '';
 
-  // Apply style rules from the external file
   results = checkTextRules(userText);
 
-  // Redirect based on results
   if (results === 'no-sentences') {
     return res.redirect ('/no-sentences');
   }
