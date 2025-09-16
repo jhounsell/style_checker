@@ -262,6 +262,11 @@ function checkTextRules(userText) {
     { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
     { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
     { regex: /\b[eE]\.?g\.?\b|\b[eE]\.?t\.?\.c?\b|\b[Ii]\.?e\.?\b/gi, message: "Use alternatives to latin abbreviations: 'for example', 'like', 'including', 'meaning' or 'that is'.", title: "Eg, etc and ie" },
+    { regex: /[Ee]uropean\s[Ee]conomic\s[Aa]rea|\bEEA\b/g, message: "Avoid using as it is not widely understood. Say ‘the EU, Norway, Iceland and Liechtenstein. When rules covering the EEA also cover Switzerland, say ‘the EU, Switzerland, Norway, Iceland and Liechtenstein’.", title: "European Economic Area (EEA)" },
+    { regex: /\bEuros?(zone)?\b|the\sEuro\b/g, message: "Lower case, if referring to the currency.", title: "Euros, the euro" },
+    { regex: /\bFAQs?\b|[Ff]requently\s[Aa]sked\s[Qq]uestions/g, message: "Do not use FAQs on GOV.UK. If you write content by starting with user needs, you will not need to use FAQs.", title: "FAQs (frequently asked questions)" },
+    { regex: /(financial\spenalt(ies|y)|financially\spenalis(e(d|s)?|ing))/gi, message: "Use ‘fine’ instead of ‘financial penalty’. For example, 'You’ll pay a £50 fine.'", title: "Fine" },
+    { regex: /civil\spenalt(ies|y)/gi, message: "Only say ‘civil penalty’ if there’s evidence users are searching for the term. Otherwise, say what will happen to the user.", title: "Civil penalty" },
 
 
   ];
