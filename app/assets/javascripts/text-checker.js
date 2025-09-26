@@ -245,7 +245,6 @@ function checkTextRules(userText) {
     { regex: /\be[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mail/gi, message: "One word.", title: "email" },
     { regex: /(?=[^@\s]*[A-Z])[\w.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, message: "Write email addresses in lower case.", title: "Email addresses" },
     //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
-    { regex: /b/gi, message:"", title:"", },
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
     { regex: /wheelchair[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bound|confined\sto\sa\swheelchair/gi, message:"Use 'wheelchair user' instead.", title:"Writing about disability", },
     { regex: /(afflicted\sby|suffer(s|ing|ed)?\sfrom)/gi, message:"Use 'has [name of condition or impairment]' instead of 'afflicted by' or similar.", title:"Writing about disability", },
@@ -267,6 +266,7 @@ function checkTextRules(userText) {
     { regex: /\bFAQs?\b|[Ff]requently\s[Aa]sked\s[Qq]uestions/g, message: "Do not use FAQs on GOV.UK. If you write content by starting with user needs, you will not need to use FAQs.", title: "FAQs (frequently asked questions)" },
     { regex: /(financial\spenalt(ies|y)|financially\spenalis(e(d|s)?|ing))/gi, message: "Use ‘fine’ instead of ‘financial penalty’. For example, 'You’ll pay a £50 fine.'", title: "Fine" },
     { regex: /civil\spenalt(ies|y)/gi, message: "Only say ‘civil penalty’ if there’s evidence users are searching for the term. Otherwise, say what will happen to the user.", title: "Civil penalty" },
+    { regex: /(?<![.?!]\s)(?!fire\sand\srescue\sservice)[fF]ire\s[aA]nd\s[rR]escue\s[sS]ervice/g, message: "Lower case.", title: "fire and resuce service" },
 
 
   ];
