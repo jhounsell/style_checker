@@ -326,6 +326,8 @@ function checkTextRules(userText) {
     'DNA',
     'PO',
     'OK',
+    'OANDA',
+    'GOV.UK'
   ]);
   
   // match acronym-like patterns
