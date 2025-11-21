@@ -28,7 +28,7 @@ function checkTextRules(userText) {
     { regex: /\b(?!(Confirmation of Acceptance for Studies)\b)[cC]onfirmation\s[oO]f\s[aA]cceptance\s[fF]or\s[sS]tudies/g, message: "Spell the initials of Confirmation of Acceptance for Studies in upper case.", title: "Confirmation of Acceptance for Studies"},
     { regex: /\bconsignee/gi, message: "Prefer recipient. If you need to use consignee, use it with recipient. For example, recipient (consignee).", title: "Consignee"},
     { regex: /\bconsignor/gi, message: "Prefer sender. If you need to use consignor, use it with sender. For example, sender (consignor).", title: "Consignor"},
-    { regex: /\bright\b(?!\s(not\s)?to)/gi, message: "Use correct rather than right.", title: "Correct"},
+    { regex: /(?<!(absolute|(un)?qualified|exercis((e(d|s)?)|ing)(?:\s+of)?\s+(?:my|her|his|your|their|our|this|that|any|a|such|the))\s)(?<!(statutory|legal|contractual)(?:\s+)?)\bright\b(?!\s+(?:,?\s*)?(?:not\s+)?to\b)(?!-to-)/gi, message: "Use correct rather than right.", title: "Correct"},
     { regex: /\bcorrespondence/gi, message: "Correspondence is not plain English. Try to be specific, like postal address, contact address or email address.", title:"Correspondence"},
     { regex: /counter(\s|\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)?sign(ator(y|ies))?/gi, message: "Countersignatory is not plain English. Instead, try the person who can confirm your identity or you must have your application signed by someone else.", title:"Countersignatory"},
     { regex: /(?!criminal\sjustice\ssystem)[cC]riminal\s[jJ]ustice\s[sS]ystem/g, message: "Spell criminal justice system in lower case.", title:"Criminal justice system"},
