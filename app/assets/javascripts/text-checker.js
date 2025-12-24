@@ -267,6 +267,13 @@ function checkTextRules(userText) {
     { regex: /(financial\spenalt(ies|y)|financially\spenalis(e(d|s)?|ing))/gi, message: "Use ‘fine’ instead of ‘financial penalty’. For example, 'You’ll pay a £50 fine.'", title: "Fine" },
     { regex: /civil\spenalt(ies|y)/gi, message: "Only say ‘civil penalty’ if there’s evidence users are searching for the term. Otherwise, say what will happen to the user.", title: "Civil penalty" },
     { regex: /(?<![.?!]\s)(?!fire\sand\srescue\sservice)[fF]ire\s[aA]nd\s[rR]escue\s[sS]ervice/g, message: "Lower case.", title: "fire and resuce service" },
+    { regex: /(?<=.)(?<![.?!]\s)(?<!\b\d{4}\s)\b(?!general\selection)[gG]eneral\s[eE]lections?\b/g, message: "Lower case when talking generally and not referring to a specific election.", title: "general elections (lower case)" },
+    { regex: /\b\d{4}\s\bgeneral\selections?\b/g, message: "Upper case when talking about a specific election. Lower case when talking about a quantity or number of general elections. For example, 'the 2019 General Election'.", title: "general elections (upper case)" },
+    { regex: /(?!((North|South)\sPole|(West|East)\sEnd)|(West|East)\sMidlands|(Central|South|North)\sAmerica)([eE]ast|[wW]est|[Nn]orth|[sS]outh)\b\s([pP]ole|[eE]nd|[mM]idlands|[aA]merica)\b/g, message: "Use upper case when talking about places that are part of recognised names or regions", title: "Geography and regions (recognised)" },
+    { regex: /(?!(Middle|Far)\sEast)([mM]iddle|[fF]ar)\s[eE]ast/g, message: "Use upper case when talking about recognised regions (Far/Middle East)", title: "Geography and regions (Far/Middle East)" },
+    { regex: /(?<!(\.|\?|\!|^)\s)(?!Northern\sIreland)(Northern|Southern|Eastern|Western)\s(Africa|Europe|America|England|Scotland|Wales|Asia|Ireland)/g, message: "Use upper case when talking about recognised regions (Far/Middle East)", title: "Geography and regions (Far/Middle East)" },
+    { regex: /(?!GOV\.UK)[Gg][Oo0][Vv]\.?[\.\s]?\.?[Uu][Kk]/g, message: "Spell GOV.UK in all upper case with the full stop", title: "GOV.UK" },
+    { regex: /(?<![.?!]\s)(?<!^)(?<!(Welsh\s|Scottish\s|His\sMajesty[\u2019\u0027]s\s))Government\b/g, message: "Lower case unless it’s a full title. For example: ‘UK government’, but ‘His Majesty’s Government of the United Kingdom of Great Britain and Northern Ireland’.", title: "government" },
 
 
   ];
