@@ -85,8 +85,8 @@ function checkTextRules(userText) {
     { regex: /(?!points[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D]based\ssystem)\b[pP]oints(\s|[\u002D\u2013\u2014\u2012\u2015\u2212\uFE58\uFF0D])[Bb]ased\s[Ss]ystem/g, message: "Spell points-based system in lower case and hyphenate.", title: "points-based system"},  
     { regex: /(?!Police\sNational\sComputer)[Pp]olice\s[Nn]ational\s[Cc]omputer/g, message: "Spell the initial letters of Police National Computer in upper case.", title:"Police National Computer"},  
     { regex: /\bpurdah/gi, message: "Use 'pre-election period', rather than 'purdah'.", title:"Purdah"},  
-    { regex: /\b(trooper|gunner|signaller|sapper|guardsman|rifleman|kingsman|lance\scorporal|corporal|sergeant|staff\ssergeant|colour\ssergeant|(warrant\sofficer\sclass\s(two|2)|wo2)|sergeant\smajor|(warrant\sofficer\sclass\s(one|1)|wo1)|regimental\ssergeant\smajor|officer\scadet|second\slieutenant|lieutenant|captain|major|lieutenant\scolonel|commanding\sofficer|colonel|brigadier|major\sgeneral|lieutenant\sgeneral|field\smarshal)\s[A-Z]\w*/gi, message: "Capitalise the rank before the name, as in 'Field Marshal Joan Smith'.", title:"Military rank"},  
-    { regex: /\b(constable|sergeant|inspector|chief\sinspector|superintendent|chief\ssuperintendent|commander|assistant\schief\sconstable|deupty\sassistant\scommissioner|deputy\schief\sconstable|assistant\scommissioner|deputy\scommissioner|commissioner|chief\sconstable)\s[A-Z]\w*/gi, message: "Capitalise the rank before the name, as in 'Detective Inspector Joan Smith'.", title:"Police rank"},  
+    { regex: /\b(trooper|gunner|signaller|sapper|guardsman|rifleman|kingsman|lance\scorporal|corporal|sergeant|staff\ssergeant|colour\ssergeant|(warrant\sofficer\sclass\s(two|2)|wo2)|sergeant\smajor|(warrant\sofficer\sclass\s(one|1)|wo1)|regimental\ssergeant\smajor|officer\scadet|second\slieutenant|lieutenant|captain|major|lieutenant\scolonel|commanding\sofficer|colonel|brigadier|major\sgeneral|lieutenant\sgeneral|field\smarshal)(\s[A-Z]\w+){2}/g, message: "Capitalise the rank before the name, as in 'Field Marshal Joan Smith'.", title:"Military rank"},  
+    { regex: /\b(constable|sergeant|inspector|chief\sinspector|superintendent|chief\ssuperintendent|commander|assistant\schief\sconstable|deupty\sassistant\scommissioner|deputy\schief\sconstable|assistant\scommissioner|deputy\scommissioner|(?<!high\s)commissioner|chief\sconstable)(\s[A-Z]\w+){2}/g, message: "Capitalise the rank before the name, as in 'Detective Inspector Joan Smith'.", title:"Police rank"},  
     { regex: /\brefugees?\b/gi, message: "Make sure you only use refugee to describe an asylum claimant who has been granted refugee status.", title:"Refugee"},  
     { regex: /(?!senior\scivil\sservice)[sS]enior\s[cC]ivil\s[sS]ervice/g, message: "Lower case the initial letters of 'senior civil service'. You can use the acronym SCS after the first full mention.", title: "Senior civil service"},  
     { regex: /Sponsor[s‘'’]?s?\b/g, message: "Lower case the word 'sponsor' when referring to a company or person sponsoring a person to work in the UK.", title: "Sponsor"},  
@@ -309,6 +309,7 @@ function checkTextRules(userText) {
   const explainedAcronyms = new Set();
   const excludedAcronyms = new Set ([
     'UK',
+    'UN',
     'USA',
     'DVLA',
     'EU',
