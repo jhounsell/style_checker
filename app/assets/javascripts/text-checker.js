@@ -326,8 +326,27 @@ function checkTextRules(userText) {
     'DNA',
     'PO',
     'OK',
+    'MOT',
+    'GPS',
     'OANDA',
-    'GOV.UK'
+    'GOV.UK',
+    'JPG',
+    'PDF',
+    'PNG',
+    'WAV',
+    'MOV',
+    'BA',
+    'GCSE',
+    'BTEC',
+    'NVQ',
+    'OBE',
+    'ACMA',
+    'MRCGP',
+    'ACII',
+    'MP',
+    'JP',
+    'LLB',
+    'MBE'
   ]);
   
   // match acronym-like patterns
