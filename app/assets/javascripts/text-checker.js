@@ -107,6 +107,7 @@ function checkTextRules(userText) {
     { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' rather than 'photograph'. For example, 'take a photo of your document' or 'photo ID'", title: "Photo"},
     { regex: /\bsiblings?(hip|[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]in[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]law)?/gi, message: "Sibling is not plain English and may be hard to translate. Use 'brother or sister' instead.", title: "Sibling"},
     { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
+    { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
 
 
   ];
