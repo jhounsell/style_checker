@@ -53,7 +53,7 @@ function checkTextRules(userText) {
     { regex: /enhanced\sdisclosure/gi, message: "Use 'enhanced DBS check' rather than 'enhanced disclosure'.", title: "enhanced disclosure"},
     { regex: /(?!EU\sSettlement\sScheme)EU\s[Ss]ettlement\s[Ss]cheme/g, message: "Capitalise EU Settlement Scheme thusly. You can use the initials EUSS after the first full mention.", title: "EU Settlement Scheme"},  
     { regex: /(?!General\sRegister\sOffice)[Gg]eneral\s[Rr]egist(er|ry|ration)\s[oO]ffice/g, message: "Capitalise General Register Office thusly. It is 'register' not 'registry'. You can use the initials 'GRO' after the first full mention.", title: "General Register Office"},  
-    { regex: /(?!GOV\.UK)[Gg][Oo][Vv]\.[Uu][Kk][^\/]/g, message: "Spell GOV.UK in all upper case.", title: "GOV.UK"},  
+    { regex: /(?!GOV\.UK)(?<!(\.|@))[Gg][Oo][Vv]\.[Uu][Kk][^\/]/g, message: "Spell GOV.UK in all upper case.", title: "GOV.UK"},  
     { regex: /[Hh]is\s[mM]ajesty(‘|'|’)s\s[A-Z]/g, message: "Use 'HM' rather than 'His Majesty's' in front of the name of the relevant public body. For example, 'HM Revenue & Customs'.", title: "His Majesty's"},  
     { regex: /\bHMPO\b/g, message: "Do not use 'HMPO' in public-facing services.", title: "HMPO"},  
     { regex: /(?!HM\sPassport\sOffice)HM\s[Pp]assport\s[Oo]ffice/g, message: "Capitalise HM Passport Office thusly.", title: "HM Passport Office"},  
