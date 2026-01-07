@@ -453,27 +453,53 @@ function checkTextRules(userText) {
   ];
 
   // Split the text into sentences
-  const sentences = userText.match(/[^\.!\?]+[\.!\?]+/g);
 
-  // Ensure sentences is an array
-  if (!sentences) {
-    return 'no-sentences';
+function splitSentences(text, locale = 'en-GB') {
+  // Prefer Intl.Segmenter when available
+  if (globalThis.Intl?.Segmenter) {
+    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
+    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
   }
 
-  // Concatenate sentences into a single string
-  const concatenatedText = sentences.join('');
+  // Fallback: protect URLs/emails so dots inside them don't split sentences
+  const URL_PATTERN = /https?:\/\/\S+/;
+  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
 
-  //Collect matches for each pattern
-  const matchesBypattern = regexPatterns.map(pattern => {
-    const matches = [];
-    sentences.forEach(sentence => {
-      if (pattern.regex.test(sentence)) {
-        const highlightedSentence = sentence.replace(pattern.regex, '<strong>$&</strong>');
-        matches.push (highlightedSentence.trim());
-      }
-    });
-    return { pattern, matches };
+  const SENTENCE_REGEX = new RegExp(
+    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
+    'g'
+  );
+
+  const parts = text.match(SENTENCE_REGEX) || [];
+  return parts.map(p => p.trim()).filter(Boolean);
+}
+
+// === Use the splitter ===
+const sentences = splitSentences(userText, 'en-GB');
+
+// Ensure sentences is an array
+if (!sentences || sentences.length === 0) {
+  return 'no-sentences';
+}
+
+// Concatenate sentences into a single string
+const concatenatedText = sentences.join('');
+
+// Collect matches for each pattern
+const matchesBypattern = regexPatterns.map(pattern => {
+  const matches = [];
+  sentences.forEach(sentence => {
+    if (pattern.regex.test(sentence)) {
+      const highlightedSentence = sentence.replace(
+        pattern.regex,
+        '<strong>$&</strong>'
+      );
+      matches.push(highlightedSentence.trim());
+    }
   });
+  return { pattern, matches };
+});
+
 
 
 
