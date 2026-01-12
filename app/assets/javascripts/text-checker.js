@@ -109,8 +109,7 @@ function checkTextRules(userText) {
     { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
     { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
     { regex: /[A-Z][a-z]+\sVisas?\b/gi, message: "Always capitalise the full name of the visa but keep the word 'visa' lower case.", title: "Visa (capitalisation)"},
-
-
+    { regex: /(?<!GOV\.UK\s|[Ss]ession\s|[Uu]ser\s|[pP]ayment\s|[Uu]nique\s|[Cc]ase\s|[Cc]ustomer\s|[vV]ot(ers?|ing)?\s|[nN]ational\s)(?<![Pp]hoto\s|[dD]igital\s|[oO]ne\s|acceptable\s|valid\s|[Gg]overnment(-?issued)?\s|forms?\sof\s|(carry|bring|provide|show|present|submit|supply|upload)(\s\w+)?\s)\bIDs?\b(?!\s[cC]hecks?(ing)?|\sdocuments?|\s[Ss]cheme|\s[Cc]ards?|\s[bB]adge|\srequirements?|\smatch|\s[vV]erification)/g, message: "Use 'identity' rather than 'ID' because it is plain English and easier to translate. For example, 'prove your identity'. There may be some execptions to this rule.", title: "Identity"},
   ];
 
   const ukEnglishregexPatterns = [
