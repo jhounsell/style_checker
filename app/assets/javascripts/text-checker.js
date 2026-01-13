@@ -109,6 +109,23 @@ function checkTextRules(userText) {
     { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
     { regex: /[A-Z][a-z]+\sVisas?\b/gi, message: "Always capitalise the full name of the visa but keep the word 'visa' lower case.", title: "Visa (capitalisation)"},
     { regex: /(?<!GOV\.UK\s|[Ss]ession\s|[Uu]ser\s|[pP]ayment\s|[Uu]nique\s|[Cc]ase\s|[Cc]ustomer\s|[vV]ot(ers?|ing)?\s|[nN]ational\s)(?<![Pp]hoto\s|[dD]igital\s|[oO]ne\s|acceptable\s|valid\s|[Gg]overnment(-?issued)?\s|forms?\sof\s|(carry|bring|provide|show|present|submit|supply|upload)(\s\w+)?\s)\bIDs?\b(?!\s[cC]hecks?(ing)?|\sdocuments?|\s[Ss]cheme|\s[Cc]ards?|\s[bB]adge|\srequirements?|\smatch|\s[vV]erification)/g, message: "Use 'identity' rather than 'ID' because it is plain English and easier to translate. For example, 'prove your identity'. There may be some execptions to this rule.", title: "Identity"},
+     
+    //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
+    { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
+    { regex: /wheelchair[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bound|confined\sto\sa\swheelchair/gi, message:"Use 'wheelchair user' instead.", title:"Writing about disability", },
+    { regex: /(afflicted\sby|suffer(s|ing|ed)?\s(from|with))/gi, message:"Use 'has [name of condition or impairment]' instead of 'afflicted by' or similar.", title:"Writing about disability", },
+    { regex: /mentally\s(handicapped|defective|challenged)|retarded|subnormal/gi, message:"Use 'with a learning disability/disabilities' instead.", title:"Writing about disability", },
+    { regex: /cripple/gi, message:"Use 'disabled person' instead.", title:"Writing about disability", },
+    { regex: /spastic/gi, message:"Use 'person with cerebral palsy' instead.", title:"Writing about disability", },
+    { regex: /able[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bodied/gi, message:"Use 'non-disabled' instead.", title:"Writing about disability", },
+    { regex: /insane|mental\spatient|mad/gi, message:"Use 'person with a mental health condition' instead.", title:"Writing about disability", },
+    { regex: /deaf\sand\sdumb|deaf\smute/gi, message:"Use 'deaf, user of British Sign Language (BSL), or person with a hearing impairment' instead.", title:"Writing about disability", },
+    { regex: /the\sblind/gi, message:"Use 'people with visual impairments', 'blind people', or 'blind and partially sighted people' instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sepileptics?/gi, message:"Use 'people with epilepsy'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdiabetics?/gi, message:"Use 'people with diabetes'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdepressives?/gi, message:"Use 'people with depression'instead.", title:"Writing about disability", },
+    { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
+    { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
   ];
 
   const ukEnglishregexPatterns = [
