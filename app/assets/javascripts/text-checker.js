@@ -52,9 +52,8 @@ function checkTextRules(userText) {
     { regex: /(?!electronic\stravel\sauthorisation)[eE]lectronic\s[tT]ravel\s[aA]uthorisation/g, message: "Use lower case initial letters on electronic travel authorisation. You can use the acronym ETA after the first mention.", title: "electronic travel authorisation"},
     { regex: /enhanced\sdisclosure/gi, message: "Use 'enhanced DBS check' rather than 'enhanced disclosure'.", title: "enhanced disclosure"},
     { regex: /(?!EU\sSettlement\sScheme)EU\s[Ss]ettlement\s[Ss]cheme/g, message: "Capitalise EU Settlement Scheme thusly. You can use the initials EUSS after the first full mention.", title: "EU Settlement Scheme"},  
-    { regex: /finger[\s]scans?/gi, message: "Not a synonym for 'fingerprint'. Fingers are 'scanned' and the results are called 'fingerprints'.", title: "Finger scan"},  
     { regex: /(?!General\sRegister\sOffice)[Gg]eneral\s[Rr]egist(er|ry|ration)\s[oO]ffice/g, message: "Capitalise General Register Office thusly. It is 'register' not 'registry'. You can use the initials 'GRO' after the first full mention.", title: "General Register Office"},  
-    { regex: /(?!GOV\.UK)[Gg][Oo][Vv]\.[Uu][Kk][^\/]/g, message: "Spell GOV.UK in all upper case.", title: "GOV.UK"},  
+    { regex: /(?!GOV\.UK)(?<!(\.|@))[Gg][Oo][Vv]\.[Uu][Kk][^\/]/g, message: "Spell GOV.UK in all upper case.", title: "GOV.UK"},  
     { regex: /[Hh]is\s[mM]ajesty(‘|'|’)s\s[A-Z]/g, message: "Use 'HM' rather than 'His Majesty's' in front of the name of the relevant public body. For example, 'HM Revenue & Customs'.", title: "His Majesty's"},  
     { regex: /\bHMPO\b/g, message: "Do not use 'HMPO' in public-facing services.", title: "HMPO"},  
     { regex: /(?!HM\sPassport\sOffice)HM\s[Pp]assport\s[Oo]ffice/g, message: "Capitalise HM Passport Office thusly.", title: "HM Passport Office"},  
@@ -70,8 +69,8 @@ function checkTextRules(userText) {
     { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' instead of 'leave to remain' or 'limited leave to remain'.", title: "Permission to stay"},  
     { regex: /(?!letter\sof\sauthority)[Ll]etter\s[oO]f\s[aA]uthority/g, message: "Spell letter of authority in lower case.", title: "Letter of authority"},  
     { regex: /(?!Life\sin\sthe\sUK\sTest)[lL]ife\s[iI]n\s[tT]he\s([uU]\.?[kK]\.?|[uU]nited\s[kK]ingdom)\s[tT]est/g, message: "Life in the UK Test should be spelled thusly, with capitals on the L and T.", title: "Life in the UK Test"},  
-    { regex: /\blog[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]?ins?\b|\blog(g(ing|ed)|s)?\s(\w+\s)?in/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
-    { regex: /\bsign(s|ed|ing)?(\s\w+)?\sinto|into\s(\w+\s)+signed\b/gi, message: "Use 'sign in to' rather than 'sign into'.", title: "Sign into"},  
+    { regex: /\blog(\s||\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)in\b|\blogin\b/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
+    { regex: /\bsign\sinto\b/gi, message: "Use 'sign in to' rather than 'sign into'.", title: "Sign into"},  
     { regex: /(?!Migrant\sHelp)\b[mM]igrants?\b/gi, message: "Avoid using 'migrants'. Try to be specific, such as 'applicant', 'claimant', 'employee' or 'worker'. If you cannot be specific, use 'people'.", title: "Migrants"},  
     { regex: /can('|’|‘)t|won('|’|‘)t|don('|’|‘)t|isn('|’|‘)t|aren('|’|‘)t|wasn('|’|‘)t|weren('|’|‘)t|doesn('|’|‘)t|didn('|’|‘)t|hasn('|’|‘)t|haven('|’|‘)t|hadn('|’|‘)t/gi, message: "Avoid all contractions. Research shows that contractions make content difficult to understand for people with limited fluency.", title: "Negative contractions"},  
     { regex: /you('|’|‘)re|it('|’|‘)s|we('|’|‘)re|they('|’|‘)re|I('|’|‘)ve|you('|’|‘)ve|we('|’|‘)ve|they('|’|‘)ve|there('|’|‘)s|that('|’|‘)s|who('|’|‘)s|what('|’|‘)s|where('|’|‘)s|when('|’|‘)s|why('|’|‘)s|how('|’|‘)s|let('|’|‘)s/gi, message: "Avoid all contractions. Research shows that contractions make content difficult to understand for people with limited fluency.", title: "Present tense contractions"},  
@@ -104,11 +103,23 @@ function checkTextRules(userText) {
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
-    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' rather than 'photograph'. For example, 'take a photo of your document' or 'photo ID'", title: "Photo"},
-    { regex: /\bsiblings?(hip|[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]in[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]law)?/gi, message: "Sibling is not plain English and may be hard to translate. Use 'brother or sister' instead.", title: "Sibling"},
-    { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
-
-
+  
+    //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
+    { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
+    { regex: /wheelchair[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bound|confined\sto\sa\swheelchair/gi, message:"Use 'wheelchair user' instead.", title:"Writing about disability", },
+    { regex: /(afflicted\sby|suffer(s|ing|ed)?\s(from|with))/gi, message:"Use 'has [name of condition or impairment]' instead of 'afflicted by' or similar.", title:"Writing about disability", },
+    { regex: /mentally\s(handicapped|defective|challenged)|retarded|subnormal/gi, message:"Use 'with a learning disability/disabilities' instead.", title:"Writing about disability", },
+    { regex: /cripple/gi, message:"Use 'disabled person' instead.", title:"Writing about disability", },
+    { regex: /spastic/gi, message:"Use 'person with cerebral palsy' instead.", title:"Writing about disability", },
+    { regex: /able[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bodied/gi, message:"Use 'non-disabled' instead.", title:"Writing about disability", },
+    { regex: /insane|mental\spatient|mad/gi, message:"Use 'person with a mental health condition' instead.", title:"Writing about disability", },
+    { regex: /deaf\sand\sdumb|deaf\smute/gi, message:"Use 'deaf, user of British Sign Language (BSL), or person with a hearing impairment' instead.", title:"Writing about disability", },
+    { regex: /the\sblind/gi, message:"Use 'people with visual impairments', 'blind people', or 'blind and partially sighted people' instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sepileptics?/gi, message:"Use 'people with epilepsy'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdiabetics?/gi, message:"Use 'people with diabetes'instead.", title:"Writing about disability", },
+    { regex: /(an?|is|are)?\sdepressives?/gi, message:"Use 'people with depression'instead.", title:"Writing about disability", },
+    { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
+    { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
   ];
 
   const ukEnglishregexPatterns = [
@@ -275,32 +286,58 @@ function checkTextRules(userText) {
     { regex: /cutiniz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
     { regex: /cycliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
 
-    //D
+    //C
     { regex: /decimaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
   ];
 
   // Split the text into sentences
-  const sentences = userText.match(/[^\.!\?]+[\.!\?]+/g);
 
-  // Ensure sentences is an array
-  if (!sentences) {
-    return 'no-sentences';
+function splitSentences(text, locale = 'en-GB') {
+  // Prefer Intl.Segmenter when available
+  if (globalThis.Intl?.Segmenter) {
+    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
+    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
   }
 
-  // Concatenate sentences into a single string
-  const concatenatedText = sentences.join('');
+  // Fallback: protect URLs/emails so dots inside them don't split sentences
+  const URL_PATTERN = /https?:\/\/\S+/;
+  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
 
-  //Collect matches for each pattern
-  const matchesBypattern = regexPatterns.map(pattern => {
-    const matches = [];
-    sentences.forEach(sentence => {
-      if (pattern.regex.test(sentence)) {
-        const highlightedSentence = sentence.replace(pattern.regex, '<strong>$&</strong>');
-        matches.push (highlightedSentence.trim());
-      }
-    });
-    return { pattern, matches };
+  const SENTENCE_REGEX = new RegExp(
+    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
+    'g'
+  );
+
+  const parts = text.match(SENTENCE_REGEX) || [];
+  return parts.map(p => p.trim()).filter(Boolean);
+}
+
+// === Use the splitter ===
+const sentences = splitSentences(userText, 'en-GB');
+
+// Ensure sentences is an array
+if (!sentences || sentences.length === 0) {
+  return 'no-sentences';
+}
+
+// Concatenate sentences into a single string
+const concatenatedText = sentences.join('');
+
+// Collect matches for each pattern
+const matchesBypattern = regexPatterns.map(pattern => {
+  const matches = [];
+  sentences.forEach(sentence => {
+    if (pattern.regex.test(sentence)) {
+      const highlightedSentence = sentence.replace(
+        pattern.regex,
+        '<strong>$&</strong>'
+      );
+      matches.push(highlightedSentence.trim());
+    }
   });
+  return { pattern, matches };
+});
+
 
 
 
@@ -325,9 +362,6 @@ function checkTextRules(userText) {
     'PDF',
     'DNA',
     'PO',
-    'OK',
-    'OANDA',
-    'GOV.UK'
   ]);
   
   // match acronym-like patterns
@@ -347,7 +381,7 @@ function checkTextRules(userText) {
 
   
   //track first occurrences
-const acronymPattern = /\b[A-Z]{2,}\b/g;
+const acronymPattern = /\b(?=[A-Z]{2,})\b(?![A-Z]{2,}([^.@\s]*[.@]))[A-Z]{2,}(?<!\.(COM|ORG|EU|AC|EDU|GOV|UK))\b/g;
 const seenAcronyms = new Set();
 const unexplained = [];
 
