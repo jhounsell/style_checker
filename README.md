@@ -8,5 +8,5 @@ We're looking to add more style guides in the future.
 For more detail see [the breakdown of which terms are not covered in the prototype page](app/views/hods-page.html).
 Or see guidance on how the tool works on the [homepage](app/views/index.html).
 
-Current version: v0.0.1.
+Current version: v1.0.2.
 See release notes: https://github.com/jhounsell/style_checker/releases 
