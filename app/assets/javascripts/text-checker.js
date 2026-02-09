@@ -109,6 +109,7 @@ function checkTextRules(userText) {
     { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
     { regex: /[A-Z][a-z]+\sVisas?\b/gi, message: "Always capitalise the full name of the visa but keep the word 'visa' lower case.", title: "Visa (capitalisation)"},
     { regex: /(?<!GOV\.UK\s|[Ss]ession\s|[Uu]ser\s|[pP]ayment\s|[Uu]nique\s|[Cc]ase\s|[Cc]ustomer\s|[vV]ot(ers?|ing)?\s|[nN]ational\s)(?<![Pp]hoto\s|[dD]igital\s|[oO]ne\s|acceptable\s|valid\s|[Gg]overnment(-?issued)?\s|forms?\sof\s|(carry|bring|provide|show|present|submit|supply|upload)(\s\w+)?\s)\bIDs?\b(?!\s[cC]hecks?(ing)?|\sdocuments?|\s[Ss]cheme|\s[Cc]ards?|\s[bB]adge|\srequirements?|\smatch|\s[vV]erification)/g, message: "Use 'identity' rather than 'ID' because it is plain English and easier to translate. For example, 'prove your identity'. There may be some execptions to this rule.", title: "Identity"},
+    { regex: /\b[uU](nited\s)?[kK](ingdom)?\s[pP]assports?/g, message: "Avoid using 'UK passport'. The official term for a passport issued by HMPO is a 'British passport'.", title: "UK passport"},
      
     //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
