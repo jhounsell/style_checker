@@ -119,7 +119,7 @@ function checkTextRules(userText) {
     { regex: /cripple/gi, message:"Use 'disabled person' instead.", title:"Writing about disability", },
     { regex: /spastic/gi, message:"Use 'person with cerebral palsy' instead.", title:"Writing about disability", },
     { regex: /able[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bodied/gi, message:"Use 'non-disabled' instead.", title:"Writing about disability", },
-    { regex: /insane|mental\spatient|mad/gi, message:"Use 'person with a mental health condition' instead.", title:"Writing about disability", },
+    { regex: /insane|mental\spatient|mad\b/gi, message:"Use 'person with a mental health condition' instead.", title:"Writing about disability", },
     { regex: /deaf\sand\sdumb|deaf\smute/gi, message:"Use 'deaf, user of British Sign Language (BSL), or person with a hearing impairment' instead.", title:"Writing about disability", },
     { regex: /the\sblind/gi, message:"Use 'people with visual impairments', 'blind people', or 'blind and partially sighted people' instead.", title:"Writing about disability", },
     { regex: /(an?|is|are)?\sepileptics?/gi, message:"Use 'people with epilepsy'instead.", title:"Writing about disability", },
@@ -127,6 +127,7 @@ function checkTextRules(userText) {
     { regex: /(an?|is|are)?\sdepressives?/gi, message:"Use 'people with depression'instead.", title:"Writing about disability", },
     { regex: /\bdwarf\b|\bmidget\b/gi, message:"Use 'someone with restricted growth or short stature'instead.", title:"Writing about disability", },
     { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
+    { regex: /\b(?!POISE\b)[Pp][Oo][Ii][Ss][Ee]\b/g, message: "Use POISE, not Poise. You do not need to write the acronym out in full.", title: "POISE" },
   ];
 
   const ukEnglishregexPatterns = [
