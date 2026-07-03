@@ -359,7 +359,6 @@ const matchesBypattern = regexPatterns.map(pattern => {
     'DVLA',
     'EU',
     'VAT',
-    'MP',
     'BBC',
     'VPN',
     'ID',
@@ -377,7 +376,6 @@ const matchesBypattern = regexPatterns.map(pattern => {
     'OANDA',
     'GOV.UK',
     'JPG',
-    'PDF',
     'PNG',
     'WAV',
     'MOV',
@@ -392,10 +390,25 @@ const matchesBypattern = regexPatterns.map(pattern => {
     'MP',
     'JP',
     'LLB',
-    'MBE'
+    'MBE',
+    'DIY',
+    'GP',
+    'HTML',
+    'MI5',
+    'MI6',
+    'PAYE',
+    'SORN',
+    'TV',
+    'KCB',
+    'KBE',
+    'CBE',
   ]);
   
   // match acronym-like patterns
+  // Roman numeral exclusion
+  function isRomanNumeral(str) {
+    return /^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)$/.test(str);
+  }
 
   const explanationPatterns = [
       /\b([A-Z]{2,})\s*\([^)]+\)/g, // ACRONYM (Explanation)
@@ -419,12 +432,13 @@ const unexplained = [];
 let match;
 while ((match = acronymPattern.exec(concatenatedText)) !==null) {
   const acronym = match[0];
-  if (!seenAcronyms.has(acronym)) {
-    seenAcronyms.add(acronym);
-    if (!explainedAcronyms.has(acronym) && !excludedAcronyms.has(acronym)) {
-      unexplained.push(acronym);
-    }
-  }
+  if (
+  !explainedAcronyms.has(acronym) &&
+  !excludedAcronyms.has(acronym) &&
+  !isRomanNumeral(acronym)
+) {
+  unexplained.push(acronym);
+}
 }
 
 
