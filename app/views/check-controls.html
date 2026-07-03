@@ -1,0 +1,87 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Customise the style checker" %}
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Customise the style checker" %}
+
+{% set selectedRules = data.rulesets or [
+  'hods',
+  'acronyms'
+] %}
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <a href="javascript:window.history.back()" class="govuk-back-link">Back</a>
+        <h1>Customise the style checker rules</h1>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                Default rules the style checker uses
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                By default the style checker checks your text:
+                <ul>
+                    <li>against the Home Office style guide</li>
+                    <li>for unexplained acronyms</li>
+                </ul>
+            </div>
+        </details>
+        <form action="/rulesets-router" method="post" novalidate id="ruleset-form">
+            <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="rulset-hint">
+                        <legend>
+                            <h2>Rules to check</h2>
+                        </legend>
+                        <div id="ruleset-hint" class="govuk-hint">
+                            Select all that apply
+                        </div>
+
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes" id="rulesets" name="rulesets">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="item-1" name="rulesets" type="checkbox" value="hods" aria-describedby="hods-hint" {{ "checked" if "hods" in selectedRules }}>
+                                <label class="govuk-label govuk-checkboxes__label" for="hods">
+                                    Home Office style guide
+                                </label>
+                            </div>
+                            
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="item-3" name="rulesets" type="checkbox" value="acronyms" aria-describedby="acronyms-hint" {{ "checked" if "acronyms" in selectedRules }}>
+                                <label class="govuk-label govuk-checkboxes__label" for="nationality-3">
+                                    Unexplained acronyms
+                                </label>
+                                <div id="acronyms-hint" class="govuk-hint govuk-checkboxes__hint">
+                                    A check for all acronyms that are not explained at the first mention
+                                </div>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="item-4" name="rulesets" type="checkbox" value="us-spelling" aria-describedby="us-spelling-hint" {{ "checked" if "us-spelling" in selectedRules }}>
+                                <label class="govuk-label govuk-checkboxes__label" for="item-4">
+                                    US English spellings
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+            </div>
+            <div class="govuk-button-group">
+                <button class="govuk-button" type="submit" data-module="govuk-button">Apply selected rules</button>
+                <button class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" onclick="window.location.href='/reset-controls'">Reset to default rules</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+document.getElementById('ruleset-form').addEventListener('submit', function(event) {
+  const checked = document.querySelectorAll(
+    'input[name="rulesets"]:checked'
+  );
+
+  if (checked.length === 0) {
+    alert('Select at least one ruleset');
+    event.preventDefault();
+  }
+});
+</script>
+{% endblock %}

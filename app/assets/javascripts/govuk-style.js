@@ -139,7 +139,7 @@ module.exports = [
     { regex: /\be[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D\s]mail/gi, message: "One word.", title: "email" },
     { regex: /(?=[^@\s]*[A-Z])[\w.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, message: "Write email addresses in lower case.", title: "email addresses" },
     // The above rule is redundant due to the way the JS splits the text into strings. Kept for when eventual bug fix is implemented.
-    //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
+    // Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
     { regex: /wheelchair[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]bound|confined\sto\sa\swheelchair/gi, message:"Use 'wheelchair user' instead.", title:"Writing about disability", },
     { regex: /(afflicted\sby|suffer(s|ing|ed)?\s(from|with))/gi, message:"Use 'has [name of condition or impairment]' instead of 'afflicted by' or similar.", title:"Writing about disability", },

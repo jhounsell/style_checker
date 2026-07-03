@@ -1,17 +1,22 @@
-function checkTextRules(userText) {
+function checkTextRules(userText, selectedRules = []) {
   let results = '';
-
+console.log('Rules being applied:', selectedRules);
 const hodsRules = require('./hods.js');
 const govukRules = require ('./govuk-style.js');
 const ukEnglishRules = require ('./uk-english.js');
 
-//combine all regex patterns into a single array
-const regexPatterns = [
-  ...hodsRules,
-  ...govukRules,
-  ...ukEnglishRules
-];
+//combine all selected regex patterns into a single array
+let regexPatterns = [];
 
+ if (selectedRules.includes('hods')) {
+  regexPatterns.push(...hodsRules);
+  }
+ if (selectedRules.includes('gds')) {
+  regexPatterns.push(...govukRules);
+ }
+ if (selectedRules.includes('us-spelling')) {
+  regexPatterns.push(...ukEnglishRules);
+ }
 
 //Split the textinto sentences
 const sentences = userText.match(/[^\.!\?]+[\.!\?]+/g);
@@ -39,6 +44,7 @@ const sentences = userText.match(/[^\.!\?]+[\.!\?]+/g);
 
 
   // === ACRONYM EXPLANATION CHECK ===
+if (selectedRules.includes('acronyms')) {
 
   const explainedAcronyms = new Set();
   const excludedAcronyms = new Set ([
@@ -109,6 +115,7 @@ while ((match = acronymPattern.exec(concatenatedText)) !==null) {
       
         results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
     }
+  }
 
   // Format results
   matchesBypattern.forEach(({ pattern, matches }) => {
