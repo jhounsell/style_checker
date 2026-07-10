@@ -1,0 +1,20 @@
+
+{% extends "layouts/main.html" %}
+{% set bodyClasses = 'hods-page' %}
+
+
+{% block beforeContent %}
+<div class="govuk-phase-banner govuk-width-container">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag">
+      Beta
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This service is in testing. Help us improve it and send feedback to <a class="govuk-link" href="mailto:jake.hounsell@digital.homeoffice.gov.uk?subject=Feedback%20on%20the%20style%20checker&body=List%20any%20false%20positives,%20missed%20terms,%20or%20improvement%20suggestions." target="_blank" rel="noopener noreferrer">jake.hounsell@digital.homeoffice.gov.uk</a>.
+    </span>
+  </p>
+</div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
