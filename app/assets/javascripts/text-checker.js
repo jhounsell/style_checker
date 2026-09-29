@@ -299,8 +299,48 @@ function checkTextRules(userText) {
     { regex: /decimaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
   ];
 
-  // Split the text into sentences
+//Readability patterns
+const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });
+const sentenceSegmenter = new Intl.Segmenter("en-GB", { granularity: "sentence" });
+const charSegmenter = /[\p{L}\p{N}]/u;
+const readingAge = {
+    1: "5-6",
+    2: "6-7",
+    3: "7-8",
+    4: "8-9",
+    5: "9-10",
+    6: "10-11",
+    7: "11-12",
+    8: "12-13",
+    9: "13-14",
+    10: "14-15",
+    11: "15-16",
+    12: "16-17",
+    13: "17-18",
+    14: "18-22" 
+  };
+function getReadabilityMetrics(text) {
+  const words = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
+  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
+  const characters = [...text].filter(char => charSegmenter.test(char)).length;
+  const rawAutomatedReadabilityIndex = 4.71 * (characters / words) + 0.5 * (words / sentences) - 21.43;
+  const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
+  return {
+    words,
+    sentences,
+    characters,
+    rawAutomatedReadabilityIndex,
+    automatedReadabilityIndex,
+    ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
+  };
+}
 
+const readabilityMetrics = getReadabilityMetrics(userText);
+
+//console.log(readabilityMetrics);
+
+
+// Split the text into sentences
 function splitSentences(text, locale = 'en-GB') {
   // Prefer Intl.Segmenter when available
   if (globalThis.Intl?.Segmenter) {
