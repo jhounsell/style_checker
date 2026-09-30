@@ -4,6 +4,7 @@ function checkTextRules(userText) {
   //Regex rule set
   const regexPatterns = [
     //HODS Style Rules
+    { regex: /(?<![A-Z][a-z]+\s(?:Overseas|Abroad))\b(?:abroad|overseas|Abroad|Overseas)\b(?!\s[A-Z])/g, message: "'Abroad' and 'overseas' can cause confusion. Try to use plain English. For example, use 'apply from outside the UK' or 'working in another country'.", title: "Abroad"},
     { regex: /anti[\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]social/gi, message: "Antisocial should be spelt without hyphens.", title: "Antisocial"},
     { regex: /alter(s|ing|ed|ation)?\b|modif(y(ing)?|ie(s|d)|ication)|switch(es|ed|ing)?/gi, message: "Use change instead of alter, modify or switch.", title: "Alter, switch, modify"},
     { regex: /(register(ing|s|ed)?|(set(s|ting)?\s*up)|(establish(es|ed|ing)?))\s+an\s+account/gi, message: "Use create instead of register or set up when you want people to create an account.", title: "Register/set up" },
