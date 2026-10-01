@@ -470,37 +470,39 @@ const matchesBypattern = regexPatterns.map(pattern => {
   
   //track first occurrences
 const acronymPattern = /\b(?=[A-Z]{2,})\b(?![A-Z]{2,}([^.@\s]*[.@]))[A-Z]{2,}(?<!\.(COM|ORG|EU|AC|EDU|GOV|UK))\b/g;
-const seenAcronyms = new Set();
 const unexplained = [];
 
-let match;
-while ((match = acronymPattern.exec(concatenatedText)) !==null) {
-  const acronym = match[0];
-  if (
-  !explainedAcronyms.has(acronym) &&
-  !excludedAcronyms.has(acronym) &&
-  !isRomanNumeral(acronym)
-) {
-  unexplained.push(acronym);
-}
-}
-
-
-    if (unexplained.length > 0 ) {
-      results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
-      results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
-      results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
-      unexplained.forEach(acronym => {
-        const regex = new RegExp(`\\b${acronym}\\b`);
-        const sentenceWithAcronym = sentences.find(sentence => regex.test(sentence));
-        if (sentenceWithAcronym) {
-          const highlighted = sentenceWithAcronym.replace(regex, '<strong>$&</strong>');
-          results += `<div class="govuk-inset-text">${highlighted.trim() }</div>`;
-        }
-      });
-      
-        results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+sentences.forEach(sentence => {
+  acronymPattern.lastIndex = 0;
+  let match;
+  while ((match = acronymPattern.exec(sentence)) !== null) {
+    const acronym = match[0];
+    if (
+      !explainedAcronyms.has(acronym) &&
+      !excludedAcronyms.has(acronym) &&
+      !isRomanNumeral(acronym)
+    ) {
+      unexplained.push({
+        acronym,
+        sentence
+       });
     }
+  }
+});
+
+
+if (unexplained.length > 0 ) {
+  results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
+  results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
+  results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
+  unexplained.forEach(item => {
+    const regex = new RegExp(`\\b${item.acronym}\\b`, 'g');
+    const highlighted = item.sentence.replace(regex, '<strong>$&</strong>');
+      results += `<div class="govuk-inset-text">${highlighted.trim()}</div>`;
+  });
+  
+    results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+}
 
   // Format results
   matchesBypattern.forEach(({ pattern, matches }) => {
