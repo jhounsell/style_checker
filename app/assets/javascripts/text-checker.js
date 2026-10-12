@@ -1,6 +1,38 @@
 function checkTextRules(userText) {
   let results = '';
 
+  // Split the text into sentences
+function splitSentences(text, locale = 'en-GB') {
+  // Prefer Intl.Segmenter when available
+  if (globalThis.Intl?.Segmenter) {
+    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
+    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
+  }
+
+  // Fallback: protect URLs/emails so dots inside them don't split sentences
+  const URL_PATTERN = /https?:\/\/\S+/;
+  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
+
+  const SENTENCE_REGEX = new RegExp(
+    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
+    'g'
+  );
+
+  const parts = text.match(SENTENCE_REGEX) || [];
+  return parts.map(p => p.trim()).filter(Boolean);
+}
+
+// === Use the splitter ===
+const sentences = splitSentences(userText, 'en-GB');
+
+// Ensure sentences is an array
+if (!sentences || sentences.length === 0) {
+  return 'no-sentences';
+}
+
+// Concatenate sentences into a single string
+const concatenatedText = sentences.join('');
+
   //Regex rule set
   const regexPatterns = [
     //HODS Style Rules
@@ -133,6 +165,23 @@ function checkTextRules(userText) {
     { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
     { regex: /\b(?!POISE\b)[Pp][Oo][Ii][Ss][Ee]\b/g, message: "Use POISE, not Poise. You do not need to write the acronym out in full.", title: "POISE" },
   ];
+
+// Collect matches for each pattern
+const matchesBypattern = regexPatterns.map(pattern => {
+  const matches = [];
+  sentences.forEach(sentence => {
+    if (pattern.regex.test(sentence)) {
+      const highlightedSentence = sentence.replace(
+        pattern.regex,
+        '<strong>$&</strong>'
+      );
+      matches.push(highlightedSentence.trim());
+    }
+  });
+  return { pattern, matches };
+});
+
+
 
   const ukEnglishregexPatterns = [
     //A
@@ -302,97 +351,6 @@ function checkTextRules(userText) {
     { regex: /decimaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
   ];
 
-//Readability patterns
-const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });
-const sentenceSegmenter = new Intl.Segmenter("en-GB", { granularity: "sentence" });
-const charSegmenter = /[\p{L}\p{N}]/u;
-const readingAge = {
-    1: "5-6",
-    2: "6-7",
-    3: "7-8",
-    4: "8-9",
-    5: "9-10",
-    6: "10-11",
-    7: "11-12",
-    8: "12-13",
-    9: "13-14",
-    10: "14-15",
-    11: "15-16",
-    12: "16-17",
-    13: "17-18",
-    14: "18-22" 
-  };
-function getReadabilityMetrics(text) {
-  const words = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
-  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
-  const characters = [...text].filter(char => charSegmenter.test(char)).length;
-  const rawAutomatedReadabilityIndex = 4.71 * (characters / words) + 0.5 * (words / sentences) - 21.43;
-  const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
-  return {
-    words,
-    sentences,
-    characters,
-    rawAutomatedReadabilityIndex,
-    automatedReadabilityIndex,
-    ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
-  };
-}
-
-const readabilityMetrics = getReadabilityMetrics(userText);
-
-//console.log(readabilityMetrics);
-
-
-// Split the text into sentences
-function splitSentences(text, locale = 'en-GB') {
-  // Prefer Intl.Segmenter when available
-  if (globalThis.Intl?.Segmenter) {
-    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
-    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
-  }
-
-  // Fallback: protect URLs/emails so dots inside them don't split sentences
-  const URL_PATTERN = /https?:\/\/\S+/;
-  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
-
-  const SENTENCE_REGEX = new RegExp(
-    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
-    'g'
-  );
-
-  const parts = text.match(SENTENCE_REGEX) || [];
-  return parts.map(p => p.trim()).filter(Boolean);
-}
-
-// === Use the splitter ===
-const sentences = splitSentences(userText, 'en-GB');
-
-// Ensure sentences is an array
-if (!sentences || sentences.length === 0) {
-  return 'no-sentences';
-}
-
-// Concatenate sentences into a single string
-const concatenatedText = sentences.join('');
-
-// Collect matches for each pattern
-const matchesBypattern = regexPatterns.map(pattern => {
-  const matches = [];
-  sentences.forEach(sentence => {
-    if (pattern.regex.test(sentence)) {
-      const highlightedSentence = sentence.replace(
-        pattern.regex,
-        '<strong>$&</strong>'
-      );
-      matches.push(highlightedSentence.trim());
-    }
-  });
-  return { pattern, matches };
-});
-
-
-
-
   // === ACRONYM EXPLANATION CHECK ===
 
   const explainedAcronyms = new Set();
@@ -532,7 +490,64 @@ if (unexplained.length > 0 ) {
      results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
    }
 
+//Readability patterns
+const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });
+const sentenceSegmenter = new Intl.Segmenter("en-GB", { granularity: "sentence" });
+const charSegmenter = /[\p{L}\p{N}]/u;
+const readingAge = {
+    1: "5-6",
+    2: "6-7",
+    3: "7-8",
+    4: "8-9",
+    5: "9-10",
+    6: "10-11",
+    7: "11-12",
+    8: "12-13",
+    9: "13-14",
+    10: "14-15",
+    11: "15-16",
+    12: "16-17",
+    13: "17-18",
+    14: "18-22" 
+  };
+function getReadabilityMetrics(text) {
+  const words = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
+  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
+  const characters = [...text].filter(char => charSegmenter.test(char)).length;
+  const rawAutomatedReadabilityIndex = 4.71 * (characters / words) + 0.5 * (words / sentences) - 21.43;
+  const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
+  return {
+    words,
+    sentences,
+    characters,
+    rawAutomatedReadabilityIndex,
+    automatedReadabilityIndex,
+    ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
+  };
+}
+function calculateOverLongSentences (text) {
+  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim());
+  if (!sentences[16] || sentences[16].segment === 0) {
+  return 'no-sentences';
+  }
+  const sentence16 = sentences[16].segment;
+  console.log([...wordSegmenter.segment(sentence16)]);
+  console.log(sentence16);
+  const sentence16WordCount = [...wordSegmenter.segment(sentence16)].filter(segment => segment.isWordLike).length;
+  return sentence16WordCount;
+}
+const overLongSentences = calculateOverLongSentences(userText);
+// console.log(overLongSentences[16].segment);
+// console.log(overLongSentences.length);
+console.log(overLongSentences);
+
+const readabilityMetrics = getReadabilityMetrics(userText);
+
+console.log(readabilityMetrics);
+
   return results;
 }
+
+
 
 module.exports = checkTextRules;
