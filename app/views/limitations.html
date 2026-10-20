@@ -1,0 +1,77 @@
+{% extends "layouts/feedback.html" %}
+
+{% set pageName="Home Office style guide coverage" %}
+
+{% block content %}
+
+<a href="javascript:window.history.back()" class="govuk-back-link">Back</a>
+
+<div class="govuk-grid-row">
+<div class="govuk-grid-column-full">
+
+<h1 class="govuk-heading-l">
+  Style checker limitations
+</h1>
+
+<p class="govuk-body">
+  The style checker can be used to assess if content follows the <a href="https://design.homeoffice.gov.uk/design-and-content/content/content-style-guide" class="govuk-link">Home Office style guide</a> consistently. It cannot tell you if your content is fit for purpose and meets user needs.
+</p>
+
+<br>
+<br>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">Terms not covered by the Style Checker</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Term</th>
+      <th scope="col" class="govuk-table__header">Reason</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">British nationality</th>
+      <td class="govuk-table__cell">Entry is more around guidance than prescribing a style point</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">British nationality (overseas)</th>
+      <td class="govuk-table__cell">Investigating. Needed to distinguish between usage of the visa term and the national, from context.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Deportation</th>
+      <td class="govuk-table__cell">This is guidance on how to use the term, less a style prescription.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Gender</th>
+      <td class="govuk-table__cell">This entry just links to the sex and gender pattern.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Ministers</th>
+      <td class="govuk-table__cell">Investigating. This entry just links to the GDS style guide.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Naturalisation</th>
+      <td class="govuk-table__cell">This is guidance on how to use the term, less a style prescription.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Passport control</th>
+      <td class="govuk-table__cell">Investigating.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Quotes and speech marks</th>
+      <td class="govuk-table__cell">This entry just links out to the GDS style guide.</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Sex</th>
+      <td class="govuk-table__cell">This is guidance on how to use the term, less a style prescription.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="govuk-inset-text">If a term does not appear here, then it is included in the style checker rules.</p>
+
+
+</div>
+</div>
+
+{% endblock %}
