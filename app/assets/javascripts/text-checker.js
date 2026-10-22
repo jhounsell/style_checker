@@ -1,6 +1,6 @@
 function checkTextRules(userText) {
-  let results = '';
-
+  let HoStyleGuideResults = '';
+  let styleIssueCount = 0;
   // Split the text into sentences
 function splitSentences(text, locale = 'en-GB') {
   // Prefer Intl.Segmenter when available
@@ -450,28 +450,30 @@ sentences.forEach(sentence => {
 
 
 if (unexplained.length > 0 ) {
-  results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
-  results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
-  results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
+  styleIssueCount++;
+  HoStyleGuideResults += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
+  HoStyleGuideResults += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
+  HoStyleGuideResults += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
   unexplained.forEach(item => {
     const regex = new RegExp(`\\b${item.acronym}\\b`, 'g');
     const highlighted = item.sentence.replace(regex, '<strong>$&</strong>');
-      results += `<div class="govuk-inset-text">${highlighted.trim()}</div>`;
+      HoStyleGuideResults += `<div class="govuk-inset-text">${highlighted.trim()}</div>`;
   });
   
-    results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+    HoStyleGuideResults += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
 }
 
-  // Format results
+  // Format HoStyleGuideResults
   matchesBypattern.forEach(({ pattern, matches }) => {
     if (matches.length > 0) {
-      results += `<h2 class="govuk-heading-s">${pattern.title}</h2>`;
-      results += `<p class="govuk-body">${pattern.message}</p>`;
-      results += `<p class="govuk-body">Matches found: ${matches.length}</p>`;
+      styleIssueCount++;
+      HoStyleGuideResults += `<h2 class="govuk-heading-s">${pattern.title}</h2>`;
+      HoStyleGuideResults += `<p class="govuk-body">${pattern.message}</p>`;
+      HoStyleGuideResults += `<p class="govuk-body">Matches found: ${matches.length}</p>`;
       matches.forEach (match => {
-        results += `<div class="govuk-inset-text">${match}</div>`;
+        HoStyleGuideResults += `<div class="govuk-inset-text">${match}</div>`;
       });
-      results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+      HoStyleGuideResults += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
     }
   });
 
@@ -483,11 +485,12 @@ if (unexplained.length > 0 ) {
   const hasTerm2 = term2.test(concatenatedText);
 
   if (hasTerm1 && hasTerm2) {
+    styleIssueCount++;
     const highlightedText = concatenatedText
       .replace(term1, '<strong>$&</strong>')
       .replace(term2, '<strong>$&</strong>');
-     results += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
-     results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
+     HoStyleGuideResults += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
+     HoStyleGuideResults += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
    }
 
 //Readability patterns
@@ -511,15 +514,19 @@ const readingAge = {
     14: "18-22" 
   };
 function getReadabilityMetrics(text) {
-  const words = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
-  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
-  const characters = [...text].filter(char => charSegmenter.test(char)).length;
-  const rawAutomatedReadabilityIndex = 4.71 * (characters / words) + 0.5 * (words / sentences) - 21.43;
+  const totalWordCount = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
+  const totalSentenceCount = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
+  const totalCharacterCount = [...text].filter(char => charSegmenter.test(char)).length;
+  const avgWordsPerSentence = Math.round(totalWordCount/totalSentenceCount);
+  const avgCharsPerWord = Math.round(totalCharacterCount/totalWordCount);
+  const rawAutomatedReadabilityIndex = 4.71 * (totalCharacterCount / totalWordCount) + 0.5 * (totalWordCount / totalSentenceCount) - 21.43;
   const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
   return {
-    words,
-    sentences,
-    characters,
+    totalWordCount,
+    totalSentenceCount,
+    totalCharacterCount,
+    avgWordsPerSentence,
+    avgCharsPerWord,
     rawAutomatedReadabilityIndex,
     automatedReadabilityIndex,
     ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
@@ -527,25 +534,56 @@ function getReadabilityMetrics(text) {
 }
 function calculateOverLongSentences (text) {
   const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim());
-  if (!sentences[16] || sentences[16].segment === 0) {
+  const over15Words = [];
+  const over25Words = [];
+  const over35Words = [];
+  if (sentences.length === 0) {
   return 'no-sentences';
-  }
-  const sentence16 = sentences[16].segment;
-  console.log([...wordSegmenter.segment(sentence16)]);
-  console.log(sentence16);
-  const sentence16WordCount = [...wordSegmenter.segment(sentence16)].filter(segment => segment.isWordLike).length;
-  return sentence16WordCount;
+  };
+
+  for (const sentence of sentences) {
+      const wordCount = [...wordSegmenter.segment(sentence.segment.trim()) ].filter(segment => segment.isWordLike).length;
+      if (wordCount >35) {
+        over35Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+      else if (wordCount >25) {
+        over25Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+      else if (wordCount >14) {
+        over15Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+  };
+  return {
+        over15Words,
+        over25Words,
+        over35Words
+      }
 }
 const overLongSentences = calculateOverLongSentences(userText);
-// console.log(overLongSentences[16].segment);
-// console.log(overLongSentences.length);
 console.log(overLongSentences);
 
 const readabilityMetrics = getReadabilityMetrics(userText);
 
 console.log(readabilityMetrics);
 
-  return results;
+const hasStyleIssues = HoStyleGuideResults.length > 0;
+
+return { 
+  styleIssueCount,
+  hasStyleIssues,
+  HoStyleGuideResults,
+  readabilityMetrics,
+  overLongSentences,
+  };
 }
 
 

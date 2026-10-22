@@ -4,24 +4,24 @@ const checkTextRules = require('./assets/javascripts/text-checker'); // Adjust t
 
 router.post('/check-text-router', (req, res, next) => {
   const userText = req.body['user-text'];
-  let results = '';
-
   // Apply style rules from the external file
-  results = checkTextRules(userText);
 
   // Redirect based on results
-  if (results === 'no-sentences') {
-    return res.redirect ('/no-sentences');
+  if (!userText || !userText.trim()) {
+    return res.redirect('/no-sentences')
   }
-    else if (results) {
-      req.session.data ['results'] = results;
-      return res.redirect('/results');
-    }
-    
-    else {
-      return res.redirect('/no-issues');
-    }
+  // Get the results of checkTextRules function and store the data for use in both /results and /no-issues
+  const results = checkTextRules(userText)
+  req.session.data['results'] = results;
 
+  if (results.hasStyleIssues) {
+    return res.redirect('/results')
+  }
+
+  else {
+    req.session.data ['results'] = results;
+    return res.redirect('/no-issues');
+  }
   })
 
 router.get('/results', (req, res) => {

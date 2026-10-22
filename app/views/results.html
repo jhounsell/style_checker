@@ -9,11 +9,125 @@
 
     <a href="javascript:window.history.back()" class="govuk-back-link">Back</a>
 
-    <h1 class="govuk-heading-l">There are style problems in your text:</h1>
+    <h1 class="govuk-heading-l">Your content has been checked</h1>
 
     <div id="results" class="govuk-body">
-      {{ results | safe }}
+      <div class="govuk-accordion" data-module="govuk-accordion" id="results-accordion">
+        <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading govuk-heading-m">
+              <span class="govuk-accordion__section-button" id="style-results-button">
+                Style issues
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
+              {{ results.styleIssueCount }} total
+            </div>
+          </div>
+          <div id="style-results-content" class="govuk-accordion__section-content">
+          {{ results.HoStyleGuideResults | safe }}
+          </div>
+      </div>
+      <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading govuk-heading-m">
+              <span class="govuk-accordion__section-button" id="sentence-length-button">
+                Sentences that are too long
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
+              {{ data.results.overLongSentences.over35Words.length + 
+                data.results.overLongSentences.over25Words.length +
+                data.results.overLongSentences.over15Words.length
+               }} total
+            </div>
+          </div>
+          <div id="sentences-results-content" class="govuk-accordion__section-content">
+          {% if results.overLongSentences.over35Words.length >0 %}
+            <h3 class="govuk-heading-s">
+            Your content has {{ data.results.overLongSentences.over35Words.length }} {{ data.results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over35Words.length | plural("is", showNumber=false)}} more than 35 words
+            </h3>
+            <p class="govuk-hint">These are very long sentences that you should try to break up. <a href="https://strainindex.wordpress.com/2012/04/30/longer-the-sentence-greater-the-strain/">Studies show</a> that at 29 words or longer, sentences become very difficult to understand.</p>
+            {% for sentence in results.overLongSentences.over35Words %}
+              <div class="govuk-inset-text">
+                {{ sentence.sentence }}
+              </div>
+              <p class="govuk-body">
+                {{ sentence.wordCount }} words
+              </p>
+              <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            {% endfor %}
+          {% endif %}
+          {% if results.overLongSentences.over25Words.length >0 %}
+            <h3 class="govuk-heading-s">
+              Your content has {{ data.results.overLongSentences.over25Words.length }} {{ data.results.overLongSentences.over25Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over25Words.length | plural("is", showNumber=false)}} more than 25 words
+            </h3>
+            <p class="govuk-hint">The GOV.UK style guide recommends keeping sentences to 25 words or less.</p>
+            {% for sentence in results.overLongSentences.over25Words %}
+              <div class="govuk-inset-text">
+                {{ sentence.sentence }}
+              </div>
+              <p class="govuk-body">
+                {{ sentence.wordCount }} words
+              </p>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            {% endfor %}
+          {% endif %}
+          {% if results.overLongSentences.over15Words.length >0 %}
+            <h3 class="govuk-heading-s">
+              Your content has {{ data.results.overLongSentences.over15Words.length }} {{ data.results.overLongSentences.over15Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over15Words.length | plural("is", showNumber=false)}} more than 15 words
+            </h3>
+            <p class="govuk-hint">The Home Office User-Centred Design Manual recommends keeping sentences short and less than 15 words.</p>
+            {% for sentence in results.overLongSentences.over15Words %}
+              <div class="govuk-inset-text">
+                {{ sentence.sentence }}
+              </div>
+            <p class="govuk-body">
+              {{ sentence.wordCount }} words
+            </p>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            {% endfor %}
+          {% endif %}
+          </div>
+      </div>
+      <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading govuk-heading-m">
+              <span class="govuk-accordion__section-button" id="readability-results-button">
+                Readability metrics
+              </span>
+            </h2>
+          </div>
+          <div id="readability-results-content" class="govuk-accordion__section-content">
+                  <p class="govuk-body">
+        Automated Readability Index score: {{ data.results.readabilityMetrics.automatedReadabilityIndex}} <br>
+        This is equivalent to a reading age of <strong>{{ data.results.readabilityMetrics.ageRange }}</strong>.
+      </p>
+      <p class="body">
+        Your content:
+        <ul>
+          <li>
+            is {{data.results.readabilityMetrics.totalWordCount}} words long
+          </li>
+          <!--
+          <li>
+            is {{data.results.readabilityMetrics.totalSentenceCount}} sentences long
+          </li>
+          -->
+          <li>
+            has an average sentence length of {{data.results.readabilityMetrics.avgWordsPerSentence}} words
+          </li>
+          <li>
+            has an average word length of {{data.results.readabilityMetrics.avgCharsPerWord}} letters
+          </li>
+        </ul>
+      </p>
+          </div>
+      </div>
+      </div>
     </div>
+    <br>
+    <br>
     <a href="check-text#user-text" class="govuk-button" id="back-to-text">Back to your text</a>
   
   </div>
