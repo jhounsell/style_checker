@@ -14,7 +14,7 @@ function checkTextRules(userText) {
     { regex: /Biometric\sResidenc(e|ey)\sPermit/g, message: "Spell biometric residence permit in lower case. You can use the acronym BRP after the first mention.", title: "Biometric residence permit"},
     { regex: /Biometric\sResidenc(e|ey)\sCard/g, message: "Spell biometric residence card in lower case. You can use the acronym BRC after the first mention.", title: "Biometric residence card"},
     { regex: /(border\sforce|Border\sforce|border\sForce|BORDER\sFORCE)/g, message: "Capitalise the first letters of Border Force.", title: "Border Force"},
-    { regex: /(passport\scontrol|primary\scontrol\spoint)/gi, message: "Use border control rather than passport control or primary control point.", title: "Border control"},
+    { regex: /primary\scontrol\spoint|\bPCP\b/gi, message: "Use border control or passport control with the general public rather than 'primary control point' or 'PCP'.", title: "Border control"},
     { regex: /(UK|United\sKingdom|U\.K\.)\s(c|C)itizen/g, message: "Do not use UK citizen. Be specific about which <a href=https://www.gov.uk/types-of-british-nationality>type of nationality</a> you mean.", title: "UK citizen"},
     { regex: /(British|UK|U\.K\.|United\sKingdom)\s(Overseas\sTerritories|overseas\sTerritories|Overseas\sterritories)/g, message: "Write overseas territories in lower case", title: "British overseas territories"},
     { regex: /\bBAME|BME\b/g, message: "In the context of inclusivity, do not use acronyms like 'BAME' or 'BME' - they do not refer to a singular homogenous ethnic group.", title: "BAME/BME"},
