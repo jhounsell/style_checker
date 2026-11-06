@@ -7,7 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <a href="javascript:window.history.back()" class="govuk-back-link">Back</a>
+    <a href="/check-text" class="govuk-back-link">Back</a>
 
     <h1 class="govuk-heading-l">Your content has been checked</h1>
 
@@ -35,17 +35,14 @@
                 Sentences that are too long
               </span>
             </h2>
-            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-1">
-              {{ data.results.overLongSentences.over35Words.length + 
-                data.results.overLongSentences.over25Words.length +
-                data.results.overLongSentences.over15Words.length
-               }} total
+            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-2">
+              {{ results.overLongSentences.totalLongSentences }} total
             </div>
           </div>
           <div id="sentences-results-content" class="govuk-accordion__section-content">
           {% if results.overLongSentences.over35Words.length >0 %}
             <h3 class="govuk-heading-s">
-            Your content has {{ data.results.overLongSentences.over35Words.length }} {{ data.results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over35Words.length | plural("is", showNumber=false)}} more than 35 words
+            Your content has {{ results.overLongSentences.over35Words.length }} {{ results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over35Words.length | plural("is", showNumber=false)}} more than 35 words
             </h3>
             <p class="govuk-hint">These are very long sentences that you should try to break up. <a href="https://strainindex.wordpress.com/2012/04/30/longer-the-sentence-greater-the-strain/">Studies show</a> that at 29 words or longer, sentences become very difficult to understand.</p>
             {% for sentence in results.overLongSentences.over35Words %}
@@ -60,7 +57,7 @@
           {% endif %}
           {% if results.overLongSentences.over25Words.length >0 %}
             <h3 class="govuk-heading-s">
-              Your content has {{ data.results.overLongSentences.over25Words.length }} {{ data.results.overLongSentences.over25Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over25Words.length | plural("is", showNumber=false)}} more than 25 words
+              Your content has {{ results.overLongSentences.over25Words.length }} {{ results.overLongSentences.over25Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over25Words.length | plural("is", showNumber=false)}} more than 25 words
             </h3>
             <p class="govuk-hint">The GOV.UK style guide recommends keeping sentences to 25 words or less.</p>
             {% for sentence in results.overLongSentences.over25Words %}
@@ -75,7 +72,7 @@
           {% endif %}
           {% if results.overLongSentences.over15Words.length >0 %}
             <h3 class="govuk-heading-s">
-              Your content has {{ data.results.overLongSentences.over15Words.length }} {{ data.results.overLongSentences.over15Words.length | plural("sentence", showNumber=false)}} that {{ data.results.overLongSentences.over15Words.length | plural("is", showNumber=false)}} more than 15 words
+              Your content has {{ results.overLongSentences.over15Words.length }} {{ results.overLongSentences.over15Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over15Words.length | plural("is", showNumber=false)}} more than 15 words
             </h3>
             <p class="govuk-hint">The Home Office User-Centred Design Manual recommends keeping sentences short and less than 15 words.</p>
             {% for sentence in results.overLongSentences.over15Words %}
@@ -90,6 +87,36 @@
           {% endif %}
           </div>
       </div>
+      {% if results.overLongParagraphs.over5sentenceParagraphs.length >0 %}
+      <div class="govuk-accordion__section">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading govuk-heading-m">
+              <span class="govuk-accordion__section-button" id="paragraph-length-button">
+                Paragraphs that are too long
+              </span>
+            </h2>
+            <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-3">
+              {{ results.overLongParagraphs.over5sentenceParagraphs.length
+               }} total
+            </div>
+          </div>
+          <div id="paragraphs-results-content" class="govuk-accordion__section-content">
+            <h3 class="govuk-heading-s">
+            Your content has {{ results.overLongParagraphs.over5sentenceParagraphs.length }} {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("paragraph", showNumber=false)}} that {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("is", showNumber=false)}} more than 5 sentences
+            </h3>
+            <p class="govuk-hint">{{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("This", showNumber=false)}} {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("is", showNumber=false)}} {% if results.overLongParagraphs.over5sentenceParagraphs.length <2 %} a{% endif %} long {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("paragraph", showNumber=false)}} that you should try to break up. <a href="https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/#:~:text=Paragraphs%20should%20have%20no%20more%20than%205%20sentences%20each.">GOV.UK recommends that paragraphs should be a maximum of 5 sentences</a>.</p>
+            {% for paragraph in results.overLongParagraphs.over5sentenceParagraphs %}
+              <div class="govuk-inset-text">
+                {{ paragraph.paragraph }}
+              </div>
+              <p class="govuk-body">
+                {{ paragraph.sentenceCount }} sentences
+              </p>
+              <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+            {% endfor %}
+          </div>
+      </div>
+      {% endif %}
       <div class="govuk-accordion__section">
           <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading govuk-heading-m">
@@ -99,29 +126,29 @@
             </h2>
           </div>
           <div id="readability-results-content" class="govuk-accordion__section-content">
-                  <p class="govuk-body">
-        Automated Readability Index score: {{ data.results.readabilityMetrics.automatedReadabilityIndex}} <br>
-        This is equivalent to a reading age of <strong>{{ data.results.readabilityMetrics.ageRange }}</strong>.
-      </p>
-      <p class="body">
+            <p class="govuk-body">
+              Automated Readability Index score: {{ results.readabilityMetrics.automatedReadabilityIndex}} <br>
+              This is equivalent to a reading age of <strong>{{ results.readabilityMetrics.ageRange }}</strong>.
+            </p>
+      <p class="govuk-body">
         Your content:
-        <ul>
+      </p>
+        <ul class="govuk-list govuk-list--bullet">
           <li>
-            is {{data.results.readabilityMetrics.totalWordCount}} words long
+            is {{results.readabilityMetrics.totalWordCount}} words long
           </li>
           <!--
           <li>
-            is {{data.results.readabilityMetrics.totalSentenceCount}} sentences long
+            is {{results.readabilityMetrics.totalSentenceCount}} sentences long
           </li>
           -->
           <li>
-            has an average sentence length of {{data.results.readabilityMetrics.avgWordsPerSentence}} words
+            has an average sentence length of {{results.readabilityMetrics.avgWordsPerSentence}} words
           </li>
           <li>
-            has an average word length of {{data.results.readabilityMetrics.avgCharsPerWord}} letters
+            has an average word length of {{results.readabilityMetrics.avgCharsPerWord}} letters
           </li>
         </ul>
-      </p>
           </div>
       </div>
       </div>

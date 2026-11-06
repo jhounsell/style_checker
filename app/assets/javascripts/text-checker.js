@@ -561,15 +561,53 @@ function calculateOverLongSentences (text) {
           wordCount
       })
       }
+
   };
+  const totalLongSentences = over15Words.length + over25Words.length + over35Words.length;
   return {
         over15Words,
         over25Words,
-        over35Words
+        over35Words,
+        totalLongSentences
       }
+}
+function calculateOverLongParagraphs(text) {
+  const over5sentenceParagraphs = [];
+  const paragraphs = text
+    .split(/\r?\n\s*\r?\n/)
+    .filter( paragraph => paragraph.trim());
+  console.log(paragraphs);
+  console.log(paragraphs.length);
+  if (paragraphs.length === 0) {
+    return {
+      over5sentenceParagraphs: []
+    };
+  }
+  for (const paragraph of paragraphs) {
+    const punctuationCount = (paragraph.match(/[.!?]/g) || []).length;
+    if (punctuationCount === 0) {
+      console.log('Skipping: ', paragraph, ' punctuation count: ', punctuationCount);
+      continue;
+    }
+    const sentenceCount = [...sentenceSegmenter.segment(paragraph)].filter(segment => segment.segment.trim()).length;
+    console.log('sentence count: ' + sentenceCount);
+
+    if (sentenceCount > 5) {
+      over5sentenceParagraphs.push({
+        paragraph: paragraph.trim(),
+        sentenceCount
+    })
+  }
+}
+return {
+  over5sentenceParagraphs
+  };
 }
 const overLongSentences = calculateOverLongSentences(userText);
 console.log(overLongSentences);
+
+const overLongParagraphs = calculateOverLongParagraphs(userText);
+console.log(overLongParagraphs);
 
 const readabilityMetrics = getReadabilityMetrics(userText);
 
@@ -583,6 +621,7 @@ return {
   HoStyleGuideResults,
   readabilityMetrics,
   overLongSentences,
+  overLongParagraphs
   };
 }
 
