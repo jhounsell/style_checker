@@ -1,0 +1,86 @@
+{% if results.overLongSentences.over15Words.length or results.overLongSentences.over25Words.length or results.overLongSentences.over35Words.length or results.overLongParagraphs.over5sentenceParagraphs.length %}
+    <div class="govuk-accordion__section">
+        <div class="govuk-accordion__section-header">
+        <h2 class="govuk-accordion__section-heading govuk-heading-m">
+            <span class="govuk-accordion__section-button" id="sentence-length-button">
+            Readability issues
+            </span>
+        </h2>
+        <div class="govuk-accordion__section-summary govuk-body" id="accordion-with-summary-sections-summary-2">
+            {% if results.overLongSentences.totalLongSentences >0 %}
+            {{ results.overLongSentences.totalLongSentences }} long {{ results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} 
+            {% endif %}
+            {% if (results.overLongSentences.totalLongSentences >0 ) and (results.overLongParagraphs.over5sentenceParagraphs.length >0) %}
+            and
+            {% endif %}
+            {% if results.overLongParagraphs.over5sentenceParagraphs.length >0 %}
+            {{ results.overLongParagraphs.over5sentenceParagraphs.length }} long {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("paragraph", showNumber=false)}}
+            {% endif %}
+        </div>
+        </div>
+        <div id="sentences-results-content" class="govuk-accordion__section-content">
+        {% if results.overLongSentences.over35Words.length >0 %}
+        <h3 class="govuk-body-l">Long sentences</h3>
+        <h4 class="govuk-heading-s">
+        Your content has {{ results.overLongSentences.over35Words.length }} {{ results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over35Words.length | plural("is", showNumber=false)}} more than 35 words
+        </h4>
+        <p class="govuk-hint">These are very long sentences that you should try to break up. <a href="https://strainindex.wordpress.com/2012/04/30/longer-the-sentence-greater-the-strain/">Studies show</a> that at 29 words or longer, sentences become very difficult to understand.</p>
+        {% for sentence in results.overLongSentences.over35Words %}
+            <div class="govuk-inset-text">
+            {{ sentence.sentence }}
+            </div>
+            <p class="govuk-body">
+            {{ sentence.wordCount }} words
+            </p>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        {% endfor %}
+        {% endif %}
+        {% if results.overLongSentences.over25Words.length >0 %}
+        <h4 class="govuk-heading-s">
+            Your content has {{ results.overLongSentences.over25Words.length }} {{ results.overLongSentences.over25Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over25Words.length | plural("is", showNumber=false)}} more than 25 words
+        </h4>
+        <p class="govuk-hint">The GOV.UK style guide recommends keeping sentences to 25 words or less.</p>
+        {% for sentence in results.overLongSentences.over25Words %}
+            <div class="govuk-inset-text">
+            {{ sentence.sentence }}
+            </div>
+            <p class="govuk-body">
+            {{ sentence.wordCount }} words
+            </p>
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        {% endfor %}
+        {% endif %}
+        {% if results.overLongSentences.over15Words.length >0 %}
+        <h4 class="govuk-heading-s">
+            Your content has {{ results.overLongSentences.over15Words.length }} {{ results.overLongSentences.over15Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over15Words.length | plural("is", showNumber=false)}} more than 15 words
+        </h4>
+        <p class="govuk-hint">The Home Office User-Centred Design Manual recommends keeping sentences short and less than 15 words.</p>
+        {% for sentence in results.overLongSentences.over15Words %}
+            <div class="govuk-inset-text">
+            {{ sentence.sentence }}
+            </div>
+        <p class="govuk-body">
+            {{ sentence.wordCount }} words
+        </p>
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        {% endfor %}
+        {% endif %}
+        {% if results.overLongParagraphs.over5sentenceParagraphs.length >0 %}
+        <h3 class="govuk-body-l">Long paragraphs</h3>
+        <h4 class="govuk-heading-s">
+        Your content has {{ results.overLongParagraphs.over5sentenceParagraphs.length }} {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("paragraph", showNumber=false)}} that {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("is", showNumber=false)}} more than 5 sentences
+        </h4>
+        <p class="govuk-hint">{{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("This", showNumber=false)}} {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("is", showNumber=false)}} {% if results.overLongParagraphs.over5sentenceParagraphs.length <2 %} a{% endif %} long {{ results.overLongParagraphs.over5sentenceParagraphs.length | plural("paragraph", showNumber=false)}} that you should try to break up. <a href="https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/#:~:text=Paragraphs%20should%20have%20no%20more%20than%205%20sentences%20each.">GOV.UK recommends that paragraphs should be a maximum of 5 sentences</a>.</p>
+        {% for paragraph in results.overLongParagraphs.over5sentenceParagraphs %}
+            <div class="govuk-inset-text">
+            {{ paragraph.paragraph }}
+            </div>
+            <p class="govuk-body">
+            {{ paragraph.sentenceCount }} sentences
+            </p>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+{% endif %}

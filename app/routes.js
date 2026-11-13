@@ -29,7 +29,9 @@ router.get('/results', (req, res) => {
 });
 
 router.get('/no-issues', (req, res) => {
-  res.render('no-issues');
+  res.render('no-issues', {
+    results: req.session.data['results']
+  });
 });
 
 module.exports = router;

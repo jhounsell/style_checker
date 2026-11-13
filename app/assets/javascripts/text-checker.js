@@ -96,10 +96,11 @@ const concatenatedText = sentences.join('');
     { regex: /(?!immigration\shealth\ssurcharge)[iI]mmigration\s[hH]ealth\s[sS]urcharge/g, message: "Spell immigration health surcharge in lower case.", title: "Immigration health surcharge"},  
     { regex: /immigration\sofficer/g, message: "Use 'Border Force officer' rather than 'immigration officer'. Only use 'immigration officer' if you have a specific reason.", title: "Immigration officer"},  
     { regex: /(?!Immigration\sRules)[iI]mmigration\s[rR]ules/g, message: "Capitalise 'Immigration Rules'.", title:"Immigration Rules"},  
-    { regex: /([iI]ndefinite\sleave\sto\s([eE]nter|[rR]emain)|ILE|ILR)/g, message: "'Indefinite leave to enter' and 'indefinite leave to remain' are officially called 'settlement'.", title: "Settlement"},  
+    { regex: /([iI]ndefinite\sleave\sto\s([eE]nter|[rR]emain)|ILE|ILR)/g, message: "'Use settlement as the plain English term for 'indefinite leave to remain' and 'indefinite leave to enter'. Use both terms together if it helps users understand. For example, 'apply for settlement (indefinite leave to remain).", title: "Indefinite leave to remain/enter"},  
+    { regex: /\bsettlement\b/gi, message: "'settlement' is the plain English term for 'indefinite leave to remain' and 'indefinite leave to enter'. Use both terms together if it helps users understand. For example, 'apply for settlement (indefinite leave to remain).", title: "Settlement"},  
     { regex: /(?!King(‘|'|’)s\sSpeech)[Kk]ing(‘|'|’)s\s[sS]peech/g, message: "Capitalise 'King's Speech' thusly.", title: "King's Speech"},  
-    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\senter/gi, message: "Use 'permission to enter' instead of 'leave to enter' or 'limited leave to enter'.", title: "Permission to enter"},  
-    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' instead of 'leave to remain' or 'limited leave to remain'.", title: "Permission to stay"},  
+    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\senter/gi, message: "Use 'permission to enter' as the plain English term for 'leave to enter' or 'limited leave to enter'. Use both terms together if it helps users understand.", title: "Permission to enter"},  
+    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' as the plain English term for 'leave to remain' or 'limited leave to remain'. Use both terms together if it helps users understand.", title: "Permission to stay"},  
     { regex: /(?!letter\sof\sauthority)[Ll]etter\s[oO]f\s[aA]uthority/g, message: "Spell letter of authority in lower case.", title: "Letter of authority"},  
     { regex: /(?!Life\sin\sthe\sUK\sTest)[lL]ife\s[iI]n\s[tT]he\s([uU]\.?[kK]\.?|[uU]nited\s[kK]ingdom)\s[tT]est/g, message: "Life in the UK Test should be spelled thusly, with capitals on the L and T.", title: "Life in the UK Test"},  
     { regex: /(?<!GOV\.UK\sOne\s)(\blog[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]ins?\b|\blogins?\b)/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
@@ -136,7 +137,7 @@ const concatenatedText = sentences.join('');
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
-    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' rather than 'photograph'. For example, 'take a photo of your document' or 'photo ID'", title: "Photo"},
+    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' if you mean a photo taken with a camera. Do not use 'photograph', 'image' or 'picture'.", title: "Photo"},
     { regex: /\bsiblings?(hip|[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]in[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]law)?/gi, message: "Sibling is not plain English and may be hard to translate. Use 'brother or sister' instead.", title: "Sibling"},
     { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
     { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
@@ -146,6 +147,7 @@ const concatenatedText = sentences.join('');
     { regex: /\b(?:remote\s+video((\s|\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)?conferencing)?\scalls?|(remote\s)?(?!video\scalls?)(remote|virtual|online|video)\s((call|meeting|(tele)?conference)s?))/gi, message: "Use 'video call' for meetings or appointments that allow participants to see and hear each other using devices with cameras and screens. For example, 'your appointment will be a video call'. Avoid less specific terms like 'remote', 'virtual meeting', 'online meeting' or 'video conference'.", title: "video call"},
     { regex: /\btelephon(e|ed|es|ing|y)\b/gi, message: "Use 'phone' instead of 'telephone'.", title: "telephone"},
     { regex: /(?<!(smart\s?|mobile\s))phones?\b/gi, message: "If it is important, specify the type of phone. For example, 'you will need a smartphone to download the app'.", title: "telephone"},
+    { regex: /(?<!(product|font|language)\s?)((immediate|close|extended|non-)\s?)?\bfamil(y|ies)\b(?!-friendly)(\smembers?)?(?!(\s((ticket|context|day|restaurant|pub|area|environment|atmosphere|setting|home|affair|tradition|business|brand|court|law|proceedings)s?))|-(owned|run))/gi, message: "Do not assume users know what you mean by 'family', and be specific about who is included.", title: "family"},
      
     //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
@@ -576,8 +578,6 @@ function calculateOverLongParagraphs(text) {
   const paragraphs = text
     .split(/\r?\n\s*\r?\n/)
     .filter( paragraph => paragraph.trim());
-  console.log(paragraphs);
-  console.log(paragraphs.length);
   if (paragraphs.length === 0) {
     return {
       over5sentenceParagraphs: []
@@ -586,12 +586,9 @@ function calculateOverLongParagraphs(text) {
   for (const paragraph of paragraphs) {
     const punctuationCount = (paragraph.match(/[.!?]/g) || []).length;
     if (punctuationCount === 0) {
-      console.log('Skipping: ', paragraph, ' punctuation count: ', punctuationCount);
       continue;
     }
     const sentenceCount = [...sentenceSegmenter.segment(paragraph)].filter(segment => segment.segment.trim()).length;
-    console.log('sentence count: ' + sentenceCount);
-
     if (sentenceCount > 5) {
       over5sentenceParagraphs.push({
         paragraph: paragraph.trim(),
@@ -604,14 +601,10 @@ return {
   };
 }
 const overLongSentences = calculateOverLongSentences(userText);
-console.log(overLongSentences);
 
 const overLongParagraphs = calculateOverLongParagraphs(userText);
-console.log(overLongParagraphs);
 
 const readabilityMetrics = getReadabilityMetrics(userText);
-
-console.log(readabilityMetrics);
 
 const hasStyleIssues = HoStyleGuideResults.length > 0;
 
