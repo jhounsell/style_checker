@@ -7,5 +7,5 @@ We're looking to add more features in the future.
 
 See guidance on how the tool works on the [homepage](app/views/index.html).
 
-Current version: v1.2.1.
+Current version: v2.0.1.
 See release notes: https://github.com/jhounsell/style_checker/releases 
