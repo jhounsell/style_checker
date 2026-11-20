@@ -1,0 +1,9 @@
+{
+    "json.schemas": [
+        { "fileMatch": [
+            "app/data/external/govuk-assist/rule_mapping.json"
+        ],
+        "url": "./app/data/external/govuk-assist/rule_mapping.schema.json"
+        }
+    ]
+}

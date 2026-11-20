@@ -1,0 +1,76 @@
+{
+    "$schema": "http://json-schema.org/2020-12/schema",
+    "title": "GOVUK Assist rule mapping schema",
+    "description": "Validates external GOV.UK Assist style guide checking rules mapping file",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "required": [
+            "rule_id",
+            "rule",
+            "details",
+            "check"
+        ],
+        "properties": {
+            "rule_id": {
+                "type": "string",
+                "minLength": 1
+            },
+            "rule": {
+                "type": "string",
+                "minLength": 1
+            },
+            "details": {
+                "type": "string"
+            },
+            "priority": {
+                "type": "number"
+            },
+            "redundant": {
+                "type": "boolean"
+            },
+            "check": {
+                "type": "object",
+                "required:": [
+                    "llm"
+                ],
+                "properties": {
+                    "llm": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "matches",
+                            "chunks",
+                            "document"
+                        ]
+                    },
+                    "patterns": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "correct_forms": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "case_sensitive": {
+                        "type:": "boolean"
+                    },
+                    "first_only": {
+                        "type:": "boolean"
+                    },
+                    "matcher": {
+                        "type": "string"
+                    },
+                    "max_words": {
+                        "type": "number"
+                    }
+                },
+                "additionalProperties": true
+            }
+        }
+    }
+}
