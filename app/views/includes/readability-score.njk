@@ -10,26 +10,31 @@
             </div>
           </div>
           <div id="readability-results-content" class="govuk-accordion__section-content">
+              <h3 class=govuk-visually-hidden>
+                Readability overview
+              </h3>
+                <dl class="govuk-summary-list govuk-summary-list--no-border">
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Readability score
+                    </dt>
+                    <dd class="govuk-summary-value">
+                      {{ results.readabilityMetrics.automatedReadabilityIndex}}
+                    </dd>
+                  </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Reading age
+                    </dt>
+                    <dd class="govuk-summary-value">
+                      {{results.readabilityMetrics.ageRange}} years old
+                    </dd>
+                  </div>
+                </dl>
+              
                 <p class="govuk-body">
-                Automated Readability Index score: {{ results.readabilityMetrics.automatedReadabilityIndex}} <br>
-                This is equivalent to a reading age of <strong>{{ results.readabilityMetrics.ageRange }}</strong>.
+                The Home Office User-Centred Design Manual <a href="https://design.homeoffice.gov.uk/accessibility/written-content/readability#:~:text=Follow%20the%20GOV.UK%20best%20practice%20guidance%20for%20writing%20content.%20Usually%20we%20recommend%20writing%20for%20a%20maximum%20reading%20age%20of%209%2C%20even%20if%20you%20are%20writing%20for%20a%20specialist%20audience.">recommends writing for a maximum reading age of 9</a>.
                 </p>
-                <p class="govuk-body">
-                    Your content:
-                </p>
-                <ul class="govuk-list govuk-list--bullet">
-                <li>
-                    is {{results.readabilityMetrics.totalWordCount}} words long
-                </li>
-                <li>
-                    is {{results.readabilityMetrics.totalSentenceCount}} sentences long
-                </li>
-                <li>
-                    has an average sentence length of {{results.readabilityMetrics.avgWordsPerSentence}} words
-                </li>
-                <li>
-                    has an average word length of {{results.readabilityMetrics.avgCharsPerWord}} letters
-                </li>
                 </ul>
           </div>
       </div>

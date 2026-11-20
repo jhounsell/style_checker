@@ -19,8 +19,11 @@
         </div>
         </div>
         <div id="sentences-results-content" class="govuk-accordion__section-content">
+        {% if results.overLongSentences.totalLongSentences >0 %}
+            <h3 class="govuk-body-l">Long sentences</h3>
+        {% endif %}
+
         {% if results.overLongSentences.over35Words.length >0 %}
-        <h3 class="govuk-body-l">Long sentences</h3>
         <h4 class="govuk-heading-s">
         Your content has {{ results.overLongSentences.over35Words.length }} {{ results.overLongSentences.over35Words.length | plural("sentence", showNumber=false)}} that {{ results.overLongSentences.over35Words.length | plural("is", showNumber=false)}} more than 35 words
         </h4>
