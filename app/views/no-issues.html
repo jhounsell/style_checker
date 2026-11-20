@@ -7,17 +7,17 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-l" id="header">No issues found</h1>
+    <h1 class="govuk-heading-l" id="header">No style issues found</h1>
 
     <p class="govuk-body">
       Your content complies with <a href="https://design.homeoffice.gov.uk/content-style-guide">Home Office</a> style rules.
     </p>
 
-    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+      {% include "includes/readability-issues.njk" %}
+      {% include "includes/readability-score.njk" %}
+    </div>
 
-    <a href="check-text.html#user-text" class="govuk-button">Back to your text</a>
-  
-  </div>
  
 </div>
 

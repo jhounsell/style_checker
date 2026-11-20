@@ -1,5 +1,37 @@
 function checkTextRules(userText) {
-  let results = '';
+  let HoStyleGuideResults = '';
+  let styleIssueCount = 0;
+  // Split the text into sentences
+function splitSentences(text, locale = 'en-GB') {
+  // Prefer Intl.Segmenter when available
+  if (globalThis.Intl?.Segmenter) {
+    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
+    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
+  }
+
+  // Fallback: protect URLs/emails so dots inside them don't split sentences
+  const URL_PATTERN = /https?:\/\/\S+/;
+  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
+
+  const SENTENCE_REGEX = new RegExp(
+    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
+    'g'
+  );
+
+  const parts = text.match(SENTENCE_REGEX) || [];
+  return parts.map(p => p.trim()).filter(Boolean);
+}
+
+// === Use the splitter ===
+const sentences = splitSentences(userText, 'en-GB');
+
+// Ensure sentences is an array
+if (!sentences || sentences.length === 0) {
+  return 'no-sentences';
+}
+
+// Concatenate sentences into a single string
+const concatenatedText = sentences.join('');
 
   //Regex rule set
   const regexPatterns = [
@@ -64,10 +96,11 @@ function checkTextRules(userText) {
     { regex: /(?!immigration\shealth\ssurcharge)[iI]mmigration\s[hH]ealth\s[sS]urcharge/g, message: "Spell immigration health surcharge in lower case.", title: "Immigration health surcharge"},  
     { regex: /immigration\sofficer/g, message: "Use 'Border Force officer' rather than 'immigration officer'. Only use 'immigration officer' if you have a specific reason.", title: "Immigration officer"},  
     { regex: /(?!Immigration\sRules)[iI]mmigration\s[rR]ules/g, message: "Capitalise 'Immigration Rules'.", title:"Immigration Rules"},  
-    { regex: /([iI]ndefinite\sleave\sto\s([eE]nter|[rR]emain)|ILE|ILR)/g, message: "'Indefinite leave to enter' and 'indefinite leave to remain' are officially called 'settlement'.", title: "Settlement"},  
+    { regex: /([iI]ndefinite\sleave\sto\s([eE]nter|[rR]emain)|ILE|ILR)/g, message: "'Use settlement as the plain English term for 'indefinite leave to remain' and 'indefinite leave to enter'. Use both terms together if it helps users understand. For example, 'apply for settlement (indefinite leave to remain).", title: "Indefinite leave to remain/enter"},  
+    { regex: /\bsettlement\b/gi, message: "'settlement' is the plain English term for 'indefinite leave to remain' and 'indefinite leave to enter'. Use both terms together if it helps users understand. For example, 'apply for settlement (indefinite leave to remain).", title: "Settlement"},  
     { regex: /(?!King(‘|'|’)s\sSpeech)[Kk]ing(‘|'|’)s\s[sS]peech/g, message: "Capitalise 'King's Speech' thusly.", title: "King's Speech"},  
-    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\senter/gi, message: "Use 'permission to enter' instead of 'leave to enter' or 'limited leave to enter'.", title: "Permission to enter"},  
-    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' instead of 'leave to remain' or 'limited leave to remain'.", title: "Permission to stay"},  
+    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\senter/gi, message: "Use 'permission to enter' as the plain English term for 'leave to enter' or 'limited leave to enter'. Use both terms together if it helps users understand.", title: "Permission to enter"},  
+    { regex: /(?<!indefinite\s)(limited\s)?leave\sto\sremain/gi, message: "Use 'permission to stay' as the plain English term for 'leave to remain' or 'limited leave to remain'. Use both terms together if it helps users understand.", title: "Permission to stay"},  
     { regex: /(?!letter\sof\sauthority)[Ll]etter\s[oO]f\s[aA]uthority/g, message: "Spell letter of authority in lower case.", title: "Letter of authority"},  
     { regex: /(?!Life\sin\sthe\sUK\sTest)[lL]ife\s[iI]n\s[tT]he\s([uU]\.?[kK]\.?|[uU]nited\s[kK]ingdom)\s[tT]est/g, message: "Life in the UK Test should be spelled thusly, with capitals on the L and T.", title: "Life in the UK Test"},  
     { regex: /(?<!GOV\.UK\sOne\s)(\blog[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]ins?\b|\blogins?\b)/gi, message: "Use 'sign in' rather than 'log in'.", title: "Sign in"},  
@@ -104,7 +137,7 @@ function checkTextRules(userText) {
     { regex: /(?!Visa\sApplication\sCentre)[vV]isa\s[aA]pplication\s[cC]ent(re|er)/g, message: "Spell 'Visa Application Centre' using UK English spelling and uppercase first letters.", title: "Visa Application Centre"},
     { regex: /((visa)*\sprocessing\spost|visa\ssection|(visa)*\sissuing\soffice)/gi, message: "In the context of visas, do not use 'processing post', 'section' or 'issuing office'. Use 'Visa Application Centre' instead.", title: "Processing post/section/issuing office"},
     { regex: /.*\b(watch[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]list|Watchlist)/g, message: "Spell 'watchlist' in lower case and as one word.", title: "Watchlist"},
-    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' rather than 'photograph'. For example, 'take a photo of your document' or 'photo ID'", title: "Photo"},
+    { regex: /\bphotographs?(?!y|e[rd]|ing)\b/gi, message: "Use 'photo' if you mean a photo taken with a camera. Do not use 'photograph', 'image' or 'picture'.", title: "Photo"},
     { regex: /\bsiblings?(hip|[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]in[\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D]law)?/gi, message: "Sibling is not plain English and may be hard to translate. Use 'brother or sister' instead.", title: "Sibling"},
     { regex: /\bspous(es?|al)([\s\u002D\u2013\u2014\u2012\u2015\u2212\u00AD\uFE58\uFF0D].+?)?/gi, message: "User research found that spouse is not plain English. Consider using husband or wife instead. For example, 'Do you want to add a husband or wife to your referral?'", title: "Spouse"},
     { regex: /\bmaiden\snames?/gi, message: "The term maiden name implies that only women change their family name after marriage. Consider using more inclusive terms like 'previous last name'.", title: "Maiden name"},
@@ -114,6 +147,7 @@ function checkTextRules(userText) {
     { regex: /\b(?:remote\s+video((\s|\u002D|\u2013|\u2014|\u2012|\u2015|\u2212|\u00AD|\uFE58|\uFF0D)?conferencing)?\scalls?|(remote\s)?(?!video\scalls?)(remote|virtual|online|video)\s((call|meeting|(tele)?conference)s?))/gi, message: "Use 'video call' for meetings or appointments that allow participants to see and hear each other using devices with cameras and screens. For example, 'your appointment will be a video call'. Avoid less specific terms like 'remote', 'virtual meeting', 'online meeting' or 'video conference'.", title: "video call"},
     { regex: /\btelephon(e|ed|es|ing|y)\b/gi, message: "Use 'phone' instead of 'telephone'.", title: "telephone"},
     { regex: /(?<!(smart\s?|mobile\s))phones?\b/gi, message: "If it is important, specify the type of phone. For example, 'you will need a smartphone to download the app'.", title: "telephone"},
+    { regex: /(?<!(product|font|language)\s?)((immediate|close|extended|non-)\s?)?\bfamil(y|ies)\b(?!-friendly)(\smembers?)?(?!(\s((ticket|context|day|restaurant|pub|area|environment|atmosphere|setting|home|affair|tradition|business|brand|court|law|proceedings)s?))|-(owned|run))/gi, message: "Do not assume users know what you mean by 'family', and be specific about who is included.", title: "family"},
      
     //Writing about disability rules - won't flag 'attack' 'fit' or 'spell' - these are too generic
     { regex: /(the\s)?handicapped/gi, message:"Use 'disabled' instead of 'handicapped'.", title:"Writing about disability", },
@@ -133,6 +167,23 @@ function checkTextRules(userText) {
     { regex: /the\sdisabled|(people|person)\swith\s(disabilities|a\sdisability)/gi, message: "Use 'disabled people' instead of 'the disabled' or 'people with disabilities'.", title: "disabled people" },
     { regex: /\b(?!POISE\b)[Pp][Oo][Ii][Ss][Ee]\b/g, message: "Use POISE, not Poise. You do not need to write the acronym out in full.", title: "POISE" },
   ];
+
+// Collect matches for each pattern
+const matchesBypattern = regexPatterns.map(pattern => {
+  const matches = [];
+  sentences.forEach(sentence => {
+    if (pattern.regex.test(sentence)) {
+      const highlightedSentence = sentence.replace(
+        pattern.regex,
+        '<strong>$&</strong>'
+      );
+      matches.push(highlightedSentence.trim());
+    }
+  });
+  return { pattern, matches };
+});
+
+
 
   const ukEnglishregexPatterns = [
     //A
@@ -302,97 +353,6 @@ function checkTextRules(userText) {
     { regex: /decimaliz/gi, message: "Prefer -ise spellings and use UK English", title: "US spelling detected", },
   ];
 
-//Readability patterns
-const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });
-const sentenceSegmenter = new Intl.Segmenter("en-GB", { granularity: "sentence" });
-const charSegmenter = /[\p{L}\p{N}]/u;
-const readingAge = {
-    1: "5-6",
-    2: "6-7",
-    3: "7-8",
-    4: "8-9",
-    5: "9-10",
-    6: "10-11",
-    7: "11-12",
-    8: "12-13",
-    9: "13-14",
-    10: "14-15",
-    11: "15-16",
-    12: "16-17",
-    13: "17-18",
-    14: "18-22" 
-  };
-function getReadabilityMetrics(text) {
-  const words = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
-  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
-  const characters = [...text].filter(char => charSegmenter.test(char)).length;
-  const rawAutomatedReadabilityIndex = 4.71 * (characters / words) + 0.5 * (words / sentences) - 21.43;
-  const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
-  return {
-    words,
-    sentences,
-    characters,
-    rawAutomatedReadabilityIndex,
-    automatedReadabilityIndex,
-    ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
-  };
-}
-
-const readabilityMetrics = getReadabilityMetrics(userText);
-
-//console.log(readabilityMetrics);
-
-
-// Split the text into sentences
-function splitSentences(text, locale = 'en-GB') {
-  // Prefer Intl.Segmenter when available
-  if (globalThis.Intl?.Segmenter) {
-    const seg = new Intl.Segmenter(locale, { granularity: 'sentence' });
-    return Array.from(seg.segment(text), s => s.segment.trim()).filter(Boolean);
-  }
-
-  // Fallback: protect URLs/emails so dots inside them don't split sentences
-  const URL_PATTERN = /https?:\/\/\S+/;
-  const EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.\w{2,}/;
-
-  const SENTENCE_REGEX = new RegExp(
-    `(?:${URL_PATTERN.source}|${EMAIL_PATTERN.source}|[^.!?])+(?:[.!?]+|$)`,
-    'g'
-  );
-
-  const parts = text.match(SENTENCE_REGEX) || [];
-  return parts.map(p => p.trim()).filter(Boolean);
-}
-
-// === Use the splitter ===
-const sentences = splitSentences(userText, 'en-GB');
-
-// Ensure sentences is an array
-if (!sentences || sentences.length === 0) {
-  return 'no-sentences';
-}
-
-// Concatenate sentences into a single string
-const concatenatedText = sentences.join('');
-
-// Collect matches for each pattern
-const matchesBypattern = regexPatterns.map(pattern => {
-  const matches = [];
-  sentences.forEach(sentence => {
-    if (pattern.regex.test(sentence)) {
-      const highlightedSentence = sentence.replace(
-        pattern.regex,
-        '<strong>$&</strong>'
-      );
-      matches.push(highlightedSentence.trim());
-    }
-  });
-  return { pattern, matches };
-});
-
-
-
-
   // === ACRONYM EXPLANATION CHECK ===
 
   const explainedAcronyms = new Set();
@@ -492,28 +452,30 @@ sentences.forEach(sentence => {
 
 
 if (unexplained.length > 0 ) {
-  results += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
-  results += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
-  results += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
+  styleIssueCount++;
+  HoStyleGuideResults += `<h2 class="govuk-heading-s">Unexplained acronyms</h2>`;
+  HoStyleGuideResults += `<p class="govuk-body">You have used acronyms without explaining them the first time you use them.</p>`;
+  HoStyleGuideResults += `<p class="govuk-body">Matches found: ${unexplained.length} unexplained acronym${unexplained.length > 1 ? 's' : ''}</p>`;
   unexplained.forEach(item => {
     const regex = new RegExp(`\\b${item.acronym}\\b`, 'g');
     const highlighted = item.sentence.replace(regex, '<strong>$&</strong>');
-      results += `<div class="govuk-inset-text">${highlighted.trim()}</div>`;
+      HoStyleGuideResults += `<div class="govuk-inset-text">${highlighted.trim()}</div>`;
   });
   
-    results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+    HoStyleGuideResults += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
 }
 
-  // Format results
+  // Format HoStyleGuideResults
   matchesBypattern.forEach(({ pattern, matches }) => {
     if (matches.length > 0) {
-      results += `<h2 class="govuk-heading-s">${pattern.title}</h2>`;
-      results += `<p class="govuk-body">${pattern.message}</p>`;
-      results += `<p class="govuk-body">Matches found: ${matches.length}</p>`;
+      styleIssueCount++;
+      HoStyleGuideResults += `<h2 class="govuk-heading-s">${pattern.title}</h2>`;
+      HoStyleGuideResults += `<p class="govuk-body">${pattern.message}</p>`;
+      HoStyleGuideResults += `<p class="govuk-body">Matches found: ${matches.length}</p>`;
       matches.forEach (match => {
-        results += `<div class="govuk-inset-text">${match}</div>`;
+        HoStyleGuideResults += `<div class="govuk-inset-text">${match}</div>`;
       });
-      results += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
+      HoStyleGuideResults += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`;
     }
   });
 
@@ -525,14 +487,137 @@ if (unexplained.length > 0 ) {
   const hasTerm2 = term2.test(concatenatedText);
 
   if (hasTerm1 && hasTerm2) {
+    styleIssueCount++;
     const highlightedText = concatenatedText
       .replace(term1, '<strong>$&</strong>')
       .replace(term2, '<strong>$&</strong>');
-     results += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
-     results += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
+     HoStyleGuideResults += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
+     HoStyleGuideResults += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
    }
 
-  return results;
+//Readability patterns
+const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });
+const sentenceSegmenter = new Intl.Segmenter("en-GB", { granularity: "sentence" });
+const charSegmenter = /[\p{L}\p{N}]/u;
+const readingAge = {
+    1: "5-6",
+    2: "6-7",
+    3: "7-8",
+    4: "8-9",
+    5: "9-10",
+    6: "10-11",
+    7: "11-12",
+    8: "12-13",
+    9: "13-14",
+    10: "14-15",
+    11: "15-16",
+    12: "16-17",
+    13: "17-18",
+    14: "18-22" 
+  };
+function getReadabilityMetrics(text) {
+  const totalWordCount = [...wordSegmenter.segment(text)].filter(segment => segment.isWordLike).length;
+  const totalSentenceCount = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim()).length;
+  const totalCharacterCount = [...text].filter(char => charSegmenter.test(char)).length;
+  const avgWordsPerSentence = Math.round(totalWordCount/totalSentenceCount);
+  const avgCharsPerWord = Math.round(totalCharacterCount/totalWordCount);
+  const rawAutomatedReadabilityIndex = 4.71 * (totalCharacterCount / totalWordCount) + 0.5 * (totalWordCount / totalSentenceCount) - 21.43;
+  const automatedReadabilityIndex = Math.ceil(rawAutomatedReadabilityIndex);
+  return {
+    totalWordCount,
+    totalSentenceCount,
+    totalCharacterCount,
+    avgWordsPerSentence,
+    avgCharsPerWord,
+    rawAutomatedReadabilityIndex,
+    automatedReadabilityIndex,
+    ageRange: readingAge[automatedReadabilityIndex] ?? "22+"
+  };
 }
+function calculateOverLongSentences (text) {
+  const sentences = [...sentenceSegmenter.segment(text)].filter(segment => segment.segment.trim());
+  const over15Words = [];
+  const over25Words = [];
+  const over35Words = [];
+  if (sentences.length === 0) {
+  return 'no-sentences';
+  };
+
+  for (const sentence of sentences) {
+      const wordCount = [...wordSegmenter.segment(sentence.segment.trim()) ].filter(segment => segment.isWordLike).length;
+      if (wordCount >35) {
+        over35Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+      else if (wordCount >25) {
+        over25Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+      else if (wordCount >14) {
+        over15Words.push({
+          sentence: sentence.segment.trim(),
+          wordCount
+      })
+      }
+
+  };
+  const totalLongSentences = over15Words.length + over25Words.length + over35Words.length;
+  return {
+        over15Words,
+        over25Words,
+        over35Words,
+        totalLongSentences
+      }
+}
+function calculateOverLongParagraphs(text) {
+  const over5sentenceParagraphs = [];
+  const paragraphs = text
+    .split(/\r?\n\s*\r?\n/)
+    .filter( paragraph => paragraph.trim());
+  if (paragraphs.length === 0) {
+    return {
+      over5sentenceParagraphs: []
+    };
+  }
+  for (const paragraph of paragraphs) {
+    const punctuationCount = (paragraph.match(/[.!?]/g) || []).length;
+    if (punctuationCount === 0) {
+      continue;
+    }
+    const sentenceCount = [...sentenceSegmenter.segment(paragraph)].filter(segment => segment.segment.trim()).length;
+    if (sentenceCount > 5) {
+      over5sentenceParagraphs.push({
+        paragraph: paragraph.trim(),
+        sentenceCount
+    })
+  }
+}
+return {
+  over5sentenceParagraphs
+  };
+}
+const overLongSentences = calculateOverLongSentences(userText);
+
+const overLongParagraphs = calculateOverLongParagraphs(userText);
+
+const readabilityMetrics = getReadabilityMetrics(userText);
+
+const hasStyleIssues = HoStyleGuideResults.length > 0;
+
+return { 
+  styleIssueCount,
+  hasStyleIssues,
+  HoStyleGuideResults,
+  readabilityMetrics,
+  overLongSentences,
+  overLongParagraphs
+  };
+}
+
+
 
 module.exports = checkTextRules;
