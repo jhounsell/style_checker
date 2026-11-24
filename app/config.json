@@ -1,3 +1,4 @@
 {
-  "serviceName": "Content checker"
+  "serviceName": "Content checker",
+  "useAuth": "false"
 }
