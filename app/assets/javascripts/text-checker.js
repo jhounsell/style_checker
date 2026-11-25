@@ -1,3 +1,5 @@
+const checkTerminology = require('../javascripts/terminology-checker')
+
 function checkTextRules(userText) {
   let HoStyleGuideResults = '';
   let styleIssueCount = 0;
@@ -481,19 +483,17 @@ if (unexplained.length > 0 ) {
 
 
 // Term consistency check
-  const term1 = /asylum\sclaimant/gi;
-  const term2 = /asylum\sapplicant/gi;
-  const hasTerm1 = term1.test(concatenatedText);
-  const hasTerm2 = term2.test(concatenatedText);
+  const terminologyFindings = checkTerminology(concatenatedText);
+  if (terminologyFindings.length > 0) {
+    terminologyFindings.forEach(finding => {
+      styleIssueCount++;
+      HoStyleGuideResults += `<h2 class="govuk-heading-s">${finding.title}</h2>`;
+      HoStyleGuideResults += `<div class="govuk-inset-text">${finding.message}</div>`
+      HoStyleGuideResults += `<hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">`
+    })
+    
 
-  if (hasTerm1 && hasTerm2) {
-    styleIssueCount++;
-    const highlightedText = concatenatedText
-      .replace(term1, '<strong>$&</strong>')
-      .replace(term2, '<strong>$&</strong>');
-     HoStyleGuideResults += `<h2 class="govuk-heading-s">Asylum applicant/claimant</h2>`;
-     HoStyleGuideResults += `<p class="govuk-body">Do not use both 'asylum claimant' or 'asylum applicant' in the same product or service, use one consistently.</p> <div class="govuk-inset-text">${highlightedText.trim()}</div>`;
-   }
+  };
 
 //Readability patterns
 const wordSegmenter = new Intl.Segmenter("en-GB", { granularity: "word" });

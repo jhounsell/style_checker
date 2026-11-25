@@ -29,7 +29,7 @@ for (const rule of activeRules) {
     }    
     types[type] = (types[type] || 0) + 1;
 }
-console.log(types);
+//console.log(types);
 
 for (const rule of activeRules) {
     if (rule.check?.matcher){
@@ -40,7 +40,8 @@ for (const rule of activeRules) {
 const correctFormRules = activeRules.filter(
     rule => rule.check?.correct_forms
 );
-console.log(JSON.stringify(correctFormRules.slice(0, 50), null, 2));
+//console.log("Correct Form 0-50 rules: ", JSON.stringify(correctFormRules.slice(0, 50), null, 2));
+
 
 
 // Mapping
