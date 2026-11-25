@@ -1481,6 +1481,9 @@
     "priority": 1000,
     "details": "Title case.\nDo not use:\n- ‘Covid-19’ with only the first letter capitalised\n- ‘covid-19’ lower case\n- ‘coronavirus’, as ‘COVID-19’ is the specific condition",
     "check": {
+      "patterns": [
+        "\\bcoronavirus\\b"
+      ],
       "correct_forms": [
         "COVID-19"
       ],

@@ -1,6 +1,5 @@
 const govukRules = require('../../external/importers/govuk-rules')
 
-//Pattern matching engine
 
 function getSentenceContainingMatch(text, position) {
     let start = position;
@@ -33,7 +32,8 @@ function highlightMatch(sentence, matchText, relativePosition) {
 function checkTerminology(concatenatedText) {
     const findings = [];
     //GOVUK Assist rules
-    const antisocialRule = govukRules.find(rule => rule.title === 'antisocial');
+    const antisocialRule = govukRules.find(rule => rule.title === 'COVID-19');
+    //Patterns engine
     const patterns = antisocialRule?.check?.patterns || [];
     for (const pattern of patterns ) {
             const regex = new RegExp (pattern, 'gi')
@@ -53,10 +53,36 @@ function checkTerminology(concatenatedText) {
             });
         };
     };
-    console.log(findings)
 
   //Correct_forms engine
+    const covid19Rule = govukRules.find(rule => rule.title === 'COVID-19');
+    correctForms = covid19Rule?.check?.correct_forms || [];
+    for (const form of correctForms) {
+        const regex = new RegExp(
+            form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'
+        );
+        const matches = [...concatenatedText.matchAll(regex)]
+        for (const match of matches) {
+            const foundText = match[0];
 
+            if (foundText !== form) {
+                const position = match.index;
+                const containingSentence = getSentenceContainingMatch(concatenatedText, position);
+                const relativePosition = position-containingSentence.sentenceStart;
+                const highlightedSentence = highlightMatch(containingSentence.sentence, foundText, relativePosition);
+                findings.push({
+                    source: "gov.uk",
+                    ruleId: covid19Rule.id,
+                    title: covid19Rule.title,
+                    guidance: covid19Rule.guidance,
+                    sentence: highlightedSentence
+                });
+            }
+        };
+    };
+
+  //Print findings
+    console.log(findings)
 
 
     //HO style rules
